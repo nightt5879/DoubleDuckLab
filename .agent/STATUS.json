@@ -1,14 +1,14 @@
 {
-  "current_task": "T-0007",
+  "current_task": "T-0008",
   "phase": "implementation",
   "progress": 1.0,
-  "last_update": "2026-03-01T00:03:11+08:00",
+  "last_update": "2026-03-01T00:07:50+08:00",
   "next_steps": [
-    "T-0008: markdown/content collections migration plan",
+    "T-0009: CMS options spike and integration plan",
     "Prepare PR summary for review"
   ],
   "blockers": [],
   "evidence": [
-    ".agent/RUNS/2026-03-01_t0007/02-evidence/terminal.log"
+    ".agent/RUNS/2026-03-01_t0008/02-evidence/terminal.log"
   ]
 }

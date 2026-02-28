@@ -1,57 +1,54 @@
 # Content Edit Guide (非技术同学版)
 
-这份文档用于“只改内容、不改代码”。
+目标：只改内容，不改业务代码。
 
 ## 1) 你需要改哪些文件
-都在 `src/data/content/` 目录：
 
-- `site.zh.json`：中文站点文案（导航、首页标题）
+### JSON（结构化基础信息）
+目录：`src/data/content/`
+- `site.zh.json`：中文站点文案（导航、首页文案）
 - `site.en.json`：英文站点文案
 - `members.json`：成员列表
 - `projects.json`：项目列表
-- `papers.json`：论文列表
-- `news.json`：新闻列表
 
-## 2) 修改规则
-- 保持 JSON 语法：
-  - 字符串用双引号 `"..."`
-  - 每项之间用逗号
-  - 最后一项后不要多余逗号
-- 不要随意改字段名（例如 `title`、`date`、`status`）
+### Markdown（更适合连续内容）
+目录：`src/content/`
+- `news/*.md`：新闻条目
+- `papers/*.md`：论文条目
 
-## 3) 常见操作示例
+## 2) JSON 修改规则
+- 使用双引号 `"..."`
+- 每项之间要有逗号
+- 不要改字段名（如 `title`、`status`）
 
-### 新增一条新闻
-在 `news.json` 数组末尾追加：
-```json
-{
-  "date": "2026-03-01",
-  "title": {
-    "zh": "这里写中文标题",
-    "en": "English title here"
-  }
-}
+## 3) Markdown 修改规则
+每个文件顶部必须有 frontmatter：
+
+### 新闻示例（`src/content/news/2026-03-01.md`）
+```md
+---
+date: '2026-03-01'
+title:
+  zh: '这里写中文标题'
+  en: 'English title here'
+---
 ```
 
-### 新增一个成员
-在 `members.json` 里追加：
-```json
-{
-  "name": "New Member",
-  "role": { "zh": "硕士生", "en": "Master" },
-  "area": "Research Area"
-}
+### 论文示例（`src/content/papers/2026-xxx.md`）
+```md
+---
+year: 2026
+title: 'Paper Title'
+venue: 'Conference Name'
+---
 ```
 
 ## 4) 修改后如何检查
-在项目根目录运行：
+在项目根目录执行：
 ```bash
 npm run validate:content
 npm run build
 ```
-
-- 第一条检查内容格式与字段是否合法
-- 第二条检查页面是否可构建
 
 ## 5) 如何预览
 ```bash
