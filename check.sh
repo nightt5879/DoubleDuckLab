@@ -21,5 +21,11 @@ fi
 echo "[check.sh] pull latest..."
 git pull --rebase origin "$TARGET_BRANCH"
 
+# 防止 Windows CRLF 导致 /usr/bin/env: 'bash\r' 报错
+if [ -f run.sh ]; then
+  sed -i 's/\r$//' run.sh
+  chmod +x run.sh
+fi
+
 echo "[check.sh] run local preview..."
-exec ./run.sh
+exec bash ./run.sh
