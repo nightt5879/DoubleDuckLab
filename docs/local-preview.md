@@ -18,8 +18,16 @@ npm run preview
 ```
 
 ## 4. 当前页面
+### 中文
 - `/` 首页
 - `/members` 成员
 - `/projects` 项目
 - `/papers` 论文
 - `/news` 新闻
+
+### English
+- `/en/` Home
+- `/en/members`
+- `/en/projects`
+- `/en/papers`
+- `/en/news`

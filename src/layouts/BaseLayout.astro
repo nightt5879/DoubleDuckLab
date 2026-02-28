@@ -1,65 +1,60 @@
 ---
-const { title = 'Lab Website', desc = 'Local-first Astro lab website prototype' } = Astro.props;
+import { dict, type Lang } from '../data/content';
+const {
+  title = 'Lab Website',
+  desc = 'Local-first Astro lab website prototype',
+  lang = 'zh',
+  pathPrefix = ''
+} = Astro.props as { title?: string; desc?: string; lang?: Lang; pathPrefix?: string };
+
+const t = dict[lang];
+const navPath = {
+  home: `${pathPrefix}/`,
+  members: `${pathPrefix}/members`,
+  projects: `${pathPrefix}/projects`,
+  papers: `${pathPrefix}/papers`,
+  news: `${pathPrefix}/news`
+};
 ---
 <!doctype html>
-<html lang="zh-CN">
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={desc} />
     <style>
-      :root {
-        --bg: #0b1020;
-        --panel: #121936;
-        --line: #26305f;
-        --text: #e8edff;
-        --muted: #a7b3de;
-        --primary: #6da2ff;
-      }
+      :root { --bg:#0b1020;--panel:#121936;--line:#26305f;--text:#e8edff;--muted:#a7b3de;--primary:#6da2ff; }
       * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-        background: radial-gradient(circle at top, #18214c, var(--bg) 45%);
-        color: var(--text);
-      }
+      body { margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at top,#18214c,var(--bg) 45%);color:var(--text); }
       a { color: var(--primary); text-decoration: none; }
       a:hover { text-decoration: underline; }
-      .container { width: min(1100px, 92vw); margin: 0 auto; }
-      header {
-        position: sticky; top: 0; z-index: 10;
-        background: rgba(11,16,32,.85); backdrop-filter: blur(6px);
-        border-bottom: 1px solid var(--line);
-      }
-      .nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
-      .brand { font-weight: 800; letter-spacing: .5px; }
-      nav a { margin-left: 14px; color: var(--muted); }
-      nav a.active, nav a:hover { color: var(--text); }
-      main { padding: 28px 0 42px; }
-      .card {
-        background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 18px;
-      }
-      h1, h2, h3 { margin-top: 0; }
-      .grid { display: grid; gap: 14px; }
-      .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-      footer { border-top: 1px solid var(--line); color: var(--muted); padding: 18px 0 28px; font-size: 14px; }
+      .container { width:min(1100px,92vw); margin:0 auto; }
+      header { position:sticky;top:0;z-index:10;background:rgba(11,16,32,.85);backdrop-filter:blur(6px);border-bottom:1px solid var(--line); }
+      .nav { display:flex;align-items:center;justify-content:space-between;padding:12px 0; }
+      .brand { font-weight:800;letter-spacing:.5px; }
+      nav a { margin-left:14px;color:var(--muted); }
+      nav a.active, nav a:hover { color:var(--text); }
+      main { padding:28px 0 42px; }
+      .card { background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:18px; }
+      h1,h2,h3 { margin-top:0; }
+      .grid { display:grid;gap:14px; }
+      .grid-3 { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+      footer { border-top:1px solid var(--line);color:var(--muted);padding:18px 0 28px;font-size:14px; }
       .badge { display:inline-block;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px; }
+      .lang-switch { font-size: 12px; color: var(--muted); }
     </style>
   </head>
   <body>
     <header>
       <div class="container nav">
-        <div class="brand">LAB · ASTRO</div>
+        <div class="brand">{t.brand}</div>
         <nav>
-          <a class={Astro.url.pathname === '/' ? 'active' : ''} href="/">首页</a>
-          <a class={Astro.url.pathname.startsWith('/members') ? 'active' : ''} href="/members">成员</a>
-          <a class={Astro.url.pathname.startsWith('/projects') ? 'active' : ''} href="/projects">项目</a>
-          <a class={Astro.url.pathname.startsWith('/papers') ? 'active' : ''} href="/papers">论文</a>
-          <a class={Astro.url.pathname.startsWith('/news') ? 'active' : ''} href="/news">新闻</a>
+          <a class={Astro.url.pathname === navPath.home ? 'active' : ''} href={navPath.home}>{t.nav.home}</a>
+          <a class={Astro.url.pathname.startsWith(navPath.members) ? 'active' : ''} href={navPath.members}>{t.nav.members}</a>
+          <a class={Astro.url.pathname.startsWith(navPath.projects) ? 'active' : ''} href={navPath.projects}>{t.nav.projects}</a>
+          <a class={Astro.url.pathname.startsWith(navPath.papers) ? 'active' : ''} href={navPath.papers}>{t.nav.papers}</a>
+          <a class={Astro.url.pathname.startsWith(navPath.news) ? 'active' : ''} href={navPath.news}>{t.nav.news}</a>
         </nav>
       </div>
     </header>
@@ -67,7 +62,10 @@ const { title = 'Lab Website', desc = 'Local-first Astro lab website prototype' 
       <slot />
     </main>
     <footer>
-      <div class="container">Local-first preview · Astro bootstrap · by nightt + 小龙虾</div>
+      <div class="container">
+        Local-first preview · Astro bootstrap · by nightt + 小龙虾
+        <span class="lang-switch"> · <a href="/">中文</a> / <a href="/en/">English</a></span>
+      </div>
     </footer>
   </body>
 </html>

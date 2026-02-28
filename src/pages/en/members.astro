@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { members } from '../../data/content';
+---
+<BaseLayout title="Lab Website · Members" lang="en" pathPrefix="/en">
+  <h1>Members</h1>
+  <div class="grid grid-3">
+    {members.map(m => (
+      <article class="card">
+        <h3>{m.name}</h3>
+        <p style="color:var(--muted)">{m.role.en}</p>
+        <p>{m.area}</p>
+      </article>
+    ))}
+  </div>
+</BaseLayout>

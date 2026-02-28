@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { papers } from '../data/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { papers } from '../../data/content';
 ---
-<BaseLayout title="Lab Website · 论文" lang="zh" pathPrefix="">
-  <h1>论文</h1>
+<BaseLayout title="Lab Website · Papers" lang="en" pathPrefix="/en">
+  <h1>Papers</h1>
   <div class="grid">
     {papers.map(p => (
       <article class="card">
