@@ -11,8 +11,8 @@
 - [x] news/papers 迁移 Markdown collections（T-0008）
 
 ## M3 基础收官（今晚冲刺）
-- [ ] T-0009：CMS 方案拍板文档（Decap vs Sanity）
-- [ ] T-0010：最小内容运营流程（0代码可执行）
-- [ ] T-0011：基础收官验收包（交付与交接）
+- [x] T-0009：CMS 方案拍板文档（Decap vs Sanity）
+- [x] T-0010：最小内容运营流程（0代码可执行）
+- [x] T-0011：基础收官验收包（交付与交接）
 
 参考：`docs/roadmap.md`
