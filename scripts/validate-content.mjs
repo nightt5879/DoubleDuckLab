@@ -21,7 +21,7 @@ function readJson(file) {
 
 function parseFrontmatter(filePath) {
   const raw = fs.readFileSync(filePath, 'utf8');
-  const m = raw.match(/^---\n([\s\S]*?)\n---/);
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   assert(m, `Missing frontmatter: ${filePath}`);
   return m[1];
 }

@@ -10,7 +10,7 @@
 
 ## 距离“基础收官”还需要 3 个任务
 
-### T-0009：CMS 方案拍板文档（Decap vs Sanity，落地建议）
+### T-0009：CMS 方案拍板文档（Decap vs Sanity，落地建议） ✅
 **产物**：`docs/cms-options.md`
 - 对比：接入复杂度、维护成本、非技术编辑体验、与现有 Astro 兼容度
 - 输出一条“今晚可执行”的推荐路线
@@ -34,7 +34,7 @@
 
 ---
 
-### T-0011：基础收官验收包（交付包）
+### T-0011：基础收官验收包（交付包） ✅
 **产物**：
 - `docs/release-baseline-checklist.md`
 - `docs/hand-off-summary.md`
