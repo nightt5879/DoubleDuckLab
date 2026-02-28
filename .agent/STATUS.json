@@ -1,0 +1,14 @@
+{
+  "current_task": "T-0000",
+  "phase": "bootstrap",
+  "progress": 1.0,
+  "last_update": "2026-02-28T22:40:00+08:00",
+  "next_steps": [
+    "Create T-0001 task spec",
+    "Execute first controlled run with evidence"
+  ],
+  "blockers": [],
+  "evidence": [
+    ".agent/RUNS/2026-02-28_01/04-summary.md"
+  ]
+}
