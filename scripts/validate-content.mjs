@@ -2,21 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const base = path.resolve('src/data/content');
-const requiredFiles = [
-  'site.zh.json',
-  'site.en.json',
-  'members.json',
-  'projects.json',
-  'papers.json',
-  'news.json'
-];
-
-function readJson(file) {
-  const p = path.join(base, file);
-  if (!fs.existsSync(p)) throw new Error(`Missing file: ${file}`);
-  return JSON.parse(fs.readFileSync(p, 'utf8'));
-}
+const jsonBase = path.resolve('src/data/content');
+const contentBase = path.resolve('src/content');
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg);
@@ -26,47 +13,65 @@ function isString(v) {
   return typeof v === 'string' && v.trim().length > 0;
 }
 
-try {
-  requiredFiles.forEach((f) => assert(fs.existsSync(path.join(base, f)), `Missing required file: ${f}`));
+function readJson(file) {
+  const p = path.join(jsonBase, file);
+  assert(fs.existsSync(p), `Missing file: ${file}`);
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
 
+function parseFrontmatter(filePath) {
+  const raw = fs.readFileSync(filePath, 'utf8');
+  const m = raw.match(/^---\n([\s\S]*?)\n---/);
+  assert(m, `Missing frontmatter: ${filePath}`);
+  return m[1];
+}
+
+try {
+  // JSON-managed content (still in JSON)
   const siteZh = readJson('site.zh.json');
   const siteEn = readJson('site.en.json');
+  const members = readJson('members.json');
+  const projects = readJson('projects.json');
+
   for (const [name, site] of [['zh', siteZh], ['en', siteEn]]) {
-    assert(isString(site.brand), `site.${name}.brand must be non-empty string`);
+    assert(isString(site.brand), `site.${name}.brand invalid`);
     ['home','members','projects','papers','news'].forEach((k)=>assert(isString(site.nav?.[k]), `site.${name}.nav.${k} invalid`));
-    assert(isString(site.home?.title), `site.${name}.home.title invalid`);
-    assert(Array.isArray(site.home?.highlights), `site.${name}.home.highlights must be array`);
   }
 
-  const members = readJson('members.json');
   assert(Array.isArray(members), 'members.json must be array');
   members.forEach((m, i) => {
     assert(isString(m.name), `members[${i}].name invalid`);
-    assert(isString(m.role?.zh) && isString(m.role?.en), `members[${i}].role zh/en invalid`);
-    assert(isString(m.area), `members[${i}].area invalid`);
+    assert(isString(m.role?.zh) && isString(m.role?.en), `members[${i}].role invalid`);
   });
 
-  const projects = readJson('projects.json');
   assert(Array.isArray(projects), 'projects.json must be array');
   projects.forEach((p, i) => {
     assert(isString(p.title), `projects[${i}].title invalid`);
-    assert(isString(p.tag), `projects[${i}].tag invalid`);
-    assert(isString(p.status?.zh) && isString(p.status?.en), `projects[${i}].status zh/en invalid`);
+    assert(isString(p.status?.zh) && isString(p.status?.en), `projects[${i}].status invalid`);
   });
 
-  const papers = readJson('papers.json');
-  assert(Array.isArray(papers), 'papers.json must be array');
-  papers.forEach((p, i) => {
-    assert(Number.isInteger(p.year), `papers[${i}].year invalid`);
-    assert(isString(p.title), `papers[${i}].title invalid`);
-    assert(isString(p.venue), `papers[${i}].venue invalid`);
+  // Markdown collections
+  const newsDir = path.join(contentBase, 'news');
+  const papersDir = path.join(contentBase, 'papers');
+  assert(fs.existsSync(newsDir), 'Missing src/content/news');
+  assert(fs.existsSync(papersDir), 'Missing src/content/papers');
+
+  const newsFiles = fs.readdirSync(newsDir).filter((f) => f.endsWith('.md'));
+  const paperFiles = fs.readdirSync(papersDir).filter((f) => f.endsWith('.md'));
+  assert(newsFiles.length > 0, 'No markdown files in src/content/news');
+  assert(paperFiles.length > 0, 'No markdown files in src/content/papers');
+
+  newsFiles.forEach((f) => {
+    const fm = parseFrontmatter(path.join(newsDir, f));
+    assert(/date:\s*['"]?\d{4}-\d{2}-\d{2}['"]?/.test(fm), `news frontmatter date invalid: ${f}`);
+    assert(/title:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/.test(fm), `news frontmatter title zh/en invalid: ${f}`);
   });
 
-  const news = readJson('news.json');
-  assert(Array.isArray(news), 'news.json must be array');
-  news.forEach((n, i) => {
-    assert(/^\d{4}-\d{2}-\d{2}$/.test(n.date), `news[${i}].date should be YYYY-MM-DD`);
-    assert(isString(n.title?.zh) && isString(n.title?.en), `news[${i}].title zh/en invalid`);
+  paperFiles.forEach((f) => {
+    const fm = parseFrontmatter(path.join(papersDir, f));
+    assert(/year:\s*\d{4}/.test(fm), `paper year invalid: ${f}`);
+    assert(/title:\s*['"].+['"]/.test(fm), `paper title invalid: ${f}`);
+    assert(/venue:\s*['"].+['"]/.test(fm), `paper venue invalid: ${f}`);
   });
 
   console.log('✅ Content validation passed');

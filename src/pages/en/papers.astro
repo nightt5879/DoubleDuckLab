@@ -1,6 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import papers from '../../data/content/papers.json';
+import { getCollection } from 'astro:content';
+
+const paperEntries = await getCollection('papers');
+const papers = paperEntries
+  .map((e) => e.data)
+  .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
 ---
 <BaseLayout title="Lab Website · Papers" lang="en" pathPrefix="/en">
   <h1>Papers</h1>
