@@ -1,6 +1,7 @@
 ---
 import siteZh from '../data/content/site.zh.json';
 import siteEn from '../data/content/site.en.json';
+import '../styles/tokens.css';
 
 const {
   title = 'Lab Website',
@@ -26,9 +27,8 @@ const navPath = {
     <title>{title}</title>
     <meta name="description" content={desc} />
     <style>
-      :root { --bg:#0b1020;--panel:#121936;--line:#26305f;--text:#e8edff;--muted:#a7b3de;--primary:#6da2ff; }
-      * { box-sizing: border-box; }
-      body { margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at top,#18214c,var(--bg) 45%);color:var(--text); }
+            * { box-sizing: border-box; }
+      body { margin:0;font-family:var(--font-base);background:radial-gradient(circle at top,#18214c,var(--bg) 45%);color:var(--text); }
       a { color: var(--primary); text-decoration: none; }
       a:hover { text-decoration: underline; }
       .container { width:min(1100px,92vw); margin:0 auto; }
@@ -37,10 +37,10 @@ const navPath = {
       .brand { font-weight:800;letter-spacing:.5px; }
       nav a { margin-left:14px;color:var(--muted); }
       nav a.active, nav a:hover { color:var(--text); }
-      main { padding:28px 0 42px; }
-      .card { background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:18px; }
+      main { padding:var(--space-page-y) 0 42px; }
+      .card { background:linear-gradient(180deg, var(--surface-1), var(--surface-2));border:1px solid var(--line);border-radius:var(--radius-card);padding:18px; }
       h1,h2,h3 { margin-top:0; }
-      .grid { display:grid;gap:14px; }
+      .grid { display:grid;gap:var(--space-gap); }
       .grid-3 { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
       footer { border-top:1px solid var(--line);color:var(--muted);padding:18px 0 28px;font-size:14px; }
       .badge { display:inline-block;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px; }
