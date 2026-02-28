@@ -7,3 +7,4 @@
 - 完成数据驱动改造：`src/data/content.ts`，并新增 `/en/*` 页面。
 - T-0006: 内容源从 content.ts 迁移到 JSON（便于非技术同学维护）。
 - T-0006: 内容源从 content.ts 迁移到 JSON（便于非技术同学维护）。
+- 完成 T-0007：design tokens + content validation + content edit guide。
