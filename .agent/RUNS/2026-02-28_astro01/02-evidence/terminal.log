@@ -1,0 +1,3 @@
+- npm install: success
+- npm run build: success, 5 pages generated
+- routes: /, /members, /projects, /papers, /news

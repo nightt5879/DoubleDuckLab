@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const projects = [
+  { title: 'Project Orion', tag: 'Embodied AI', status: 'Ongoing' },
+  { title: 'LabSite Pipeline', tag: 'Infra', status: 'Prototype' },
+  { title: 'Multimodal Tutor', tag: 'EdTech', status: 'Planning' },
+];
+---
+<BaseLayout title="Lab Website · Projects">
+  <h1>项目</h1>
+  <div class="grid grid-3">
+    {projects.map(p => (
+      <article class="card">
+        <h3>{p.title}</h3>
+        <p><span class="badge">{p.tag}</span></p>
+        <p style="color:var(--muted)">状态：{p.status}</p>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
