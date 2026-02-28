@@ -1,6 +1,5 @@
 # WORKLOG
 
 ## 2026-02-28
-- Bootstrap: 初始化 Agent 可观测工作流结构。
-- 新增协议：CONTRACT、STATUS、PLAN、TASK 模板、RUN 模板。
-- 新增脚本：`scripts/agent_status.py` 用于读取 STATUS。
+- 收到需求：直接 Astro 开工，先本地预览，不碰服务器。
+- 已完成：Astro 骨架 + 5 个页面 + 本地运行说明。

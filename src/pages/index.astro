@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Lab Website · Home">
+  <section class="card" style="margin-bottom:14px;">
+    <span class="badge">Prototype v0 / Local Preview</span>
+    <h1 style="margin:10px 0 8px;">课题组官网（Astro 本地原型）</h1>
+    <p style="color:var(--muted);line-height:1.7;">目标：先把视觉与信息架构跑起来，不碰服务器。你在公司 fetch 后即可本地预览。</p>
+  </section>
+
+  <section class="grid grid-3" style="margin-bottom:14px;">
+    <article class="card"><h3>研究方向</h3><p style="color:var(--muted)">Embodied AI / HCI / Robotics</p></article>
+    <article class="card"><h3>近期成果</h3><p style="color:var(--muted)">2026 已发表 8 篇论文，2 个开源项目</p></article>
+    <article class="card"><h3>招生与合作</h3><p style="color:var(--muted)">欢迎本科实习、联合培养、企业课题合作</p></article>
+  </section>
+
+  <section class="card">
+    <h2>快速入口</h2>
+    <ul>
+      <li><a href="/members">成员列表</a></li>
+      <li><a href="/projects">项目展示</a></li>
+      <li><a href="/papers">论文列表</a></li>
+      <li><a href="/news">新闻动态</a></li>
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const papers = [
+  { year: 2026, title: 'Interactive Agents for Lab Knowledge Ops', venue: 'CHI' },
+  { year: 2025, title: 'Embodied Skill Transfer with Sparse Demo', venue: 'ICRA' },
+  { year: 2025, title: 'Human Feedback for Multi-agent Planning', venue: 'NeurIPS Workshop' },
+];
+---
+<BaseLayout title="Lab Website · Papers">
+  <h1>论文</h1>
+  <div class="grid">
+    {papers.map(p => (
+      <article class="card">
+        <h3 style="margin-bottom:6px">{p.title}</h3>
+        <p style="margin:0;color:var(--muted)">{p.year} · {p.venue}</p>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
