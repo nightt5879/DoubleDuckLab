@@ -9,3 +9,4 @@
 - T-0006: 内容源从 content.ts 迁移到 JSON（便于非技术同学维护）。
 - 完成 T-0007：design tokens + content validation + content edit guide。
 - 完成 T-0008：news/papers 迁移到 markdown content collections。
+- 完成 T-0009：CMS 选型拍板文档（Decap 主推，Sanity 备选）。
