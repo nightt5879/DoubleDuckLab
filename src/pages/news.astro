@@ -1,17 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const news = [
-  { date: '2026-02-28', title: '官网 Astro 原型上线（本地）' },
-  { date: '2026-02-20', title: '实验室春季招新启动' },
-  { date: '2026-02-10', title: '两项论文被会议接收' },
-];
+import { news } from '../data/content';
 ---
-<BaseLayout title="Lab Website · News">
+<BaseLayout title="Lab Website · 新闻" lang="zh" pathPrefix="">
   <h1>新闻动态</h1>
   <div class="grid">
     {news.map(n => (
       <article class="card">
-        <h3 style="margin-bottom:6px">{n.title}</h3>
+        <h3 style="margin-bottom:6px">{n.title.zh}</h3>
         <p style="margin:0;color:var(--muted)">{n.date}</p>
       </article>
     ))}

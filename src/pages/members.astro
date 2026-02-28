@@ -1,19 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const members = [
-  { name: 'Prof. Zhang', role: 'PI', area: 'HCI + Robotics' },
-  { name: 'Alice', role: 'PhD', area: 'Vision-Language Agents' },
-  { name: 'Bob', role: 'Master', area: 'Embodied Planning' },
-  { name: 'Carol', role: 'RA', area: 'Human-in-the-loop System' },
-];
+import { members } from '../data/content';
 ---
-<BaseLayout title="Lab Website · Members">
+<BaseLayout title="Lab Website · 成员" lang="zh" pathPrefix="">
   <h1>成员列表</h1>
   <div class="grid grid-3">
     {members.map(m => (
       <article class="card">
         <h3>{m.name}</h3>
-        <p style="color:var(--muted)">{m.role}</p>
+        <p style="color:var(--muted)">{m.role.zh}</p>
         <p>{m.area}</p>
       </article>
     ))}

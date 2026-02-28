@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { dict } from '../data/content';
-const t = dict.zh;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { dict } from '../../data/content';
+const t = dict.en;
 ---
-<BaseLayout title="Lab Website · 首页" lang="zh" pathPrefix="">
+<BaseLayout title="Lab Website · Home" lang="en" pathPrefix="/en">
   <section class="card" style="margin-bottom:14px;">
     <span class="badge">{t.home.badge}</span>
     <h1 style="margin:10px 0 8px;">{t.home.title}</h1>
@@ -19,10 +19,10 @@ const t = dict.zh;
   <section class="card">
     <h2>{t.home.quick}</h2>
     <ul>
-      <li><a href="/members">成员列表</a></li>
-      <li><a href="/projects">项目展示</a></li>
-      <li><a href="/papers">论文列表</a></li>
-      <li><a href="/news">新闻动态</a></li>
+      <li><a href="/en/members">Members</a></li>
+      <li><a href="/en/projects">Projects</a></li>
+      <li><a href="/en/papers">Publications</a></li>
+      <li><a href="/en/news">News</a></li>
     </ul>
   </section>
 </BaseLayout>

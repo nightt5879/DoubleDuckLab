@@ -1,0 +1,3 @@
+- npm run build: success
+- static routes include zh + en pages (10 total)
+- data-driven rendering from src/data/content.ts confirmed
