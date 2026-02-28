@@ -22,7 +22,7 @@
 
 ---
 
-### T-0010：最小内容运营流程（0代码同学可上手）
+### T-0010：最小内容运营流程（0代码同学可上手） ✅
 **产物**：`docs/content-ops-checklist.md`
 - 内容更新 SOP：新增新闻/论文/成员/项目的标准步骤
 - 提交前检查：`npm run validate:content` + `npm run build`

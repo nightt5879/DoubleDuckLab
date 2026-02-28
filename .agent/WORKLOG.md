@@ -10,3 +10,4 @@
 - 完成 T-0007：design tokens + content validation + content edit guide。
 - 完成 T-0008：news/papers 迁移到 markdown content collections。
 - 完成 T-0009：CMS 选型拍板文档（Decap 主推，Sanity 备选）。
+- 完成 T-0010：内容运营 SOP 与 0代码维护清单。
