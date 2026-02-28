@@ -1,0 +1,3 @@
+- npm run build: success
+- 10 routes generated (zh + en)
+- pages now consume JSON content files

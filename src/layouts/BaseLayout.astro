@@ -1,13 +1,15 @@
 ---
-import { dict, type Lang } from '../data/content';
+import siteZh from '../data/content/site.zh.json';
+import siteEn from '../data/content/site.en.json';
+
 const {
   title = 'Lab Website',
   desc = 'Local-first Astro lab website prototype',
   lang = 'zh',
   pathPrefix = ''
-} = Astro.props as { title?: string; desc?: string; lang?: Lang; pathPrefix?: string };
+} = Astro.props as { title?: string; desc?: string; lang?: 'zh' | 'en'; pathPrefix?: string };
 
-const t = dict[lang];
+const t = lang === 'en' ? siteEn : siteZh;
 const navPath = {
   home: `${pathPrefix}/`,
   members: `${pathPrefix}/members`,
@@ -30,13 +32,13 @@ const navPath = {
       a { color: var(--primary); text-decoration: none; }
       a:hover { text-decoration: underline; }
       .container { width:min(1100px,92vw); margin:0 auto; }
-      header { position:sticky;top:0;z-index:10;background:rgba(11,16,32,.85);backdrop-filter:blur(6px);border-bottom:1px solid var(--line); }
+      header { position:sticky;top:0;z-index:10;background:rgba(11,16,32,.85);backdrop-filter: blur(6px);border-bottom:1px solid var(--line); }
       .nav { display:flex;align-items:center;justify-content:space-between;padding:12px 0; }
       .brand { font-weight:800;letter-spacing:.5px; }
       nav a { margin-left:14px;color:var(--muted); }
       nav a.active, nav a:hover { color:var(--text); }
       main { padding:28px 0 42px; }
-      .card { background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:18px; }
+      .card { background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:18px; }
       h1,h2,h3 { margin-top:0; }
       .grid { display:grid;gap:14px; }
       .grid-3 { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }

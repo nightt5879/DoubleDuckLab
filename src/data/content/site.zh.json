@@ -1,0 +1,21 @@
+{
+  "brand": "LAB · ASTRO",
+  "nav": {
+    "home": "首页",
+    "members": "成员",
+    "projects": "项目",
+    "papers": "论文",
+    "news": "新闻"
+  },
+  "home": {
+    "badge": "Prototype v1 / JSON content source",
+    "title": "课题组官网（Astro 本地原型）",
+    "intro": "目标：先把视觉与信息架构跑起来，不碰服务器。你在公司 fetch 后即可本地预览。",
+    "highlights": [
+      { "title": "研究方向", "desc": "Embodied AI / HCI / Robotics" },
+      { "title": "近期成果", "desc": "2026 已发表 8 篇论文，2 个开源项目" },
+      { "title": "招生与合作", "desc": "欢迎本科实习、联合培养、企业课题合作" }
+    ],
+    "quick": "快速入口"
+  }
+}
