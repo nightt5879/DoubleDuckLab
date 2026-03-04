@@ -128,6 +128,75 @@ npm run preview
 
 ---
 
+## 📄 Papers 内容配置
+
+论文内容使用 Astro Content Collections，文件位置：
+
+```text
+src/content/papers/*.md
+```
+
+每篇 paper 的 frontmatter 最小模板（仅必填）：
+
+```md
+---
+year: 2025
+title: "Embodied Skill Transfer with Sparse Demo"
+venue: "ICRA"
+---
+```
+
+完整模板（可选字段全部展示）：
+
+```md
+---
+year: 2025
+title: "Embodied Skill Transfer with Sparse Demo"
+venue: "ICRA"
+abstract: |
+  We study skill transfer with sparse demonstrations and propose a lightweight pipeline
+  that improves generalization across tasks.
+links:
+  online: "https://example.com/paper"
+  pdf: "/papers/embodied-skill-transfer.pdf"
+  project: "https://doubleducklab.com/projects/embodied-skill-transfer"
+  code: "https://github.com/nightt5879/DoubleDuckLab"
+bibtex: |
+  @inproceedings{demo2025,
+    title={Embodied Skill Transfer with Sparse Demo},
+    author={First Author and Second Author},
+    booktitle={ICRA},
+    year={2025}
+  }
+---
+```
+
+字段说明：
+
+- 必填：`year`、`title`、`venue`
+- 可选：`abstract`、`links`、`bibtex`
+- `links` 子字段全部可选：`online`、`pdf`、`project`、`code`
+
+详情页显示规则：
+
+- 不写 `abstract`：不显示 Abstract/摘要 区块
+- `links` 四项都不写：不显示 Links 区块
+- `links` 只写某一项：仅显示对应按钮
+- 不写 `bibtex`：不显示 Citation (BibTeX) 区块
+
+`links.pdf` 支持两种写法：
+
+- 外链：`https://...`
+- 站内静态路径：`/papers/xxx.pdf`
+
+如果使用站内路径，请把 PDF 文件放到：
+
+```text
+public/papers/xxx.pdf
+```
+
+---
+
 ## 🌍 部署
 
 推荐使用 **Cloudflare Pages**。

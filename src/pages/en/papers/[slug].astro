@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const papers = await getCollection('papers');
@@ -11,12 +11,16 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const bibtex = `@inproceedings{${entry.slug},\n  title={${entry.data.title}},\n  year={${entry.data.year}},\n  booktitle={${entry.data.venue}},\n  author={Template Author et al.}\n}`;
+const abstract = entry.data.abstract?.trim() ?? '';
+const bibtex = entry.data.bibtex?.trim() ?? '';
+const links = entry.data.links;
+const hasLinks = Boolean(links?.online || links?.pdf || links?.project || links?.code);
+const hasBody = Boolean(entry.body?.trim());
+const { Content } = await render(entry);
 ---
 <BaseLayout title={entry.data.title} lang="en" pathPrefix="/en">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
-      <span class="badge-muted">Paper Detail Template</span>
       <h1 class="page-title">{entry.data.title}</h1>
       <div class="detail-meta">
         <span class="badge">{entry.data.venue}</span>
@@ -24,25 +28,49 @@ const bibtex = `@inproceedings{${entry.slug},\n  title={${entry.data.title}},\n 
       </div>
     </article>
 
-    <article class="card detail-section" data-reveal>
-      <h2>Abstract (Template)</h2>
-      <p>This paragraph is a placeholder abstract to demonstrate a complete paper detail experience in the static template.</p>
-      <p>In production, teams can replace this with actual abstract, contribution bullets, and artifact references.</p>
-    </article>
+    {abstract && (
+      <article class="card detail-section" data-reveal>
+        <h2>Abstract</h2>
+        <p>{abstract}</p>
+      </article>
+    )}
 
-    <article class="card detail-section" data-reveal>
-      <h2>BibTeX (Template)</h2>
-      <pre><code>{bibtex}</code></pre>
-    </article>
+    {hasLinks && (
+      <article class="card detail-section" data-reveal>
+        <h2>Links</h2>
+        <div class="detail-links">
+          {links?.online && <a class="btn btn-ghost" href={links.online} target="_blank" rel="noreferrer">Online</a>}
+          {links?.pdf && <a class="btn btn-ghost" href={links.pdf} target="_blank" rel="noreferrer">Paper PDF</a>}
+          {links?.project && <a class="btn btn-ghost" href={links.project} target="_blank" rel="noreferrer">Project Link</a>}
+          {links?.code && <a class="btn btn-ghost" href={links.code} target="_blank" rel="noreferrer">Code</a>}
+        </div>
+      </article>
+    )}
 
-    <article class="card detail-section" data-reveal>
-      <h2>Links</h2>
-      <div class="detail-links">
-        <a class="btn btn-ghost" href="#">Paper PDF</a>
-        <a class="btn btn-ghost" href="#">Code</a>
-        <a class="btn btn-ghost" href="#">Project Page</a>
-      </div>
-    </article>
+    {bibtex && (
+      <article class="card detail-section" data-reveal>
+        <h2>Citation</h2>
+        <details class="bibtex-details">
+          <summary>Citation (BibTeX)</summary>
+          <pre id={`bibtex-${entry.slug}`}><code>{bibtex}</code></pre>
+        </details>
+        <button
+          class="btn btn-ghost copy-btn"
+          type="button"
+          data-copy-target={`bibtex-${entry.slug}`}
+          data-copy-label="Copy"
+          data-copy-success="Copied"
+        >
+          Copy
+        </button>
+      </article>
+    )}
+
+    {hasBody && (
+      <article class="card detail-content" data-reveal>
+        <Content />
+      </article>
+    )}
 
     <div class="back-row" data-reveal>
       <a class="btn btn-primary" href="/en/papers">Back to Papers</a>

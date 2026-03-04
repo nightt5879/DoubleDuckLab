@@ -410,6 +410,37 @@
   gap: 8px;
 }
 
+.bibtex-details {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.bibtex-details summary {
+  cursor: pointer;
+  padding: 10px 12px;
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+.bibtex-details pre {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+  border-top: 1px solid var(--line);
+  background: rgba(10, 14, 24, 0.5);
+}
+
+.bibtex-details code {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.copy-btn {
+  width: fit-content;
+}
+
 .back-row {
   margin-top: 8px;
   display: flex;

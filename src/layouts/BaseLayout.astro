@@ -39,6 +39,7 @@ const navPath = {
     <link rel="apple-touch-icon" href="/DDLab_logo.png" />
     <script is:inline>
       (() => {
+        document.documentElement.classList.add('js');
         const saved = localStorage.getItem('lab-theme');
         const preferred = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', preferred);

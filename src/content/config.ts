@@ -22,7 +22,17 @@ const papers = defineCollection({
   schema: z.object({
     year: z.number().int(),
     title: z.string().min(1),
-    venue: z.string().min(1)
+    venue: z.string().min(1),
+    abstract: z.string().optional(),
+    links: z
+      .object({
+        online: z.string().min(1).optional(),
+        pdf: z.string().min(1).optional(),
+        project: z.string().min(1).optional(),
+        code: z.string().min(1).optional()
+      })
+      .optional(),
+    bibtex: z.string().optional()
   })
 });
 

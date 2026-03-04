@@ -111,5 +111,38 @@ function initMembersFilter() {
   });
 }
 
+function initCopyButtons() {
+  const buttons = Array.from(document.querySelectorAll('[data-copy-target], [data-copy-text]'));
+  if (!buttons.length) {
+    return;
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const explicit = btn.getAttribute('data-copy-text');
+      const targetId = btn.getAttribute('data-copy-target');
+      const targetText = targetId ? (document.getElementById(targetId)?.textContent || '') : '';
+      const text = (explicit || targetText || '').trim();
+
+      if (!text) {
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        const normal = btn.getAttribute('data-copy-label') || btn.textContent || 'Copy';
+        const success = btn.getAttribute('data-copy-success') || 'Copied';
+        btn.textContent = success;
+        window.setTimeout(() => {
+          btn.textContent = normal;
+        }, 1200);
+      } catch (_err) {
+        // Swallow clipboard failures quietly in static preview mode.
+      }
+    });
+  });
+}
+
 initThemeToggle();
 initMembersFilter();
+initCopyButtons();

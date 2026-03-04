@@ -1,5 +1,5 @@
 ---
 year: 2025
-title: 'Embodied Skill Transfer with Sparse Demo'
+title: 'Embodied Skill Trakghkhnsfer with Sparse Demo'
 venue: 'ICRA'
 ---
