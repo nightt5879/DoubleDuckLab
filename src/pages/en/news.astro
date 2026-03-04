@@ -4,7 +4,12 @@ import { getCollection } from 'astro:content';
 
 const newsEntries = await getCollection('news');
 const news = newsEntries
-  .map((e) => ({ slug: e.slug, date: e.data.date, title: e.data.title.en }))
+  .map((e) => ({
+    slug: e.slug,
+    date: e.data.date,
+    title: e.data.title.en,
+    contex: e.data.contex?.en ?? ''
+  }))
   .sort((a, b) => b.date.localeCompare(a.date));
 ---
 <BaseLayout title="Lab Website · News" lang="en" pathPrefix="/en">
@@ -18,6 +23,11 @@ const news = newsEntries
       <a href={`/en/news/${n.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
         <h3>{n.title}</h3>
         <p>{n.date}</p>
+        {n.contex && (
+          <div class="news-contex">
+            <p>{n.contex}</p>
+          </div>
+        )}
       </a>
     ))}
   </div>

@@ -371,6 +371,23 @@
   max-width: 76ch;
 }
 
+.news-contex {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+.news-contex p {
+  margin: 0;
+}
+
+.detail-contex {
+  color: var(--text-soft);
+}
+
+.detail-contex p {
+  margin: 0;
+}
+
 .detail-section {
   display: grid;
   gap: 10px;

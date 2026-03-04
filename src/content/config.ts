@@ -7,7 +7,13 @@ const news = defineCollection({
     title: z.object({
       zh: z.string().min(1),
       en: z.string().min(1)
-    })
+    }),
+    contex: z
+      .object({
+        zh: z.string().min(1),
+        en: z.string().min(1)
+      })
+      .optional()
   })
 });
 

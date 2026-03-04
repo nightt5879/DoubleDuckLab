@@ -24,7 +24,6 @@ const { Content } = await render(entry);
 <BaseLayout title={`Lab Website · ${entry.data.title.zh}`} lang="zh" pathPrefix="">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
-      <span class="badge-muted">新闻详情</span>
       <h1 class="page-title">{entry.data.title.zh}</h1>
       <div class="detail-meta">
         <span class="badge-muted">{entry.data.date}</span>
@@ -32,6 +31,11 @@ const { Content } = await render(entry);
     </article>
 
     <article class="card detail-content" data-reveal>
+      {entry.data.contex?.zh && (
+        <div class="detail-contex">
+          <p>{entry.data.contex.zh}</p>
+        </div>
+      )}
       <Content />
     </article>
 
