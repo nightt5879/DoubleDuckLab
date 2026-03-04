@@ -39,7 +39,7 @@ const sections = [
 
 const related = projectsWithSlug.filter((p) => p.slug !== project.slug).slice(0, 3);
 ---
-<BaseLayout title={`Lab Website · ${project.title}`} lang="zh" pathPrefix="">
+<BaseLayout title={project.title} lang="zh" pathPrefix="">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <span class="badge-muted">项目详情模板</span>

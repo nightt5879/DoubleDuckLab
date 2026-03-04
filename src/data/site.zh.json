@@ -1,0 +1,20 @@
+{
+  "brand": "DOUBLEDUCK·LAB",
+  "siteName": "DoubleDuckLab",
+  "nav": {
+    "home": "首页",
+    "members": "成员",
+    "projects": "项目",
+    "papers": "论文",
+    "news": "新闻"
+  },
+  "home": {
+    "intro": "目标：先在本地把视觉风格与信息结构确定，再上线部署。",
+    "highlights": [
+      { "title": "研究方向", "desc": "Embodied AI / HCI / Robotics" },
+      { "title": "近期成果", "desc": "2026 已发表 8 篇论文，2 个开源项目" },
+      { "title": "招生与合作", "desc": "欢迎本科实习、联合培养、企业课题合作" }
+    ],
+    "quick": "快速入口"
+  }
+}

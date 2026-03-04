@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import siteEn from '../../data/content/site.en.json';
+import siteEn from '../../data/site.en.json';
 import projects from '../../data/content/projects.json';
 
 const t = siteEn;
@@ -10,9 +10,9 @@ const featuredProjects = projects.slice(0, 3).map((p) => ({
 }));
 const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
 ---
-<BaseLayout title="Lab Website · Home" lang="en" pathPrefix="/en">
+<BaseLayout title="Home" lang="en" pathPrefix="/en">
   <section class="card hero hero-glow gradient-frame mb-5" data-reveal>
-    <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.home.title}</h1>
+    <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.siteName}</h1>
     <p class="hero-subtitle" data-reveal data-reveal-delay="120">{t.home.intro}</p>
     <div class="hero-actions" data-reveal data-reveal-delay="180">
       <a class="btn btn-primary" href="/en/projects">Explore Projects</a>

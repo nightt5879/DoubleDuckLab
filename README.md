@@ -91,6 +91,43 @@ news.json
 
 ---
 
+## 🏷️ 修改站点品牌与网站名称（中文）
+
+这两个字段已经拆分：
+
+- `brand`：用于左上角品牌（Header）
+- `siteName`：用于首页 Hero 标题和浏览器标签页标题（`<title>`）
+
+请编辑文件：
+
+```json
+src/data/site.zh.json
+```
+
+示例：
+
+```json
+{
+  "brand": "DOUBLEDUCK·LAB",
+  "siteName": "DoubleDuckLab"
+}
+```
+
+修改后效果：
+
+- Header 左上角显示 `brand`
+- 首页主标题显示 `siteName`
+- 页面标题显示为 `页面名 · siteName`（例如：`新闻 · DoubleDuckLab`）
+
+执行验证：
+
+```bash
+npm run build
+npm run preview
+```
+
+---
+
 ## 🌍 部署
 
 推荐使用 **Cloudflare Pages**。

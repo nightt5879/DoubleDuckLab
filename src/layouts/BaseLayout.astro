@@ -1,6 +1,6 @@
 ---
-import siteZh from '../data/content/site.zh.json';
-import siteEn from '../data/content/site.en.json';
+import siteZh from '../data/site.zh.json';
+import siteEn from '../data/site.en.json';
 
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -13,7 +13,7 @@ import uiScript from '../scripts/ui.mjs?url';
 import navbarScrollScript from '../scripts/navbar-scroll.mjs?url';
 
 const {
-  title = 'Lab Website',
+  title = '',
   desc = 'Local-first Astro lab website prototype',
   lang = 'zh',
   pathPrefix = ''
@@ -33,7 +33,7 @@ const navPath = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <title>{title ? `${title} · ${t.siteName}` : t.siteName}</title>
     <meta name="description" content={desc} />
     <link rel="icon" type="image/png" href="/DDLab_logo.png" />
     <link rel="apple-touch-icon" href="/DDLab_logo.png" />
@@ -72,10 +72,10 @@ const navPath = {
             <a href="/">中文</a> / <a href="/en/">English</a>
           </span>
 
-          <span>© 2026 DoubleDuckLab</span>
+          <span>© 2026 {t.siteName}</span>
 
           <span>
-            <a href="https://github.com/nightt5879/DoubleDuckLab" target="_blank">
+            <a href={`https://github.com/nightt5879/${t.siteName}`} target="_blank">
               GitHub
             </a>
           </span>

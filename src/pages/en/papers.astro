@@ -7,7 +7,7 @@ const papers = paperEntries
   .map((e) => ({ slug: e.slug, ...e.data }))
   .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
 ---
-<BaseLayout title="Lab Website · Papers" lang="en" pathPrefix="/en">
+<BaseLayout title="Papers" lang="en" pathPrefix="/en">
   <section class="page-head" data-reveal>
     <h1 class="page-title">Papers</h1>
     <p class="page-subtitle">Publication list with restrained motion and improved reading rhythm.</p>

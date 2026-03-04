@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 const { entry, related } = Astro.props;
 const { Content } = await render(entry);
 ---
-<BaseLayout title={`Lab Website · ${entry.data.title.zh}`} lang="zh" pathPrefix="">
+<BaseLayout title={entry.data.title.zh} lang="zh" pathPrefix="">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{entry.data.title.zh}</h1>

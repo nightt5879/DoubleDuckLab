@@ -7,7 +7,7 @@ const projectsWithSlug = projects.map((p) => ({
   slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
 }));
 ---
-<BaseLayout title="Lab Website · 项目" lang="zh" pathPrefix="">
+<BaseLayout title="项目" lang="zh" pathPrefix="">
   <section class="page-head" data-reveal>
     <h1 class="page-title">项目</h1>
     <p class="page-subtitle">课题组重点方向与阶段状态一览。</p>

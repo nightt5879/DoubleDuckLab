@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const bibtex = `@inproceedings{${entry.slug},\n  title={${entry.data.title}},\n  year={${entry.data.year}},\n  booktitle={${entry.data.venue}},\n  author={Template Author et al.}\n}`;
 ---
-<BaseLayout title={`Lab Website · ${entry.data.title}`} lang="en" pathPrefix="/en">
+<BaseLayout title={entry.data.title} lang="en" pathPrefix="/en">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <span class="badge-muted">Paper Detail Template</span>
