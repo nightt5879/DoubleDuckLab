@@ -63,14 +63,25 @@ const navPath = {
     <main class="container site-shell">
       <slot />
     </main>
-
     <footer class="footer">
       <div class="container footer-inner">
-        <span>Local-first preview · Astro static baseline</span>
-        <span class="lang-switch"><a href="/">中文</a> / <a href="/en/">English</a></span>
+      
+          <span class="lang-switch">
+            <a href="/">中文</a> / <a href="/en/">English</a>
+          </span>
+
+          <span>© 2026 DoubleDuckLab</span>
+
+          <span>
+            <a href="https://github.com/nightt5879/DoubleDuckLab" target="_blank">
+              GitHub
+            </a>
+          </span>
+
+        </div>
+      </footer>
       </div>
     </footer>
-
     <script type="module" src={revealScript}></script>
     <script type="module" src={uiScript}></script>
     <script type="module" src={navbarScrollScript}></script>

@@ -21,11 +21,23 @@
 * 🌙 **深色 / 浅色模式**
 * 🚀 可直接部署到 **Cloudflare Pages / Vercel**
 
----
+## 🦆 在线访问
+👉 https://doubleducklab.com
 
-## 🖼 项目预览
+## 🖼️ 项目预览
 
-![preview](./docs/preview.png)
+<p align="center">
+  <a href="https://doubleducklab.com" target="_blank">
+    <img src="./sources/preview_light.png" alt="Preview (Light)" width="48%"/>
+  </a>
+  <a href="https://doubleducklab.com" target="_blank">
+    <img src="./sources/preview_dark.png" alt="Preview (Dark)" width="48%"/>
+  </a>
+</p>
+
+<p align="center">
+  <sub>左：Light / 右：Dark（点击图片可直接访问 doubleducklab.com）</sub>
+</p>
 
 ---
 

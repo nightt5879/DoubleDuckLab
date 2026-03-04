@@ -9,7 +9,6 @@
   },
   "home": {
     "title": "DoubleDuckLab",
-    "intro": "目标：先把视觉与信息架构跑起来，不碰服务器。你在公司 fetch 后即可本地预览。",
     "highlights": [
       { "title": "研究方向", "desc": "Embodied AI / HCI / Robotics" },
       { "title": "近期成果", "desc": "2026 已发表 8 篇论文，2 个开源项目" },
