@@ -1,0 +1,7 @@
+[2026-03-04] Process audit evidence
+- checked: .agent/CONTRACT.md
+- checked: .agent/STATUS.json
+- checked: .agent/WORKLOG.md
+- checked: .agent/PLAN.md
+- checked: .agent/TASKS/*
+- checked: .agent/RUNS/2026-03-01_t0011/*
