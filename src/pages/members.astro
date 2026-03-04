@@ -1,16 +1,63 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import members from '../data/content/members.json';
+
+const roles = ['全部', ...Array.from(new Set(members.map((m) => m.role.zh)))];
+
+function initials(name: string) {
+  const chunks = name.split(/\s+/).filter(Boolean);
+  if (chunks.length >= 2) {
+    return `${chunks[0][0] || ''}${chunks[chunks.length - 1][0] || ''}`.toUpperCase();
+  }
+  return (chunks[0] || 'M').slice(0, 2).toUpperCase();
+}
 ---
 <BaseLayout title="Lab Website · 成员" lang="zh" pathPrefix="">
-  <h1>成员列表</h1>
-  <div class="grid grid-3">
-    {members.map(m => (
-      <article class="card">
-        <h3>{m.name}</h3>
-        <p style="color:var(--muted)">{m.role.zh}</p>
-        <p>{m.area}</p>
-      </article>
-    ))}
-  </div>
+  <section class="page-head" data-reveal>
+    <h1 class="page-title">成员列表</h1>
+    <p class="page-subtitle">可按姓名/方向关键词搜索，并通过角色标签快速过滤。</p>
+  </section>
+
+  <section class="filter-wrap" data-members-filter-root data-reveal>
+    <input
+      class="filter-input"
+      type="search"
+      data-member-search
+      placeholder="搜索 name / area / role..."
+      aria-label="搜索成员"
+    />
+
+    <div class="filter-tags">
+      {roles.map((role, i) => (
+        <button
+          class={`filter-tag ${i === 0 ? 'is-selected' : ''}`}
+          type="button"
+          data-role-filter={i === 0 ? '__all' : role.toLowerCase()}
+        >
+          {role}
+        </button>
+      ))}
+    </div>
+
+    <p class="empty-state" data-empty-state hidden>没有匹配成员，请调整关键词或筛选条件。</p>
+
+    <div class="grid grid-3">
+      {members.map((m, i) => (
+        <article
+          class="card card-hover member-card"
+          data-member-card
+          data-name={m.name}
+          data-role={m.role.zh}
+          data-area={m.area}
+          data-reveal
+          data-reveal-delay={String(i * 70)}
+        >
+          <span class="member-avatar" aria-hidden="true">{initials(m.name)}</span>
+          <h3>{m.name}</h3>
+          <p class="member-role"><span class="badge-muted">{m.role.zh}</span></p>
+          <p class="mt-4">{m.area}</p>
+        </article>
+      ))}
+    </div>
+  </section>
 </BaseLayout>

@@ -8,12 +8,16 @@ const papers = paperEntries
   .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
 ---
 <BaseLayout title="Lab Website · Papers" lang="en" pathPrefix="/en">
-  <h1>Papers</h1>
+  <section class="page-head" data-reveal>
+    <h1 class="page-title">Papers</h1>
+    <p class="page-subtitle">Publication list with restrained motion and improved reading rhythm.</p>
+  </section>
+
   <div class="grid">
-    {papers.map(p => (
-      <article class="card">
-        <h3 style="margin-bottom:6px">{p.title}</h3>
-        <p style="margin:0;color:var(--muted)">{p.year} · {p.venue}</p>
+    {papers.map((p, i) => (
+      <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 80)}>
+        <h3>{p.title}</h3>
+        <p>{p.year} · {p.venue}</p>
       </article>
     ))}
   </div>

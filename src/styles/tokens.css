@@ -1,15 +1,70 @@
 :root {
   --bg: #0b1020;
-  --line: #26305f;
-  --text: #e8edff;
-  --muted: #a7b3de;
-  --primary: #6da2ff;
-  --surface-1: rgba(255,255,255,.03);
-  --surface-2: rgba(255,255,255,.01);
+  --bg-elevated: #111a33;
+  --line: rgba(141, 163, 229, 0.24);
+  --line-strong: rgba(156, 177, 241, 0.48);
+  --text: #ecf2ff;
+  --text-soft: #c8d4f3;
+  --muted: #9fb0de;
+  --primary: #7da7ff;
+  --primary-2: #5dd2ff;
+  --surface-1: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.02);
 
-  --radius-card: 14px;
-  --space-page-y: 28px;
-  --space-gap: 14px;
+  --gradient-bg: radial-gradient(1200px 700px at 10% -10%, rgba(117, 157, 255, 0.25), transparent 60%),
+    radial-gradient(1000px 600px at 90% 0%, rgba(84, 220, 255, 0.16), transparent 55%),
+    linear-gradient(180deg, #0b1020 0%, #090e1b 100%);
+  --gradient-accent: linear-gradient(120deg, var(--primary), var(--primary-2));
 
-  --font-base: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --radius-card: 16px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+
+  --space-page-y: 42px;
+  --space-gap: 18px;
+
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.22);
+  --shadow-md: 0 16px 40px rgba(5, 12, 28, 0.34);
+  --shadow-focus: 0 0 0 3px rgba(125, 167, 255, 0.32);
+
+  --blur-card: 12px;
+
+  --font-base: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-title: 'Space Grotesk', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: clamp(28px, 4vw, 44px);
+
+  --lh-tight: 1.22;
+  --lh-copy: 1.72;
+
+  --motion-fast: 150ms;
+  --motion-mid: 260ms;
+  --motion-slow: 460ms;
+  --ease-standard: cubic-bezier(0.2, 0.78, 0.22, 1);
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme='light'] {
+  --bg: #f3f6ff;
+  --bg-elevated: #ffffff;
+  --line: rgba(69, 89, 146, 0.18);
+  --line-strong: rgba(58, 84, 159, 0.36);
+  --text: #121936;
+  --text-soft: #34416e;
+  --muted: #5e6f9e;
+  --primary: #3f6de0;
+  --primary-2: #0f9bc7;
+  --surface-1: rgba(255, 255, 255, 0.86);
+  --surface-2: rgba(235, 242, 255, 0.72);
+  --gradient-bg: radial-gradient(1100px 600px at 0% -10%, rgba(135, 174, 255, 0.26), transparent 60%),
+    radial-gradient(900px 580px at 95% 0%, rgba(95, 206, 255, 0.18), transparent 55%),
+    linear-gradient(180deg, #f7f9ff 0%, #edf2ff 100%);
+  --shadow-sm: 0 8px 22px rgba(27, 54, 126, 0.1);
+  --shadow-md: 0 20px 44px rgba(41, 70, 147, 0.16);
+  --shadow-focus: 0 0 0 3px rgba(64, 106, 227, 0.25);
 }

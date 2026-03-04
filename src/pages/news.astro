@@ -8,12 +8,16 @@ const news = newsEntries
   .sort((a, b) => b.date.localeCompare(a.date));
 ---
 <BaseLayout title="Lab Website · 新闻" lang="zh" pathPrefix="">
-  <h1>新闻动态</h1>
+  <section class="page-head" data-reveal>
+    <h1 class="page-title">新闻动态</h1>
+    <p class="page-subtitle">近期更新按时间倒序排列，信息密度高但保持轻盈视觉。</p>
+  </section>
+
   <div class="grid">
-    {news.map(n => (
-      <article class="card">
-        <h3 style="margin-bottom:6px">{n.title}</h3>
-        <p style="margin:0;color:var(--muted)">{n.date}</p>
+    {news.map((n, i) => (
+      <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 80)}>
+        <h3>{n.title}</h3>
+        <p>{n.date}</p>
       </article>
     ))}
   </div>

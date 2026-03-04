@@ -1,24 +1,59 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import siteEn from '../../data/content/site.en.json';
+import projects from '../../data/content/projects.json';
+
 const t = siteEn;
+const featuredProjects = projects.slice(0, 3);
 ---
 <BaseLayout title="Lab Website · Home" lang="en" pathPrefix="/en">
-  <section class="card" style="margin-bottom:14px;">
-    <span class="badge">{t.home.badge}</span>
-    <h1 style="margin:10px 0 8px;">{t.home.title}</h1>
-    <p style="color:var(--muted);line-height:1.7;">{t.home.intro}</p>
+  <section class="card hero mb-5" data-reveal>
+    <span class="badge" data-reveal data-reveal-delay="30">{t.home.badge}</span>
+    <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.home.title}</h1>
+    <p class="hero-subtitle" data-reveal data-reveal-delay="120">{t.home.intro}</p>
+    <div class="hero-actions" data-reveal data-reveal-delay="180">
+      <a class="btn btn-primary" href="/en/projects">Explore Projects</a>
+      <a class="btn btn-ghost" href="/en/members">Meet Members</a>
+    </div>
   </section>
 
-  <section class="grid grid-3" style="margin-bottom:14px;">
-    {t.home.highlights.map((h) => (
-      <article class="card"><h3>{h.title}</h3><p style="color:var(--muted)">{h.desc}</p></article>
-    ))}
+  <section class="mb-5">
+    <div class="page-head" data-reveal>
+      <h2 class="page-title">Highlights</h2>
+      <p class="page-subtitle">Core updates are displayed with lightweight motion and clear information hierarchy.</p>
+    </div>
+    <div class="grid grid-3">
+      {t.home.highlights.map((h, i) => (
+        <article class="card card-hover" data-reveal data-reveal-delay={String(i * 90)}>
+          <h3>{h.title}</h3>
+          <p class="mt-4">{h.desc}</p>
+        </article>
+      ))}
+    </div>
   </section>
 
-  <section class="card">
+  <section class="mb-5">
+    <div class="page-head" data-reveal>
+      <h2 class="page-title">Featured Projects</h2>
+      <p class="page-subtitle">Reusing existing project data for a richer yet restrained homepage showcase.</p>
+    </div>
+    <div class="grid grid-3">
+      {featuredProjects.map((p, i) => (
+        <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 100)}>
+          <h3>{p.title}</h3>
+          <div class="meta">
+            <span class="badge">{p.tag}</span>
+            <span class="badge-muted">{p.status.en}</span>
+          </div>
+          <p>Focus area: {p.tag}. Current phase: {p.status.en}.</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="card" data-reveal>
     <h2>{t.home.quick}</h2>
-    <ul>
+    <ul class="quick-links">
       <li><a href="/en/members">Members</a></li>
       <li><a href="/en/projects">Projects</a></li>
       <li><a href="/en/papers">Publications</a></li>

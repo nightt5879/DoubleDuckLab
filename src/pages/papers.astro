@@ -8,12 +8,16 @@ const papers = paperEntries
   .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
 ---
 <BaseLayout title="Lab Website · 论文" lang="zh" pathPrefix="">
-  <h1>论文</h1>
+  <section class="page-head" data-reveal>
+    <h1 class="page-title">论文</h1>
+    <p class="page-subtitle">按年份排序的论文列表，强调信息可读性与层次。</p>
+  </section>
+
   <div class="grid">
-    {papers.map(p => (
-      <article class="card">
-        <h3 style="margin-bottom:6px">{p.title}</h3>
-        <p style="margin:0;color:var(--muted)">{p.year} · {p.venue}</p>
+    {papers.map((p, i) => (
+      <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 80)}>
+        <h3>{p.title}</h3>
+        <p>{p.year} · {p.venue}</p>
       </article>
     ))}
   </div>

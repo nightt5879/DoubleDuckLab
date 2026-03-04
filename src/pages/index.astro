@@ -1,24 +1,59 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteZh from '../data/content/site.zh.json';
+import projects from '../data/content/projects.json';
+
 const t = siteZh;
+const featuredProjects = projects.slice(0, 3);
 ---
 <BaseLayout title="Lab Website · 首页" lang="zh" pathPrefix="">
-  <section class="card" style="margin-bottom:14px;">
-    <span class="badge">{t.home.badge}</span>
-    <h1 style="margin:10px 0 8px;">{t.home.title}</h1>
-    <p style="color:var(--muted);line-height:1.7;">{t.home.intro}</p>
+  <section class="card hero mb-5" data-reveal>
+    <span class="badge" data-reveal data-reveal-delay="30">{t.home.badge}</span>
+    <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.home.title}</h1>
+    <p class="hero-subtitle" data-reveal data-reveal-delay="120">{t.home.intro}</p>
+    <div class="hero-actions" data-reveal data-reveal-delay="180">
+      <a class="btn btn-primary" href="/projects">查看项目</a>
+      <a class="btn btn-ghost" href="/members">了解成员</a>
+    </div>
   </section>
 
-  <section class="grid grid-3" style="margin-bottom:14px;">
-    {t.home.highlights.map((h) => (
-      <article class="card"><h3>{h.title}</h3><p style="color:var(--muted)">{h.desc}</p></article>
-    ))}
+  <section class="mb-5">
+    <div class="page-head" data-reveal>
+      <h2 class="page-title">Highlights</h2>
+      <p class="page-subtitle">重点信息以卡片形式呈现，动效在滚动过程中渐进出现。</p>
+    </div>
+    <div class="grid grid-3">
+      {t.home.highlights.map((h, i) => (
+        <article class="card card-hover" data-reveal data-reveal-delay={String(i * 90)}>
+          <h3>{h.title}</h3>
+          <p class="mt-4">{h.desc}</p>
+        </article>
+      ))}
+    </div>
   </section>
 
-  <section class="card">
+  <section class="mb-5">
+    <div class="page-head" data-reveal>
+      <h2 class="page-title">Featured Projects</h2>
+      <p class="page-subtitle">复用现有项目数据，展示更聚焦的研究方向与进度。</p>
+    </div>
+    <div class="grid grid-3">
+      {featuredProjects.map((p, i) => (
+        <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 100)}>
+          <h3>{p.title}</h3>
+          <div class="meta">
+            <span class="badge">{p.tag}</span>
+            <span class="badge-muted">{p.status.zh}</span>
+          </div>
+          <p>聚焦于 {p.tag} 方向，当前阶段：{p.status.zh}。</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="card" data-reveal>
     <h2>{t.home.quick}</h2>
-    <ul>
+    <ul class="quick-links">
       <li><a href="/members">成员列表</a></li>
       <li><a href="/projects">项目展示</a></li>
       <li><a href="/papers">论文列表</a></li>

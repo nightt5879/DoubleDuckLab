@@ -1,7 +1,14 @@
 ---
 import siteZh from '../data/content/site.zh.json';
 import siteEn from '../data/content/site.en.json';
+
 import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/components.css';
+import '../styles/utilities.css';
+
+import revealScript from '../scripts/reveal.mjs?url';
+import uiScript from '../scripts/ui.mjs?url';
 
 const {
   title = 'Lab Website',
@@ -26,48 +33,39 @@ const navPath = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={desc} />
-    <style>
-            * { box-sizing: border-box; }
-      body { margin:0;font-family:var(--font-base);background:radial-gradient(circle at top,#18214c,var(--bg) 45%);color:var(--text); }
-      a { color: var(--primary); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      .container { width:min(1100px,92vw); margin:0 auto; }
-      header { position:sticky;top:0;z-index:10;background:rgba(11,16,32,.85);backdrop-filter: blur(6px);border-bottom:1px solid var(--line); }
-      .nav { display:flex;align-items:center;justify-content:space-between;padding:12px 0; }
-      .brand { font-weight:800;letter-spacing:.5px; }
-      nav a { margin-left:14px;color:var(--muted); }
-      nav a.active, nav a:hover { color:var(--text); }
-      main { padding:var(--space-page-y) 0 42px; }
-      .card { background:linear-gradient(180deg, var(--surface-1), var(--surface-2));border:1px solid var(--line);border-radius:var(--radius-card);padding:18px; }
-      h1,h2,h3 { margin-top:0; }
-      .grid { display:grid;gap:var(--space-gap); }
-      .grid-3 { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-      footer { border-top:1px solid var(--line);color:var(--muted);padding:18px 0 28px;font-size:14px; }
-      .badge { display:inline-block;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px; }
-      .lang-switch { font-size: 12px; color: var(--muted); }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <header>
+    <header class="site-header">
       <div class="container nav">
         <div class="brand">{t.brand}</div>
-        <nav>
-          <a class={Astro.url.pathname === navPath.home ? 'active' : ''} href={navPath.home}>{t.nav.home}</a>
-          <a class={Astro.url.pathname.startsWith(navPath.members) ? 'active' : ''} href={navPath.members}>{t.nav.members}</a>
-          <a class={Astro.url.pathname.startsWith(navPath.projects) ? 'active' : ''} href={navPath.projects}>{t.nav.projects}</a>
-          <a class={Astro.url.pathname.startsWith(navPath.papers) ? 'active' : ''} href={navPath.papers}>{t.nav.papers}</a>
-          <a class={Astro.url.pathname.startsWith(navPath.news) ? 'active' : ''} href={navPath.news}>{t.nav.news}</a>
+        <nav class="nav-links">
+          <a class={`nav-link ${Astro.url.pathname === navPath.home ? 'is-active' : ''}`} href={navPath.home}>{t.nav.home}</a>
+          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.members) ? 'is-active' : ''}`} href={navPath.members}>{t.nav.members}</a>
+          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.projects) ? 'is-active' : ''}`} href={navPath.projects}>{t.nav.projects}</a>
+          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.papers) ? 'is-active' : ''}`} href={navPath.papers}>{t.nav.papers}</a>
+          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.news) ? 'is-active' : ''}`} href={navPath.news}>{t.nav.news}</a>
         </nav>
+        <div class="nav-actions">
+          <button class="btn btn-ghost" data-theme-toggle type="button" aria-label="Switch theme">Theme</button>
+        </div>
       </div>
     </header>
-    <main class="container">
+
+    <main class="container site-shell">
       <slot />
     </main>
-    <footer>
-      <div class="container">
-        Local-first preview · Astro bootstrap · by nightt + 小龙虾
-        <span class="lang-switch"> · <a href="/">中文</a> / <a href="/en/">English</a></span>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>Local-first preview · Astro static baseline</span>
+        <span class="lang-switch"><a href="/">中文</a> / <a href="/en/">English</a></span>
       </div>
     </footer>
+
+    <script type="module" src={revealScript}></script>
+    <script type="module" src={uiScript}></script>
   </body>
 </html>

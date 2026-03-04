@@ -3,13 +3,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import projects from '../../data/content/projects.json';
 ---
 <BaseLayout title="Lab Website · Projects" lang="en" pathPrefix="/en">
-  <h1>Projects</h1>
+  <section class="page-head" data-reveal>
+    <h1 class="page-title">Projects</h1>
+    <p class="page-subtitle">A concise view of key initiatives and current progress.</p>
+  </section>
+
   <div class="grid grid-3">
-    {projects.map(p => (
-      <article class="card">
+    {projects.map((p, i) => (
+      <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 90)}>
         <h3>{p.title}</h3>
-        <p><span class="badge">{p.tag}</span></p>
-        <p style="color:var(--muted)">Status: {p.status.en}</p>
+        <div class="meta">
+          <span class="badge">{p.tag}</span>
+          <span class="badge-muted">{p.status.en}</span>
+        </div>
+        <p>Current status: {p.status.en}</p>
       </article>
     ))}
   </div>
