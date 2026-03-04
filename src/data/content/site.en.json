@@ -1,5 +1,5 @@
 {
-  "brand": "LAB · ASTRO",
+  "brand": "DOUBLEDUCK·LAB",
   "nav": {
     "home": "Home",
     "members": "Members",
@@ -8,8 +8,7 @@
     "news": "News"
   },
   "home": {
-    "badge": "Prototype v1 / JSON content source",
-    "title": "Lab Website (Astro Local Prototype)",
+    "title": "DoubleDuckLab",
     "intro": "Goal: finalize visual language and information architecture locally before any server deployment.",
     "highlights": [
       { "title": "Research", "desc": "Embodied AI / HCI / Robotics" },

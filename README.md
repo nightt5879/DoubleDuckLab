@@ -1,35 +1,128 @@
-# lab-website-template
+<p align="center">
+  <img src="./sources/DDLab_logo.png" width="350">
+</p>
 
-这个仓库已初始化为「Agent 可观测 + 工作流协议」模式。
+# 🦆🦆 DoubleDuckLab (DDLab)
+<p align="right">
+  中文 | <a href="./README_EN.md">English</a>
+</p>
 
-## 目标
-先固定链路：**计划 → 执行 → 证据 → 回报 → 复盘**。
+一个基于 **Astro** 构建的现代化课题组官网模板，
+为**科研团队**设计。
 
-## 快速开始
-1. 先读 `.agent/CONTRACT.md`
-2. 新任务按 `.agent/TASKS/T-xxxx.md` 创建
-3. 每次执行在 `.agent/RUNS/<run_id>/` 落盘证据
-4. 更新 `.agent/STATUS.json` 与 `.agent/WORKLOG.md`
+---
 
-## 常用命令
+## ✨ 项目特点
+
+* ⚡ 基于 **Astro** 构建，静态生成，速度极快
+* 🧩 **JSON / Markdown 内容驱动**，无需后端
+* 🧑‍🔬 专为 **科研团队官网** 场景设计
+* 📱 **响应式布局**
+* 🌙 **深色 / 浅色模式**
+* 🚀 可直接部署到 **Cloudflare Pages / Vercel**
+
+---
+
+## 🖼 项目预览
+
+![preview](./docs/preview.png)
+
+---
+
+## 🚀 快速开始
+
+克隆项目：
+
 ```bash
-./check.sh   # fetch + 切分支 + pull + run（推荐）
-./run.sh     # 直接本地预览
-npm run validate:content
+git clone https://github.com/YOURNAME/doubleducklab.git
+cd doubleducklab
+```
+
+安装依赖：
+
+```bash
+npm install
+```
+
+启动开发服务器：
+
+```bash
+npm run dev
+```
+
+访问：
+
+```
+http://localhost:4321
+```
+
+---
+
+## 📝 内容编辑
+
+网站主要内容存储在：
+
+```
+src/content/
+```
+
+例如：
+
+```
+members.json
+projects.json
+papers.json
+news.json
+```
+
+修改这些文件即可更新网站内容。
+
+---
+
+## 🌍 部署
+
+推荐使用 **Cloudflare Pages**。
+
+构建命令：
+
+```
 npm run build
 ```
 
-## 关键文档入口
-- `docs/zero-code-ops-playbook.md`：0代码内容运营与持续测试主文档（后续新增用户端可操作能力都更新这里）
-- `docs/content-edit-guide.md`：内容编辑快速指南
-- `docs/content-ops-checklist.md`：内容运营SOP
-- `docs/release-baseline-checklist.md`：基础收官验收清单
-- `docs/hand-off-summary.md`：交接摘要
+输出目录：
 
-## 目录
-- `docs/`：架构与说明文档
-- `decisions/`：ADR 决策记录
-- `src/`：源码
-- `tests/`：测试
-- `scripts/`：自动化脚本
-- `.agent/`：Agent 协作协议与执行痕迹（核心）
+```
+dist
+```
+
+---
+
+## 🗺 Roadmap
+
+计划中的功能：
+
+* [ ] Markdown 内容系统
+* [ ] 可视化内容编辑
+* [ ] 多语言支持
+* [ ] 成员个人主页
+* [ ] 自动导入论文（Google Scholar）
+
+---
+
+## 🤝 贡献
+
+欢迎提交 Issue 或 Pull Request。
+
+---
+
+## 📜 开源协议
+
+MIT License
+
+---
+
+## 🦆 关于项目名称
+
+**DoubleDuckLab** 来源于中山大学的一个网络昵称 “双鸭山大学”。
+
+项目旨在为科研团队提供一个简单、现代、易维护的官网模板。

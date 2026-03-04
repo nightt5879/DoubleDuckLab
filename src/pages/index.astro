@@ -12,7 +12,6 @@ const highlightLinks = ['/projects', '/papers', '/join'];
 ---
 <BaseLayout title="Lab Website · 首页" lang="zh" pathPrefix="">
   <section class="card hero hero-glow gradient-frame mb-5" data-reveal>
-    <span class="badge" data-reveal data-reveal-delay="30">{t.home.badge}</span>
     <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.home.title}</h1>
     <p class="hero-subtitle" data-reveal data-reveal-delay="120">{t.home.intro}</p>
     <div class="hero-actions" data-reveal data-reveal-delay="180">
@@ -24,7 +23,6 @@ const highlightLinks = ['/projects', '/papers', '/join'];
   <section class="mb-5">
     <div class="page-head" data-reveal>
       <h2 class="page-title">Highlights</h2>
-      <p class="page-subtitle">重点信息以卡片形式呈现，动效在滚动过程中渐进出现。</p>
     </div>
     <div class="grid grid-3" data-reveal-group>
       {t.home.highlights.map((h, i) => (
@@ -40,7 +38,6 @@ const highlightLinks = ['/projects', '/papers', '/join'];
   <section class="mb-5">
     <div class="page-head" data-reveal>
       <h2 class="page-title">Featured Projects</h2>
-      <p class="page-subtitle">复用现有项目数据，展示更聚焦的研究方向与进度。</p>
     </div>
     <div class="grid grid-3" data-reveal-group>
       {featuredProjects.map((p, i) => (
