@@ -4,7 +4,11 @@ import siteEn from '../../data/content/site.en.json';
 import projects from '../../data/content/projects.json';
 
 const t = siteEn;
-const featuredProjects = projects.slice(0, 3);
+const featuredProjects = projects.slice(0, 3).map((p) => ({
+  ...p,
+  slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+}));
+const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
 ---
 <BaseLayout title="Lab Website · Home" lang="en" pathPrefix="/en">
   <section class="card hero hero-glow gradient-frame mb-5" data-reveal>
@@ -24,7 +28,8 @@ const featuredProjects = projects.slice(0, 3);
     </div>
     <div class="grid grid-3" data-reveal-group>
       {t.home.highlights.map((h, i) => (
-        <article class="card card-hover" data-reveal data-reveal-order={String(i)}>
+        <article class="card card-hover card-clickable" data-reveal data-reveal-order={String(i)}>
+          <a class="card-link-overlay" href={highlightLinks[i] ?? '/en/news'} aria-label={`View ${h.title}`}></a>
           <h3>{h.title}</h3>
           <p class="mt-4">{h.desc}</p>
         </article>
@@ -39,7 +44,8 @@ const featuredProjects = projects.slice(0, 3);
     </div>
     <div class="grid grid-3" data-reveal-group>
       {featuredProjects.map((p, i) => (
-        <article class="card card-hover stack-sm" data-reveal data-reveal-order={String(i)}>
+        <article class="card card-hover card-clickable stack-sm" data-reveal data-reveal-order={String(i)}>
+          <a class="card-link-overlay" href={`/en/projects/${p.slug}/`} aria-label={`View project ${p.title}`}></a>
           <h3>{p.title}</h3>
           <div class="meta">
             <span class="badge">{p.tag}</span>

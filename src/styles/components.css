@@ -126,6 +126,22 @@
   box-shadow: var(--shadow-focus);
 }
 
+.card-clickable {
+  position: relative;
+}
+
+.card-link-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.card-link-overlay:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
 .card-hover {
   transition: transform var(--motion-mid) var(--ease-standard),
     border-color var(--motion-mid) var(--ease-standard),
@@ -294,6 +310,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  position: relative;
+  padding-bottom: 2px;
   transition: color var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard);
 }
 
@@ -304,9 +322,28 @@
   color: var(--primary);
 }
 
+.quick-links a::after {
+  content: '';
+  position: absolute;
+  left: 20px;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  border-radius: 999px;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-mid) var(--ease-standard);
+}
+
 .quick-links a:hover {
   color: var(--text);
   transform: translateX(3px);
+}
+
+.quick-links a:hover::after,
+.quick-links a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .detail-shell {
