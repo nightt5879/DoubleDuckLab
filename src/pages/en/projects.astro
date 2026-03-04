@@ -8,9 +8,9 @@ import projects from '../../data/content/projects.json';
     <p class="page-subtitle">A concise view of key initiatives and current progress.</p>
   </section>
 
-  <div class="grid grid-3">
+  <div class="grid grid-3" data-reveal-group>
     {projects.map((p, i) => (
-      <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 90)}>
+      <article class="card card-hover stack-sm" data-reveal data-reveal-order={String(i)}>
         <h3>{p.title}</h3>
         <div class="meta">
           <span class="badge">{p.tag}</span>

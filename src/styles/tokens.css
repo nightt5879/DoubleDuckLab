@@ -15,6 +15,7 @@
     radial-gradient(1000px 600px at 90% 0%, rgba(84, 220, 255, 0.16), transparent 55%),
     linear-gradient(180deg, #0b1020 0%, #090e1b 100%);
   --gradient-accent: linear-gradient(120deg, var(--primary), var(--primary-2));
+  --gradient-border: linear-gradient(130deg, rgba(125, 167, 255, 0.48), rgba(93, 210, 255, 0.32), rgba(125, 167, 255, 0.12));
 
   --radius-card: 16px;
   --radius-md: 12px;
@@ -25,12 +26,14 @@
 
   --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.22);
   --shadow-md: 0 16px 40px rgba(5, 12, 28, 0.34);
+  --shadow-ring: 0 0 0 1px rgba(116, 153, 255, 0.2);
   --shadow-focus: 0 0 0 3px rgba(125, 167, 255, 0.32);
+  --glow-soft: 0 0 46px rgba(112, 165, 255, 0.24);
 
   --blur-card: 12px;
 
-  --font-base: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-title: 'Space Grotesk', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-base: 'Inter', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-title: 'Inter', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --text-xs: 12px;
@@ -43,10 +46,11 @@
   --lh-copy: 1.72;
 
   --motion-fast: 150ms;
-  --motion-mid: 260ms;
+  --motion-mid: 240ms;
   --motion-slow: 460ms;
   --ease-standard: cubic-bezier(0.2, 0.78, 0.22, 1);
   --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --stagger-step: 80ms;
 }
 
 :root[data-theme='light'] {
@@ -66,5 +70,7 @@
     linear-gradient(180deg, #f7f9ff 0%, #edf2ff 100%);
   --shadow-sm: 0 8px 22px rgba(27, 54, 126, 0.1);
   --shadow-md: 0 20px 44px rgba(41, 70, 147, 0.16);
+  --shadow-ring: 0 0 0 1px rgba(63, 109, 224, 0.22);
+  --glow-soft: 0 0 44px rgba(72, 122, 246, 0.2);
   --shadow-focus: 0 0 0 3px rgba(64, 106, 227, 0.25);
 }

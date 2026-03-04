@@ -1,3 +1,20 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-var.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  /* v0.2: self-hosted Chinese sans, mapped as Source Han Sans SC compatible family */
+  font-family: 'Source Han Sans SC';
+  src: url('/fonts/sourcehan-sc-vf.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -26,7 +43,7 @@ body {
   line-height: var(--lh-copy);
   color: var(--text);
   background: var(--gradient-bg);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.004em;
 }
 
 body::before {
@@ -74,7 +91,7 @@ h3 {
   margin: 0;
   font-family: var(--font-title);
   line-height: var(--lh-tight);
-  letter-spacing: -0.018em;
+  letter-spacing: -0.02em;
 }
 
 h1 {
@@ -95,6 +112,7 @@ h3 {
 p {
   margin: 0;
   color: var(--text-soft);
+  line-height: 1.75;
 }
 
 ul {

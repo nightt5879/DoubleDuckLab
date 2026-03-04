@@ -7,9 +7,20 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid var(--line);
-  background: color-mix(in oklab, var(--bg) 80%, transparent);
-  backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  transition: background-color var(--motion-mid) var(--ease-standard),
+    border-color var(--motion-mid) var(--ease-standard),
+    box-shadow var(--motion-mid) var(--ease-standard),
+    backdrop-filter var(--motion-mid) var(--ease-standard);
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: var(--line);
+  background: color-mix(in oklab, var(--bg) 76%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
 }
 
 .nav {
@@ -72,7 +83,7 @@
 
 .nav-link.is-active {
   color: var(--text);
-  background: rgba(125, 167, 255, 0.12);
+  background: rgba(125, 167, 255, 0.16);
 }
 
 .nav-actions {
@@ -115,7 +126,7 @@
 .card-hover:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), var(--shadow-ring), var(--glow-soft);
 }
 
 .badge,
@@ -139,6 +150,21 @@
 .badge-muted {
   color: var(--muted);
   background: rgba(255, 255, 255, 0.03);
+}
+
+.badge,
+.badge-muted {
+  transition: border-color var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.badge:hover,
+.badge-muted:hover {
+  border-color: var(--line-strong);
+  color: var(--text);
+  transform: translateY(-1px);
 }
 
 .btn {
@@ -196,6 +222,15 @@
   color: var(--text);
   border-color: var(--line-strong);
   background: rgba(125, 167, 255, 0.08);
+}
+
+[data-theme-toggle] {
+  min-width: 84px;
+  letter-spacing: 0.01em;
+}
+
+[data-theme-toggle]:active {
+  transform: translateY(0);
 }
 
 .hero {

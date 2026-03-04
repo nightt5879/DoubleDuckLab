@@ -2,6 +2,7 @@ function initThemeToggle() {
   const root = document.documentElement;
   const toggle = document.querySelector('[data-theme-toggle]');
   const key = 'lab-theme';
+  const isZh = root.lang?.startsWith('zh');
 
   const preferred = (() => {
     const saved = localStorage.getItem(key);
@@ -14,8 +15,15 @@ function initThemeToggle() {
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     if (toggle) {
-      toggle.textContent = theme === 'dark' ? 'Light' : 'Dark';
-      toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      const nextLabel = theme === 'dark'
+        ? (isZh ? '浅色' : 'Light')
+        : (isZh ? '深色' : 'Dark');
+      const icon = theme === 'dark' ? '☼' : '☾';
+      toggle.textContent = `${icon} ${nextLabel}`;
+      toggle.setAttribute('aria-label', theme === 'dark'
+        ? (isZh ? '切换到浅色模式' : 'Switch to light mode')
+        : (isZh ? '切换到深色模式' : 'Switch to dark mode'));
+      toggle.setAttribute('aria-pressed', String(theme === 'dark'));
     }
   }
 

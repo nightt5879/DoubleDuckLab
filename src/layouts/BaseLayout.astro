@@ -5,10 +5,12 @@ import siteEn from '../data/content/site.en.json';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/components.css';
+import '../styles/effects.css';
 import '../styles/utilities.css';
 
 import revealScript from '../scripts/reveal.mjs?url';
 import uiScript from '../scripts/ui.mjs?url';
+import navbarScrollScript from '../scripts/navbar-scroll.mjs?url';
 
 const {
   title = 'Lab Website',
@@ -33,9 +35,13 @@ const navPath = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={desc} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem('lab-theme');
+        const preferred = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', preferred);
+      })();
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -49,7 +55,7 @@ const navPath = {
           <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.news) ? 'is-active' : ''}`} href={navPath.news}>{t.nav.news}</a>
         </nav>
         <div class="nav-actions">
-          <button class="btn btn-ghost" data-theme-toggle type="button" aria-label="Switch theme">Theme</button>
+          <button class="btn btn-ghost" data-theme-toggle type="button" aria-label="Switch theme">Dark</button>
         </div>
       </div>
     </header>
@@ -67,5 +73,6 @@ const navPath = {
 
     <script type="module" src={revealScript}></script>
     <script type="module" src={uiScript}></script>
+    <script type="module" src={navbarScrollScript}></script>
   </body>
 </html>

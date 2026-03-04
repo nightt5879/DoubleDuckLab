@@ -41,7 +41,7 @@ function initials(name: string) {
 
     <p class="empty-state" data-empty-state hidden>No matching member found. Try another keyword or role.</p>
 
-    <div class="grid grid-3">
+    <div class="grid grid-3" data-reveal-group>
       {members.map((m, i) => (
         <article
           class="card card-hover member-card"
@@ -50,7 +50,7 @@ function initials(name: string) {
           data-role={m.role.en}
           data-area={m.area}
           data-reveal
-          data-reveal-delay={String(i * 70)}
+          data-reveal-order={String(i)}
         >
           <span class="member-avatar" aria-hidden="true">{initials(m.name)}</span>
           <h3>{m.name}</h3>

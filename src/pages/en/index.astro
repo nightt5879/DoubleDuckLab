@@ -7,7 +7,7 @@ const t = siteEn;
 const featuredProjects = projects.slice(0, 3);
 ---
 <BaseLayout title="Lab Website · Home" lang="en" pathPrefix="/en">
-  <section class="card hero mb-5" data-reveal>
+  <section class="card hero hero-glow gradient-frame mb-5" data-reveal>
     <span class="badge" data-reveal data-reveal-delay="30">{t.home.badge}</span>
     <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.home.title}</h1>
     <p class="hero-subtitle" data-reveal data-reveal-delay="120">{t.home.intro}</p>
@@ -22,9 +22,9 @@ const featuredProjects = projects.slice(0, 3);
       <h2 class="page-title">Highlights</h2>
       <p class="page-subtitle">Core updates are displayed with lightweight motion and clear information hierarchy.</p>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-3" data-reveal-group>
       {t.home.highlights.map((h, i) => (
-        <article class="card card-hover" data-reveal data-reveal-delay={String(i * 90)}>
+        <article class="card card-hover" data-reveal data-reveal-order={String(i)}>
           <h3>{h.title}</h3>
           <p class="mt-4">{h.desc}</p>
         </article>
@@ -37,9 +37,9 @@ const featuredProjects = projects.slice(0, 3);
       <h2 class="page-title">Featured Projects</h2>
       <p class="page-subtitle">Reusing existing project data for a richer yet restrained homepage showcase.</p>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-3" data-reveal-group>
       {featuredProjects.map((p, i) => (
-        <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 100)}>
+        <article class="card card-hover stack-sm" data-reveal data-reveal-order={String(i)}>
           <h3>{p.title}</h3>
           <div class="meta">
             <span class="badge">{p.tag}</span>
