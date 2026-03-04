@@ -23,6 +23,7 @@ const papers = defineCollection({
     year: z.number().int(),
     title: z.string().min(1),
     venue: z.string().min(1),
+    authors: z.string().optional(),
     abstract: z.string().optional(),
     links: z
       .object({

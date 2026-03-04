@@ -362,6 +362,12 @@
   gap: 8px;
 }
 
+.paper-authors {
+  margin-top: 2px;
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
 .detail-content {
   display: grid;
   gap: 14px;

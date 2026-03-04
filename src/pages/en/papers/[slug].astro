@@ -26,6 +26,7 @@ const { Content } = await render(entry);
         <span class="badge">{entry.data.venue}</span>
         <span class="badge-muted">{entry.data.year}</span>
       </div>
+      {entry.data.authors && <p class="paper-authors">Authors: {entry.data.authors}</p>}
     </article>
 
     {abstract && (

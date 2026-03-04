@@ -17,6 +17,7 @@ const papers = paperEntries
       <a href={`/en/papers/${p.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
         <h3>{p.title}</h3>
         <p>{p.year} · {p.venue}</p>
+        {p.authors && <p class="paper-authors">Authors: {p.authors}</p>}
       </a>
     ))}
   </div>
