@@ -35,6 +35,43 @@ html {
   color-scheme: light;
 }
 
+:root {
+  --scroll-track: rgba(255, 255, 255, 0.08);
+  --scroll-thumb: rgba(188, 205, 247, 0.46);
+  --scroll-thumb-hover: rgba(206, 219, 252, 0.68);
+}
+
+:root[data-theme='light'] {
+  --scroll-track: rgba(78, 96, 150, 0.12);
+  --scroll-thumb: rgba(58, 84, 160, 0.34);
+  --scroll-thumb-hover: rgba(46, 72, 146, 0.5);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+
 body {
   position: relative;
   min-height: 100vh;
