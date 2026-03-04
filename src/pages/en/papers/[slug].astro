@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const papers = await getCollection('papers');
+  return papers.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const bibtex = `@inproceedings{${entry.slug},\n  title={${entry.data.title}},\n  year={${entry.data.year}},\n  booktitle={${entry.data.venue}},\n  author={Template Author et al.}\n}`;
+---
+<BaseLayout title={`Lab Website · ${entry.data.title}`} lang="en" pathPrefix="/en">
+  <section class="detail-shell">
+    <article class="card detail-hero" data-reveal>
+      <span class="badge-muted">Paper Detail Template</span>
+      <h1 class="page-title">{entry.data.title}</h1>
+      <div class="detail-meta">
+        <span class="badge">{entry.data.venue}</span>
+        <span class="badge-muted">{entry.data.year}</span>
+      </div>
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>Abstract (Template)</h2>
+      <p>This paragraph is a placeholder abstract to demonstrate a complete paper detail experience in the static template.</p>
+      <p>In production, teams can replace this with actual abstract, contribution bullets, and artifact references.</p>
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>BibTeX (Template)</h2>
+      <pre><code>{bibtex}</code></pre>
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>Links</h2>
+      <div class="detail-links">
+        <a class="btn btn-ghost" href="#">Paper PDF</a>
+        <a class="btn btn-ghost" href="#">Code</a>
+        <a class="btn btn-ghost" href="#">Project Page</a>
+      </div>
+    </article>
+
+    <div class="back-row" data-reveal>
+      <a class="btn btn-primary" href="/en/papers">Back to Papers</a>
+      <a class="btn btn-ghost" href="/en/">Back to Home</a>
+    </div>
+  </section>
+</BaseLayout>

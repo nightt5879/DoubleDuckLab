@@ -116,6 +116,16 @@
   padding: 18px;
 }
 
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-link:focus-visible {
+  box-shadow: var(--shadow-focus);
+}
+
 .card-hover {
   transition: transform var(--motion-mid) var(--ease-standard),
     border-color var(--motion-mid) var(--ease-standard),
@@ -297,6 +307,60 @@
 .quick-links a:hover {
   color: var(--text);
   transform: translateX(3px);
+}
+
+.detail-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.detail-hero {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.detail-content {
+  display: grid;
+  gap: 14px;
+}
+
+.detail-content p {
+  max-width: 76ch;
+}
+
+.detail-section {
+  display: grid;
+  gap: 10px;
+}
+
+.detail-list {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+}
+
+.detail-list li {
+  color: var(--text-soft);
+}
+
+.detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.back-row {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .filter-wrap {

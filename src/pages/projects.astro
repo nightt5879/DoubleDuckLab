@@ -1,6 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import projects from '../data/content/projects.json';
+
+const projectsWithSlug = projects.map((p) => ({
+  ...p,
+  slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+}));
 ---
 <BaseLayout title="Lab Website · 项目" lang="zh" pathPrefix="">
   <section class="page-head" data-reveal>
@@ -9,15 +14,15 @@ import projects from '../data/content/projects.json';
   </section>
 
   <div class="grid grid-3" data-reveal-group>
-    {projects.map((p, i) => (
-      <article class="card card-hover stack-sm" data-reveal data-reveal-order={String(i)}>
+    {projectsWithSlug.map((p, i) => (
+      <a href={`/projects/${p.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
         <h3>{p.title}</h3>
         <div class="meta">
           <span class="badge">{p.tag}</span>
           <span class="badge-muted">{p.status.zh}</span>
         </div>
         <p>项目状态：{p.status.zh}</p>
-      </article>
+      </a>
     ))}
   </div>
 </BaseLayout>

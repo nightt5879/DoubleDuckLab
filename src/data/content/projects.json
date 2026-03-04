@@ -1,5 +1,20 @@
 [
-  { "title": "Project Orion", "tag": "Embodied AI", "status": { "zh": "进行中", "en": "Ongoing" } },
-  { "title": "LabSite Pipeline", "tag": "Infra", "status": { "zh": "原型阶段", "en": "Prototype" } },
-  { "title": "Multimodal Tutor", "tag": "EdTech", "status": { "zh": "规划中", "en": "Planning" } }
+  {
+    "slug": "project-orion",
+    "title": "Project Orion",
+    "tag": "Embodied AI",
+    "status": { "zh": "进行中", "en": "Ongoing" }
+  },
+  {
+    "slug": "labsite-pipeline",
+    "title": "LabSite Pipeline",
+    "tag": "Infra",
+    "status": { "zh": "原型阶段", "en": "Prototype" }
+  },
+  {
+    "slug": "multimodal-tutor",
+    "title": "Multimodal Tutor",
+    "tag": "EdTech",
+    "status": { "zh": "规划中", "en": "Planning" }
+  }
 ]

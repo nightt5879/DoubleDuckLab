@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allNews = await getCollection('news');
+  const sorted = allNews.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+  return sorted.map((entry) => ({
+    params: { slug: entry.slug },
+    props: {
+      entry,
+      related: sorted
+        .filter((n) => n.slug !== entry.slug)
+        .slice(0, 3)
+        .map((n) => ({ slug: n.slug, date: n.data.date, title: n.data.title.en })),
+    },
+  }));
+}
+
+const { entry, related } = Astro.props;
+const { Content } = await render(entry);
+---
+<BaseLayout title={`Lab Website · ${entry.data.title.en}`} lang="en" pathPrefix="/en">
+  <section class="detail-shell">
+    <article class="card detail-hero" data-reveal>
+      <span class="badge-muted">News Detail</span>
+      <h1 class="page-title">{entry.data.title.en}</h1>
+      <div class="detail-meta">
+        <span class="badge-muted">{entry.data.date}</span>
+      </div>
+    </article>
+
+    <article class="card detail-content" data-reveal>
+      <Content />
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>More News</h2>
+      <ul class="detail-list">
+        {related.map((n) => (
+          <li><a href={`/en/news/${n.slug}/`}>{n.title}</a> · {n.date}</li>
+        ))}
+      </ul>
+    </article>
+
+    <div class="back-row" data-reveal>
+      <a class="btn btn-primary" href="/en/news">Back to News</a>
+      <a class="btn btn-ghost" href="/en/">Back to Home</a>
+    </div>
+  </section>
+</BaseLayout>

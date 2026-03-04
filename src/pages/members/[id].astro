@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import members from '../../data/content/members.json';
+
+export function getStaticPaths() {
+  return members.map((m) => {
+    const id = m.id ?? m.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    return {
+      params: { id },
+      props: { member: { ...m, id } },
+    };
+  });
+}
+
+const { member } = Astro.props;
+
+const summaryBlocks = [
+  `${member.name} 目前聚焦于 ${member.area} 方向的系统化研究，主要负责从问题定义到实验验证的全流程推进。`,
+  '在课题组模板演示场景中，该页面用于承载个人研究简介、协作方向与阶段成果，方便后续替换为真实内容。',
+  '当前文案为占位模板，可在不改页面结构的情况下直接替换为真实履历、研究陈述与项目经历。',
+];
+
+const selectedWorks = [
+  { title: 'Adaptive Perception Pipeline for Lab Robotics', venue: 'Demo Template 2026' },
+  { title: 'Human-in-the-loop Evaluation Benchmark', venue: 'Template Workshop' },
+  { title: 'Knowledge Ops Dashboard for Research Teams', venue: 'Internal Showcase' },
+];
+
+const email = `${member.id}@example-lab.org`;
+---
+<BaseLayout title={`Lab Website · ${member.name}`} lang="zh" pathPrefix="">
+  <section class="detail-shell">
+    <article class="card detail-hero" data-reveal>
+      <span class="badge-muted">成员详情模板</span>
+      <h1 class="page-title">{member.name}</h1>
+      <div class="detail-meta">
+        <span class="badge">{member.role.zh}</span>
+        <span class="badge-muted">{member.area}</span>
+        <span class="badge-muted">{email}</span>
+      </div>
+    </article>
+
+    <article class="card detail-content" data-reveal>
+      <h2>简介</h2>
+      {summaryBlocks.map((text) => <p>{text}</p>)}
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>Links</h2>
+      <div class="detail-links">
+        <a class="btn btn-ghost" href="#">Homepage</a>
+        <a class="btn btn-ghost" href="#">Google Scholar</a>
+        <a class="btn btn-ghost" href="#">GitHub</a>
+      </div>
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>Selected Works</h2>
+      <ul class="detail-list">
+        {selectedWorks.map((work) => (
+          <li>{work.title} · {work.venue}</li>
+        ))}
+      </ul>
+    </article>
+
+    <div class="back-row" data-reveal>
+      <a class="btn btn-primary" href="/members">返回成员列表</a>
+      <a class="btn btn-ghost" href="/">回到首页</a>
+    </div>
+  </section>
+</BaseLayout>

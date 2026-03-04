@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allNews = await getCollection('news');
+  const sorted = allNews.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+  return sorted.map((entry) => ({
+    params: { slug: entry.slug },
+    props: {
+      entry,
+      related: sorted
+        .filter((n) => n.slug !== entry.slug)
+        .slice(0, 3)
+        .map((n) => ({ slug: n.slug, date: n.data.date, title: n.data.title.zh })),
+    },
+  }));
+}
+
+const { entry, related } = Astro.props;
+const { Content } = await render(entry);
+---
+<BaseLayout title={`Lab Website · ${entry.data.title.zh}`} lang="zh" pathPrefix="">
+  <section class="detail-shell">
+    <article class="card detail-hero" data-reveal>
+      <span class="badge-muted">新闻详情</span>
+      <h1 class="page-title">{entry.data.title.zh}</h1>
+      <div class="detail-meta">
+        <span class="badge-muted">{entry.data.date}</span>
+      </div>
+    </article>
+
+    <article class="card detail-content" data-reveal>
+      <Content />
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>更多新闻</h2>
+      <ul class="detail-list">
+        {related.map((n) => (
+          <li><a href={`/news/${n.slug}/`}>{n.title}</a> · {n.date}</li>
+        ))}
+      </ul>
+    </article>
+
+    <div class="back-row" data-reveal>
+      <a class="btn btn-primary" href="/news">返回新闻列表</a>
+      <a class="btn btn-ghost" href="/">回到首页</a>
+    </div>
+  </section>
+</BaseLayout>

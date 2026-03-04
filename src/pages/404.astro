@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Lab Website · 404" lang="zh" pathPrefix="">
+  <section class="detail-shell">
+    <article class="card detail-hero" data-reveal>
+      <span class="badge-muted">404</span>
+      <h1 class="page-title">页面不存在</h1>
+      <p>你访问的内容可能已移动或尚未发布。请通过下方入口返回主要列表页面。</p>
+    </article>
+
+    <div class="back-row" data-reveal>
+      <a class="btn btn-primary" href="/">返回首页</a>
+      <a class="btn btn-ghost" href="/members">成员</a>
+      <a class="btn btn-ghost" href="/projects">项目</a>
+      <a class="btn btn-ghost" href="/news">新闻</a>
+    </div>
+  </section>
+</BaseLayout>

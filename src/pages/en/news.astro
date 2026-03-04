@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 
 const newsEntries = await getCollection('news');
 const news = newsEntries
-  .map((e) => ({ date: e.data.date, title: e.data.title.en }))
+  .map((e) => ({ slug: e.slug, date: e.data.date, title: e.data.title.en }))
   .sort((a, b) => b.date.localeCompare(a.date));
 ---
 <BaseLayout title="Lab Website · News" lang="en" pathPrefix="/en">
@@ -15,10 +15,10 @@ const news = newsEntries
 
   <div class="grid">
     {news.map((n, i) => (
-      <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 80)}>
+      <a href={`/en/news/${n.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
         <h3>{n.title}</h3>
         <p>{n.date}</p>
-      </article>
+      </a>
     ))}
   </div>
 </BaseLayout>

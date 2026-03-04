@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 
 const paperEntries = await getCollection('papers');
 const papers = paperEntries
-  .map((e) => e.data)
+  .map((e) => ({ slug: e.slug, ...e.data }))
   .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
 ---
 <BaseLayout title="Lab Website · Papers" lang="en" pathPrefix="/en">
@@ -15,10 +15,10 @@ const papers = paperEntries
 
   <div class="grid">
     {papers.map((p, i) => (
-      <article class="card card-hover stack-sm" data-reveal data-reveal-delay={String(i * 80)}>
+      <a href={`/en/papers/${p.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
         <h3>{p.title}</h3>
         <p>{p.year} · {p.venue}</p>
-      </article>
+      </a>
     ))}
   </div>
 </BaseLayout>

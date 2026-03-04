@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import projects from '../../../data/content/projects.json';
+
+export function getStaticPaths() {
+  return projects.map((p) => {
+    const slug = p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    return {
+      params: { slug },
+      props: { project: { ...p, slug } },
+    };
+  });
+}
+
+const { project } = Astro.props;
+const projectsWithSlug = projects.map((p) => ({
+  ...p,
+  slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+}));
+
+const sections = [
+  {
+    title: 'Summary',
+    body: 'This page is a structured placeholder to demonstrate a complete project-detail flow in a static Astro template.',
+  },
+  {
+    title: 'Background & Goal',
+    body: 'The sample narrative focuses on iterative delivery: clear framing, measurable milestones, and cross-role collaboration.',
+  },
+  {
+    title: 'Method',
+    body: 'The implementation block typically includes data, pipeline design, evaluation setup, and visual reporting layers.',
+  },
+  {
+    title: 'Current Progress',
+    body: `Current status: ${project.status.en}. The demo loop is ready for replacing placeholder text with production-level updates.`,
+  },
+];
+
+const related = projectsWithSlug.filter((p) => p.slug !== project.slug).slice(0, 3);
+---
+<BaseLayout title={`Lab Website · ${project.title}`} lang="en" pathPrefix="/en">
+  <section class="detail-shell">
+    <article class="card detail-hero" data-reveal>
+      <span class="badge-muted">Project Detail Template</span>
+      <h1 class="page-title">{project.title}</h1>
+      <div class="detail-meta">
+        <span class="badge">{project.tag}</span>
+        <span class="badge-muted">{project.status.en}</span>
+      </div>
+    </article>
+
+    {sections.map((section) => (
+      <article class="card detail-section" data-reveal>
+        <h2>{section.title}</h2>
+        <p>{section.body}</p>
+      </article>
+    ))}
+
+    <article class="card detail-section" data-reveal>
+      <h2>Links</h2>
+      <div class="detail-links">
+        <a class="btn btn-ghost" href="#">Repo</a>
+        <a class="btn btn-ghost" href="#">Demo</a>
+        <a class="btn btn-ghost" href="#">Paper</a>
+      </div>
+    </article>
+
+    <article class="card detail-section" data-reveal>
+      <h2>Related</h2>
+      <ul class="detail-list">
+        {related.map((item) => (
+          <li><a href={`/en/projects/${item.slug}/`}>{item.title}</a> · {item.status.en}</li>
+        ))}
+      </ul>
+    </article>
+
+    <div class="back-row" data-reveal>
+      <a class="btn btn-primary" href="/en/projects">Back to Projects</a>
+      <a class="btn btn-ghost" href="/en/">Back to Home</a>
+    </div>
+  </section>
+</BaseLayout>

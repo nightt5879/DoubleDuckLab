@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import members from '../data/content/members.json';
 
 const roles = ['全部', ...Array.from(new Set(members.map((m) => m.role.zh)))];
+const membersWithId = members.map((m) => ({
+  ...m,
+  id: m.id ?? m.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+}));
 
 function initials(name: string) {
   const chunks = name.split(/\s+/).filter(Boolean);
@@ -42,9 +46,10 @@ function initials(name: string) {
     <p class="empty-state" data-empty-state hidden>没有匹配成员，请调整关键词或筛选条件。</p>
 
     <div class="grid grid-3" data-reveal-group>
-      {members.map((m, i) => (
-        <article
-          class="card card-hover member-card"
+      {membersWithId.map((m, i) => (
+        <a
+          href={`/members/${m.id}/`}
+          class="card card-hover card-link member-card"
           data-member-card
           data-name={m.name}
           data-role={m.role.zh}
@@ -56,7 +61,7 @@ function initials(name: string) {
           <h3>{m.name}</h3>
           <p class="member-role"><span class="badge-muted">{m.role.zh}</span></p>
           <p class="mt-4">{m.area}</p>
-        </article>
+        </a>
       ))}
     </div>
   </section>
