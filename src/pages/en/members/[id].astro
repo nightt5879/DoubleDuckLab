@@ -1,67 +1,63 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import members from '../../../data/content/members.json';
+import { getCollection } from 'astro:content';
+import { resolveMemberAvatar } from '../../../utils/member-avatar';
+import { pickI18nText } from '../../../utils/i18n-text';
 
-export function getStaticPaths() {
-  return members.map((m) => {
-    const id = m.id ?? m.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+export async function getStaticPaths() {
+  const members = await getCollection('members');
+  return members.map((entry) => {
+    const id = entry.data.id ?? entry.slug;
     return {
       params: { id },
-      props: { member: { ...m, id } },
+      props: { member: { ...entry.data, id, avatarResolved: resolveMemberAvatar(entry.data) } },
     };
   });
 }
 
 const { member } = Astro.props;
-
-const summaryBlocks = [
-  `${member.name} is currently focused on ${member.area}, covering problem framing, implementation, and iterative evaluation.`,
-  'This page is intentionally a rich template placeholder so teams can demonstrate a complete member profile workflow before real content migration.',
-  'All paragraphs and sections here can be replaced by real profiles while keeping the same route, style, and page structure.',
-];
-
-const selectedWorks = [
-  { title: 'Adaptive Perception Pipeline for Lab Robotics', venue: 'Demo Template 2026' },
-  { title: 'Human-in-the-loop Evaluation Benchmark', venue: 'Template Workshop' },
-  { title: 'Knowledge Ops Dashboard for Research Teams', venue: 'Internal Showcase' },
-];
-
-const email = `${member.id}@example-lab.org`;
+const nameText = pickI18nText(member.name, 'en');
+const areaText = pickI18nText(member.area, 'en');
+const bio = pickI18nText(member.bio, 'en');
+const links = member.links;
+const hasLinks = Boolean(links?.scholar || links?.github || links?.homepage);
 ---
-<BaseLayout title={member.name} lang="en" pathPrefix="/en">
+<BaseLayout title={nameText} lang="en" pathPrefix="/en">
   <section class="detail-shell">
-    <article class="card detail-hero" data-reveal>
-      <span class="badge-muted">Member Detail Template</span>
-      <h1 class="page-title">{member.name}</h1>
-      <div class="detail-meta">
-        <span class="badge">{member.role.en}</span>
-        <span class="badge-muted">{member.area}</span>
-        <span class="badge-muted">{email}</span>
+    <article class="card detail-hero detail-hero-member" data-reveal>
+      <div class="detail-hero-main">
+        <h1 class="page-title">{nameText}</h1>
+        <div class="detail-meta">
+          <span class="badge">{member.role.en}</span>
+          <span class="badge-muted">{areaText}</span>
+        </div>
       </div>
+      <img
+        class="member-avatar member-avatar-lg"
+        src={member.avatarResolved}
+        alt={`${nameText} avatar`}
+        loading="eager"
+        decoding="async"
+      />
     </article>
 
-    <article class="card detail-content" data-reveal>
-      <h2>About</h2>
-      {summaryBlocks.map((text) => <p>{text}</p>)}
-    </article>
+    {bio && (
+      <article class="card detail-content" data-reveal>
+        <h2>About</h2>
+        <p>{bio}</p>
+      </article>
+    )}
 
-    <article class="card detail-section" data-reveal>
-      <h2>Links</h2>
-      <div class="detail-links">
-        <a class="btn btn-ghost" href="#">Homepage</a>
-        <a class="btn btn-ghost" href="#">Google Scholar</a>
-        <a class="btn btn-ghost" href="#">GitHub</a>
-      </div>
-    </article>
-
-    <article class="card detail-section" data-reveal>
-      <h2>Selected Works</h2>
-      <ul class="detail-list">
-        {selectedWorks.map((work) => (
-          <li>{work.title} · {work.venue}</li>
-        ))}
-      </ul>
-    </article>
+    {hasLinks && (
+      <article class="card detail-section" data-reveal>
+        <h2>Links</h2>
+        <div class="detail-links">
+          {links?.scholar && <a class="btn btn-ghost" href={links.scholar} target="_blank" rel="noreferrer">Google Scholar</a>}
+          {links?.github && <a class="btn btn-ghost" href={links.github} target="_blank" rel="noreferrer">GitHub</a>}
+          {links?.homepage && <a class="btn btn-ghost" href={links.homepage} target="_blank" rel="noreferrer">Homepage</a>}
+        </div>
+      </article>
+    )}
 
     <div class="back-row" data-reveal>
       <a class="btn btn-primary" href="/en/members">Back to Members</a>
