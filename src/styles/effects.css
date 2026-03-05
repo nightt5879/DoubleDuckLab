@@ -80,3 +80,26 @@
     animation: none;
   }
 }
+
+@supports (view-transition-name: root) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  html[data-theme-transition='ink']::view-transition-new(root) {
+    animation: inkReveal 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes inkReveal {
+    from {
+      clip-path: circle(0px at var(--theme-x) var(--theme-y));
+      filter: saturate(1.08);
+    }
+    to {
+      clip-path: circle(var(--theme-r) at var(--theme-x) var(--theme-y));
+      filter: saturate(1);
+    }
+  }
+}

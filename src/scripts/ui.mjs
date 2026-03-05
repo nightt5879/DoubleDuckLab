@@ -3,6 +3,7 @@ function initThemeToggle() {
   const toggle = document.querySelector('[data-theme-toggle]');
   const key = 'lab-theme';
   const isZh = root.lang?.startsWith('zh');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const preferred = (() => {
     const saved = localStorage.getItem(key);
@@ -27,16 +28,57 @@ function initThemeToggle() {
     }
   }
 
+  function getRippleCenter(event) {
+    if (event && Number.isFinite(event.clientX) && Number.isFinite(event.clientY)) {
+      return { x: event.clientX, y: event.clientY };
+    }
+    if (toggle) {
+      const rect = toggle.getBoundingClientRect();
+      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    }
+    return { x: window.innerWidth / 2, y: 0 };
+  }
+
+  function getRippleRadius(x, y) {
+    const dx = Math.max(x, window.innerWidth - x);
+    const dy = Math.max(y, window.innerHeight - y);
+    return Math.hypot(dx, dy);
+  }
+
   applyTheme(preferred);
 
   if (!toggle) {
     return;
   }
 
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', (event) => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(key, next);
-    applyTheme(next);
+    const supportsInkTransition = typeof document.startViewTransition === 'function';
+
+    if (!supportsInkTransition || reduceMotion) {
+      localStorage.setItem(key, next);
+      applyTheme(next);
+      return;
+    }
+
+    const { x, y } = getRippleCenter(event);
+    const radius = getRippleRadius(x, y);
+    root.style.setProperty('--theme-x', `${x}px`);
+    root.style.setProperty('--theme-y', `${y}px`);
+    root.style.setProperty('--theme-r', `${radius}px`);
+    root.setAttribute('data-theme-transition', 'ink');
+
+    const transition = document.startViewTransition(() => {
+      localStorage.setItem(key, next);
+      applyTheme(next);
+    });
+
+    transition.finished.finally(() => {
+      root.removeAttribute('data-theme-transition');
+      root.style.removeProperty('--theme-x');
+      root.style.removeProperty('--theme-y');
+      root.style.removeProperty('--theme-r');
+    });
   });
 }
 
