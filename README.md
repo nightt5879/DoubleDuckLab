@@ -10,21 +10,20 @@
 一个基于 **Astro** 构建的现代化课题组官网模板，
 为**科研团队**设计。
 
----
 
-## ✨ 项目特点
+## 🦆🦆 项目特点
 
-* ⚡ 基于 **Astro** 构建，静态生成，速度极快
-* 🧩 **JSON / Markdown 内容驱动**，无需后端
-* 🧑‍🔬 专为 **科研团队官网** 场景设计
-* 📱 **响应式布局**
-* 🌙 **深色 / 浅色模式**
-* 🚀 可直接部署到 **Cloudflare Pages / Vercel**
+*  基于 **Astro** 构建，静态生成，速度极快
+*  **JSON / Markdown 内容驱动**，无需后端
+*  专为 **科研团队官网** 场景设计
+*  **响应式布局**
+*  **深色 / 浅色模式**
+*  可直接部署到 **Cloudflare Pages / Vercel**
 
-## 🦆 在线访问
+## 🦆🦆 在线访问
 👉 https://doubleducklab.com
 
-## 🖼️ 项目预览
+## 🦆🦆 项目预览
 
 <p align="center">
   <a href="https://doubleducklab.com" target="_blank">
@@ -41,12 +40,12 @@
 
 ---
 
-## 🚀 快速开始
+## 🦆🦆 快速开始
 
 克隆项目：
 
 ```bash
-git clone https://github.com/YOURNAME/doubleducklab.git
+git clone https://github.com/nightt5879/doubleducklab.git
 cd doubleducklab
 ```
 
@@ -56,10 +55,14 @@ cd doubleducklab
 npm install
 ```
 
-启动开发服务器：
-
+构建项目：
 ```bash
-npm run dev
+npm run build
+```
+
+本地预览：
+```bash
+npm run preview
 ```
 
 访问：
@@ -70,7 +73,7 @@ http://localhost:4321
 
 ---
 
-## 📝 内容编辑
+## 🦆🦆 内容编辑
 
 网站主要内容存储在：
 
@@ -85,15 +88,12 @@ members/*.md
 papers/*.md
 news/*/*_cn.md
 news/*/*_en.md
+join/*/overview_cn.md
+join/*/overview_en/md
 ```
 
-修改这些文件即可更新网站内容。
-
----
-
-## 🏷️ 修改站点品牌与网站名称（中文）
-
-这两个字段已经拆分：
+修改这些文件即可更新网站内容。接下来将从主页开始讲解能修改的内容：
+###  🦆🦆🦆 修改站点品牌与网站名称
 
 - `brand`：用于左上角品牌（Header）
 - `siteName`：用于首页 Hero 标题和浏览器标签页标题（`<title>`）
@@ -125,10 +125,7 @@ src/data/site.zh.json
 npm run build
 npm run preview
 ```
-
----
-
-## 🏠 首页文案配置（中英文）
+###  🦆🦆🦆 首页文案配置（中英文）
 
 首页 Hero、Highlights、Featured Projects 标题都来自：
 
@@ -155,18 +152,198 @@ npm run preview
 }
 ```
 
+
+### 🦆🦆🦆 招生与合作（Join）内容配置（双语 Markdown）
+
+`/join` 与 `/en/join` 采用 Markdown 内容驱动，路径如下：
+
+```text
+src/content/join/recruitment/
+  overview_cn.md
+  overview_en.md
+```
+
 说明：
 
-- 第 3 张卡可自定义标题（如“招生与合作 / Recruitment & Collaboration”）。
-- `highlights[].desc` 支持中英文独立配置，可分别写研究方向、近期成果、联系方式等信息。
-- 首页 CTA 默认顺序已调整为：
-  - 主按钮：查看论文 / View Papers
-  - 次按钮：查看项目 / Explore Projects
-  - 次按钮：了解成员 / Meet Members
+- 中文页读取 `overview_cn.md`
+- 英文页读取 `overview_en.md`
+- `frontmatter.title` 可选，用于页面主标题
+- 正文支持完整 Markdown（列表、图片、代码块等）
+
+### 🦆🦆🦆 Members 内容配置（含头像）
+
+成员内容使用 Astro Content Collections，文件位置：
+
+```text
+src/content/members/*.md
+```
+
+头像资源目录：
+
+```text
+public/member/images/
+```
+
+默认头像（未匹配到成员头像时使用）：
+
+```text
+public/images/avatar-default.png
+```
+
+#### 1) 最小模板（必填字段）
+
+```md
+---
+id: "zhang-wei"
+name:
+  zh: "张伟"
+  en: "Wei Zhang"
+role:
+  zh: "博士生"
+  en: "PhD"
+area:
+  zh: "多模态智能体"
+  en: "Multimodal Agents"
+```
+
+#### 2) 完整模板（含可选字段）
+
+```md
+---
+id: "li-ming"
+name:
+  zh: "李明"
+  en: "Ming Li"
+role:
+  zh: "硕士生"
+  en: "Master"
+status:
+  zh: "在读"
+  en: "Current"
+area:
+  zh: "机器人规划"
+  en: "Robot Planning"
+bio:
+  zh: "研究方向聚焦于机器人规划与控制。"
+  en: "Focused on robot planning and control."
+avatar: "/member/images/custom-li-ming.png"
+links:
+  scholar: "https://scholar.google.com/"
+  github: "https://github.com/yourname"
+  homepage: "https://example.com"
+  email: "liming@xxx.com"
+```
+
+字段说明：
+
+- 必填：`id`、`name.zh/en`、`role.zh/en`、`area.zh/en`
+- 可选：`status`、`bio`、`avatar`、`links`
+- `links` 子字段可选：`scholar`、`github`、`homepage`、`email`
+
+显示规则（不填即不显示）：
+
+- 不写 `bio`：详情页不显示简介区块
+- `links` 四项都不写：详情页不显示 Links 区块
+- `links.email` 写了：详情页显示完整邮箱文本，可点击复制。
+- 不写 `status`：列表卡片右上角不显示状态角标（PI 默认也不显示）
+
+#### 3) 头像自动匹配规则
+
+系统会自动按 **name** 去找同名头像：
+
+```text
+public/member/images/<name>.png
+public/member/images/<name>.jpg
+public/member/images/<name>.svg
+```
+
+示例：
+
+- `name.zh: "张教授"` -> `public/member/images/张教授.png`
+- `name.en: "Prof. Zhang"` -> `public/member/images/Prof. Zhang.jpg`
+
+支持中文文件名。
+
+#### 4) 成员排序规则（默认）
+
+列表页默认按以下顺序展示：
+
+1. PI（负责人）
+2. 在组成员：PhD -> Master -> RA
+3. 离组成员：PhD -> Master -> RA
+
+状态角标颜色：
+
+- 蓝色：`在读 / 在职`（`Current / Active`）
+- 绿色：`已毕业 / 已离开`（`Alumni / Former`）
+
+### 项目（project）内容配置（双语 Markdown）
+
+项目模块采用“每个项目一个目录 + 中英文各两篇 Markdown（概览/背景）”的结构。
+
+目录结构：
+
+```text
+src/content/projects/<slug>/
+  overview_cn.md
+  overview_en.md
+  background_cn.md
+  background_en.md
+```
+
+说明：
+
+- `<slug>` 会作为项目详情页路径：`/projects/<slug>/` 与 `/en/projects/<slug>/`
+- `overview_*` 用于“项目概览”区块
+- `background_*` 用于“背景与目标”区块
+- 正文是标准 Markdown，支持图片、列表、代码块等
+
+`overview` 文件支持可选 frontmatter（建议写）：
+
+```md
+title: "Project Orion"
+tag: "Embodied AI"
+status: "进行中"
+links:
+  repo: "https://github.com/xxx"
+  demo: "https://example.com/demo"
+  paper: "https://example.com/paper"
+```
+
+显示逻辑：
+
+- 详情页固定保留：项目概览、背景与目标
+- `links` 三项（`repo/demo/paper`）全部可选
+- 三项都不写：`Links` 区块不显示
+- 只写某几项：只显示对应按钮
+- 列表卡片只显示上方 badge 状态，不再重复显示“项目状态：xxx”文案
+
+### 项目图片建议（prj）
+
+将项目图片放到：
+
+```text
+public/prj/
+```
+
+在项目 markdown 里引用：
+
+```md
+![项目配图](/prj/prj_template.png)
+```
+或者也可以单独一个项目创建一个文件夹方便管理
+
+### 新增一个项目（最短步骤）
+
+1. 新建目录：`src/content/projects/my-new-project/`
+2. 放四个文件：`overview_cn.md`、`overview_en.md`、`background_cn.md`、`background_en.md`
+3. 在 `overview_cn.md / overview_en.md` 顶部填 `title/tag/status/links(可选)`
+4. 正文写 Markdown，图片放 `public/prj` 后用 `/prj/xxx.png` 引用
+5. 运行 `npm run build` 与 `npm run preview` 验证
 
 ---
 
-## 📄 Papers 内容配置
+###  🦆🦆🦆Papers 内容配置
 
 论文内容使用 Astro Content Collections，文件位置：
 
@@ -177,11 +354,9 @@ src/content/papers/*.md
 每篇 paper 的 frontmatter 最小模板（仅必填）：
 
 ```md
----
 year: 2025
 title: "Embodied Skill Transfer with Sparse Demo"
 venue: "ICRA"
----
 ```
 
 完整模板（可选字段全部展示）：
@@ -235,74 +410,9 @@ public/papers/xxx.pdf
 
 ---
 
-## Projects（prj）内容配置（双语 Markdown）
 
-项目模块采用“每个项目一个目录 + 中英文各两篇 Markdown（概览/背景）”的结构。
 
-目录结构：
-
-```text
-src/content/projects/<slug>/
-  overview_cn.md
-  overview_en.md
-  background_cn.md
-  background_en.md
-```
-
-说明：
-
-- `<slug>` 会作为项目详情页路径：`/projects/<slug>/` 与 `/en/projects/<slug>/`
-- `overview_*` 用于“项目概览”区块
-- `background_*` 用于“背景与目标”区块
-- 正文是标准 Markdown，支持图片、列表、代码块等
-
-`overview` 文件支持可选 frontmatter（建议写）：
-
-```md
----
-title: "Project Orion"
-tag: "Embodied AI"
-status: "进行中"
-links:
-  repo: "https://github.com/xxx"
-  demo: "https://example.com/demo"
-  paper: "https://example.com/paper"
----
-```
-
-显示逻辑：
-
-- 详情页固定保留：项目概览、背景与目标
-- `links` 三项（`repo/demo/paper`）全部可选
-- 三项都不写：`Links` 区块不显示
-- 只写某几项：只显示对应按钮
-- 列表卡片只显示上方 badge 状态，不再重复显示“项目状态：xxx”文案
-
-### 项目图片建议（prj）
-
-将项目图片放到：
-
-```text
-public/prj/
-```
-
-在项目 markdown 里引用：
-
-```md
-![项目配图](/prj/prj_template.png)
-```
-
-### 新增一个项目（最短步骤）
-
-1. 新建目录：`src/content/projects/my-new-project/`
-2. 放四个文件：`overview_cn.md`、`overview_en.md`、`background_cn.md`、`background_en.md`
-3. 在 `overview_cn.md / overview_en.md` 顶部填 `title/tag/status/links(可选)`
-4. 正文写 Markdown，图片放 `public/prj` 后用 `/prj/xxx.png` 引用
-5. 运行 `npm run build` 与 `npm run preview` 验证
-
----
-
-## 📰 News 内容配置（双语 Markdown）
+#### 🦆🦆🦆 News 内容配置（双语 Markdown）
 
 新闻模块采用“每条新闻一个目录 + 中英文各一篇 Markdown”的逻辑。  
 你只要按下面 4 步操作，就会自动出现在新闻列表和详情页。
@@ -354,9 +464,7 @@ src/content/news/<slug>/
 可选 frontmatter（推荐保留 `date`）：
 
 ```md
----
 date: "2026-02-20"
----
 ```
 
 说明：
@@ -377,127 +485,16 @@ public/news/
 ```md
 ![配图说明](/news/news_template.png)
 ```
+与project一样，是可以分具体的小文件，方便进行管理
 
-### 常见问题
+#### 常见问题
 
-- 只放了 `_cn.md` 或只放了 `_en.md`：该新闻不完整，建议始终成对维护。
+- 只放了 `_cn.md` 或只放了 `_en.md`：该新闻不完整。
 - 文件名后缀写成 `_zh.md`：不会被识别，必须是 `_cn.md`。
 - 图片不显示：确认路径是 `/news/xxx.png`，并且文件真实位于 `public/news/xxx.png`。
 
----
 
-## 👥 Members 内容配置（含头像）
-
-成员内容使用 Astro Content Collections，文件位置：
-
-```text
-src/content/members/*.md
-```
-
-头像资源目录：
-
-```text
-public/member/images/
-```
-
-默认头像（未匹配到成员头像时使用）：
-
-```text
-public/images/avatar-default.png
-```
-
-### 1) 最小模板（必填字段）
-
-```md
----
-id: "zhang-wei"
-name:
-  zh: "张伟"
-  en: "Wei Zhang"
-role:
-  zh: "博士生"
-  en: "PhD"
-area:
-  zh: "多模态智能体"
-  en: "Multimodal Agents"
----
-```
-
-### 2) 完整模板（含可选字段）
-
-```md
----
-id: "li-ming"
-name:
-  zh: "李明"
-  en: "Ming Li"
-role:
-  zh: "硕士生"
-  en: "Master"
-status:
-  zh: "在读"
-  en: "Current"
-area:
-  zh: "机器人规划"
-  en: "Robot Planning"
-bio:
-  zh: "研究方向聚焦于机器人规划与控制。"
-  en: "Focused on robot planning and control."
-avatar: "/member/images/custom-li-ming.png"
-links:
-  scholar: "https://scholar.google.com/"
-  github: "https://github.com/yourname"
-  homepage: "https://example.com"
-  email: "liming@xxx.com"
----
-```
-
-字段说明：
-
-- 必填：`id`、`name.zh/en`、`role.zh/en`、`area.zh/en`
-- 可选：`status`、`bio`、`avatar`、`links`
-- `links` 子字段可选：`scholar`、`github`、`homepage`、`email`
-
-显示规则（不填即不显示）：
-
-- 不写 `bio`：详情页不显示简介区块
-- `links` 四项都不写：详情页不显示 Links 区块
-- `links.email` 写了：详情页显示完整邮箱文本，可点击复制，长邮箱会自动换行
-- 不写 `status`：列表卡片右上角不显示状态角标（PI 默认也不显示）
-
-### 3) 头像自动匹配规则
-
-如果没有写 `avatar`，系统会自动按 **name** 去找同名头像：
-
-```text
-public/member/images/<name>.png
-public/member/images/<name>.jpg
-public/member/images/<name>.svg
-```
-
-示例：
-
-- `name.zh: "张教授"` -> `public/member/images/张教授.png`
-- `name.en: "Prof. Zhang"` -> `public/member/images/Prof. Zhang.jpg`
-
-支持中文文件名。
-
-### 4) 成员排序规则（默认）
-
-列表页默认按以下顺序展示：
-
-1. PI（负责人）
-2. 在组成员：PhD -> Master -> RA
-3. 离组成员：PhD -> Master -> RA
-
-状态角标颜色：
-
-- 蓝色：`在读 / 在职`（`Current / Active`）
-- 绿色：`已毕业 / 已离开`（`Alumni / Former`）
-
----
-
-## 🌍 部署
+## 🦆🦆 部署
 
 推荐使用 **Cloudflare Pages**。
 
@@ -513,33 +510,25 @@ npm run build
 dist
 ```
 
----
-
 ## 🗺 Roadmap
 
 计划中的功能：
 
-* [ ] Markdown 内容系统
-* [ ] 可视化内容编辑
-* [ ] 多语言支持
-* [ ] 成员个人主页
-* [ ] 自动导入论文（Google Scholar）
+* [ ] 可视化编辑主页元素
+* [ ] 自动通过Google scholar抓取论文
+* [ ] 更加0代码基础的可视化编辑后台（优先本地）
 
 ---
 
-## 🤝 贡献
+## 🦆🦆 贡献
 
 欢迎提交 Issue 或 Pull Request。
 
----
-
-## 📜 开源协议
+## 🦆🦆 开源协议
 
 MIT License
 
----
-
-## 🦆 关于项目名称
+## 🦆🦆 关于项目名称
 
 **DoubleDuckLab** 来源于中山大学的一个网络昵称 “双鸭山大学”。
 

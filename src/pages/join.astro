@@ -1,34 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const joinEntries = await getCollection('join');
+const entry =
+  joinEntries.find((item) => item.id === 'recruitment/overview_cn.md') ||
+  joinEntries.find((item) => /_cn\.md$/i.test(item.id));
+
+if (!entry) {
+  throw new Error('Missing Chinese join content: src/content/join/**/_cn.md');
+}
+
+const { Content } = await render(entry);
+const pageTitle = entry.data.title || '招生与合作';
 ---
-<BaseLayout title="招生与合作" lang="zh" pathPrefix="">
+<BaseLayout title={pageTitle} lang="zh" pathPrefix="">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
-      <h1 class="page-title">招生与合作</h1>
-      <p>这是模板占位页，用于展示课题组官网中的“加入我们”完整入口闭环。</p>
+      <h1 class="page-title">{pageTitle}</h1>
     </article>
 
-    <article class="card detail-section" data-reveal>
-      <h2>招生方向（模板）</h2>
-      <ul class="detail-list">
-        <li>本科生科研实习：每学期滚动招募，欢迎对 HCI/机器人方向感兴趣的同学。</li>
-        <li>硕博研究生：关注具身智能、多模态代理、系统评测与应用落地。</li>
-        <li>联合培养：支持跨学院、跨机构协作培养与联合课题实践。</li>
-      </ul>
-    </article>
-
-    <article class="card detail-section" data-reveal>
-      <h2>合作方式（模板）</h2>
-      <p>可支持学术合作、企业联合课题、场景验证与技术共研，建议先提供问题定义与预期目标。</p>
-    </article>
-
-    <article class="card detail-section" data-reveal>
-      <h2>联系方式（模板）</h2>
-      <ul class="detail-list">
-        <li>邮箱：join@example-lab.org</li>
-        <li>地址：XX 大学 XX 楼 5F · 智能系统实验室</li>
-        <li>办公时间：工作日 10:00 - 18:00（请预约）</li>
-      </ul>
+    <article class="card detail-content news-article" data-reveal>
+      <Content />
     </article>
 
     <div class="back-row" data-reveal>

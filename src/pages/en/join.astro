@@ -1,34 +1,27 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const joinEntries = await getCollection('join');
+const entry =
+  joinEntries.find((item) => item.id === 'recruitment/overview_en.md') ||
+  joinEntries.find((item) => /_en\.md$/i.test(item.id));
+
+if (!entry) {
+  throw new Error('Missing English join content: src/content/join/**/_en.md');
+}
+
+const { Content } = await render(entry);
+const pageTitle = entry.data.title || 'Recruitment & Collaboration';
 ---
-<BaseLayout title="Join & Collaborate" lang="en" pathPrefix="/en">
+<BaseLayout title={pageTitle} lang="en" pathPrefix="/en">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
-      <h1 class="page-title">Join & Collaborate</h1>
-      <p>This template page demonstrates a complete CTA destination for recruitment and collaboration workflows.</p>
+      <h1 class="page-title">{pageTitle}</h1>
     </article>
 
-    <article class="card detail-section" data-reveal>
-      <h2>Open Positions (Template)</h2>
-      <ul class="detail-list">
-        <li>Undergraduate research interns with interests in HCI, robotics, and AI systems.</li>
-        <li>MS/PhD applicants focused on embodied intelligence, multimodal agents, and evaluation pipelines.</li>
-        <li>Joint supervision opportunities for cross-lab and cross-industry projects.</li>
-      </ul>
-    </article>
-
-    <article class="card detail-section" data-reveal>
-      <h2>Collaboration Modes (Template)</h2>
-      <p>We support academic collaboration, industry co-research, and scenario-driven validation tracks.</p>
-    </article>
-
-    <article class="card detail-section" data-reveal>
-      <h2>Contact (Template)</h2>
-      <ul class="detail-list">
-        <li>Email: join@example-lab.org</li>
-        <li>Address: Intelligent Systems Lab, Building XX, 5F</li>
-        <li>Office Hours: Weekdays 10:00 - 18:00 (appointment recommended)</li>
-      </ul>
+    <article class="card detail-content news-article" data-reveal>
+      <Content />
     </article>
 
     <div class="back-row" data-reveal>

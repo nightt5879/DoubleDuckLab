@@ -72,4 +72,11 @@ const projects = defineCollection({
   })
 });
 
-export const collections = { news, papers, members, projects };
+const join = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string().min(1).optional()
+  })
+});
+
+export const collections = { news, papers, members, projects, join };
