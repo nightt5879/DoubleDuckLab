@@ -3,6 +3,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { buildLocalizedProjects, projectDisplayMeta } from '../../utils/projects-localized';
 
+function resolveProjectStatusTone(status: string) {
+  const value = (status || '').toLowerCase();
+  if (value.includes('已完成') || value.includes('毕业') || value.includes('离开') || value.includes('completed')) {
+    return 'former';
+  }
+  if (value.includes('进行中') || value.includes('在读') || value.includes('在职') || value.includes('ongoing') || value.includes('active')) {
+    return 'current';
+  }
+  return '';
+}
+
 export async function getStaticPaths() {
   const allProjects = await getCollection('projects');
   const localized = buildLocalizedProjects(allProjects).filter((item) => item.entry.overview.zh);
@@ -35,7 +46,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.paper);
       <div class="detail-meta">
         {meta.tag && <span class="badge">{meta.tag}</span>}
         {meta.time && <span class="badge-muted">{meta.time}</span>}
-        {meta.status && <span class="badge-muted">{meta.status}</span>}
+        {meta.status && <span class={`status-chip status-${resolveProjectStatusTone(meta.status)}`}>{meta.status}</span>}
       </div>
     </article>
 

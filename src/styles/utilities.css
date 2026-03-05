@@ -52,6 +52,17 @@
   transform: translateY(0) scale(1);
 }
 
+.project-grid {
+  contain: layout paint style;
+}
+
+@supports (content-visibility: auto) {
+  .project-grid > * {
+    content-visibility: auto;
+    contain-intrinsic-size: 280px 240px;
+  }
+}
+
 .member-card {
   transition: opacity var(--motion-mid) var(--ease-standard), transform var(--motion-mid) var(--ease-standard);
 }

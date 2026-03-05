@@ -5,14 +5,24 @@ import { buildLocalizedProjects, projectDisplayMeta } from '../../utils/projects
 
 const projectEntries = await getCollection('projects');
 const projects = buildLocalizedProjects(projectEntries).filter((item) => item.entry.overview.en);
+
+function resolveProjectStatusTone(status: string) {
+  const value = (status || '').toLowerCase();
+  if (value.includes('completed') || value.includes('alumni') || value.includes('former') || value.includes('已完成') || value.includes('毕业')) {
+    return 'former';
+  }
+  if (value.includes('ongoing') || value.includes('active') || value.includes('current') || value.includes('进行中') || value.includes('在读')) {
+    return 'current';
+  }
+  return '';
+}
 ---
 <BaseLayout title="Projects" lang="en" pathPrefix="/en">
   <section class="page-head" data-reveal>
     <h1 class="page-title">Projects</h1>
-    <p class="page-subtitle">A concise view of key initiatives and current progress.</p>
   </section>
 
-  <div class="grid grid-3" data-reveal-group>
+  <div class="grid grid-3 project-grid" data-reveal-group data-reveal-step="44">
     {projects.map((item, i) => {
       const meta = projectDisplayMeta(item, 'en');
       return (
@@ -20,7 +30,7 @@ const projects = buildLocalizedProjects(projectEntries).filter((item) => item.en
           <h3>{meta.title}</h3>
           <div class="meta">
             {meta.tag && <span class="badge">{meta.tag}</span>}
-            {meta.status && <span class="badge-muted">{meta.status}</span>}
+            {meta.status && <span class={`status-chip status-${resolveProjectStatusTone(meta.status)}`}>{meta.status}</span>}
           </div>
         </a>
       );
