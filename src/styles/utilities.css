@@ -76,6 +76,10 @@
   display: none;
 }
 
+[data-list-card].is-filter-hidden {
+  display: none;
+}
+
 .member-card.is-filter-visible {
   animation: memberIn 360ms var(--ease-standard);
 }

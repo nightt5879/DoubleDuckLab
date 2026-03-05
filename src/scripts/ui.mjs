@@ -143,6 +143,57 @@ function initCopyButtons() {
   });
 }
 
+function initListSearch() {
+  const roots = Array.from(document.querySelectorAll('[data-list-filter-root]'));
+  if (!roots.length) {
+    return;
+  }
+
+  roots.forEach((root) => {
+    const input = root.querySelector('[data-list-search]');
+    const cards = Array.from(root.querySelectorAll('[data-list-card]'));
+    const emptyState = root.querySelector('[data-empty-state]');
+    const listEl = root.querySelector('[data-progressive-list]');
+    const progressiveApi = listEl?.__progressiveListApi;
+    let materialized = false;
+
+    if (!input || !cards.length) {
+      return;
+    }
+
+    function applyFilter() {
+      const q = input.value.trim().toLowerCase();
+      const allCards = Array.from(root.querySelectorAll('[data-list-card]'));
+      let visibleCount = 0;
+
+      allCards.forEach((card) => {
+        const text = (card.getAttribute('data-search-text') || '').toLowerCase();
+        const shouldShow = !q || text.includes(q);
+        card.classList.toggle('is-filter-hidden', !shouldShow);
+        if (shouldShow) {
+          visibleCount += 1;
+        }
+      });
+
+      if (emptyState) {
+        emptyState.hidden = visibleCount !== 0;
+      }
+    }
+
+    input.addEventListener('input', () => {
+      const hasQuery = input.value.trim().length > 0;
+      if (hasQuery && progressiveApi && !materialized) {
+        progressiveApi.materializeAll();
+        materialized = true;
+      }
+      applyFilter();
+    });
+
+    applyFilter();
+  });
+}
+
 initThemeToggle();
 initMembersFilter();
 initCopyButtons();
+initListSearch();

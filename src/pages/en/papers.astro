@@ -12,6 +12,16 @@ const papers = paperEntries
     <h1 class="page-title">Papers</h1>
   </section>
 
+  <section class="filter-wrap" data-list-filter-root data-reveal>
+    <input
+      class="filter-input"
+      type="search"
+      data-list-search
+      placeholder="Search title / authors / venue / year..."
+      aria-label="Search papers"
+    />
+    <p class="empty-state" data-empty-state hidden>No matching paper found. Try another keyword.</p>
+
   <div
     class="grid project-grid"
     data-reveal-group
@@ -24,11 +34,19 @@ const papers = paperEntries
     data-chunk-size="6"
   >
     {papers.map((p) => (
-      <a href={`/en/papers/${p.slug}/`} class="card card-hover card-link stack-sm" data-progressive-item data-reveal>
+      <a
+        href={`/en/papers/${p.slug}/`}
+        class="card card-hover card-link stack-sm"
+        data-progressive-item
+        data-list-card
+        data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
+        data-reveal
+      >
         <h3>{p.title}</h3>
         <p>{p.year} · {p.venue}</p>
         {p.authors && <p class="paper-authors">Authors: {p.authors}</p>}
       </a>
     ))}
   </div>
+  </section>
 </BaseLayout>

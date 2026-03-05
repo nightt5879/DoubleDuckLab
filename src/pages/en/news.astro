@@ -11,12 +11,30 @@ const news = buildLocalizedNews(newsEntries).filter((item) => item.entry.en);
     <h1 class="page-title">News</h1>
   </section>
 
+  <section class="filter-wrap" data-list-filter-root data-reveal>
+    <input
+      class="filter-input"
+      type="search"
+      data-list-search
+      placeholder="Search title / date / keywords..."
+      aria-label="Search news"
+    />
+    <p class="empty-state" data-empty-state hidden>No matching news found. Try another keyword.</p>
+
   <div class="grid">
     {news.map((n, i) => (
-      <a href={`/en/news/${n.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
+      <a
+        href={`/en/news/${n.slug}/`}
+        class="card card-hover card-link stack-sm"
+        data-list-card
+        data-search-text={`${n.title.en || ''} ${n.title.zh || ''} ${n.date || ''} ${n.slug}`}
+        data-reveal
+        data-reveal-order={String(i)}
+      >
         <h3>{n.title.en || n.title.zh || n.slug}</h3>
         {n.date && <p>{n.date}</p>}
       </a>
     ))}
   </div>
+  </section>
 </BaseLayout>

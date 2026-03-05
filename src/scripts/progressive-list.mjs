@@ -33,6 +33,7 @@ function setupProgressiveList(list) {
 
   let prepared = [];
   let isRendering = false;
+  let forceMaterializeAfterRender = false;
   let rafId = 0;
   let tailObserver = null;
   const sentinel = document.createElement('div');
@@ -107,6 +108,11 @@ function setupProgressiveList(list) {
     appendChunk(nodes, () => {
       isRendering = false;
       rafId = 0;
+      if (forceMaterializeAfterRender) {
+        forceMaterializeAfterRender = false;
+        materializeAll();
+        return;
+      }
       prepareNextBatch();
       scheduleTailTrigger();
     });
@@ -121,6 +127,37 @@ function setupProgressiveList(list) {
     }
     renderPreparedBatch();
   }
+
+  function materializeAll() {
+    if (isRendering) {
+      forceMaterializeAfterRender = true;
+      return;
+    }
+    if (!prepared.length && !reservoir.length) {
+      return;
+    }
+
+    if (tailObserver) {
+      tailObserver.disconnect();
+    }
+
+    const nodes = [...prepared, ...reservoir];
+    prepared = [];
+    reservoir.length = 0;
+
+    const frag = document.createDocumentFragment();
+    nodes.forEach((node) => {
+      node.classList.remove('is-visible');
+      node.style.removeProperty('--reveal-delay');
+      frag.appendChild(node);
+    });
+    list.appendChild(frag);
+    dispatchRevealRefresh(nodes);
+  }
+
+  list.__progressiveListApi = {
+    materializeAll,
+  };
 
   prepareNextBatch();
   scheduleTailTrigger();

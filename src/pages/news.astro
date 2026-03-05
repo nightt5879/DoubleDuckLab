@@ -11,12 +11,30 @@ const news = buildLocalizedNews(newsEntries).filter((item) => item.entry.zh);
     <h1 class="page-title">新闻动态</h1>
   </section>
 
+  <section class="filter-wrap" data-list-filter-root data-reveal>
+    <input
+      class="filter-input"
+      type="search"
+      data-list-search
+      placeholder="搜索新闻标题 / 日期 / 关键词..."
+      aria-label="搜索新闻"
+    />
+    <p class="empty-state" data-empty-state hidden>没有匹配新闻，请调整关键词。</p>
+
   <div class="grid">
     {news.map((n, i) => (
-      <a href={`/news/${n.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
+      <a
+        href={`/news/${n.slug}/`}
+        class="card card-hover card-link stack-sm"
+        data-list-card
+        data-search-text={`${n.title.zh || ''} ${n.title.en || ''} ${n.date || ''} ${n.slug}`}
+        data-reveal
+        data-reveal-order={String(i)}
+      >
         <h3>{n.title.zh || n.title.en || n.slug}</h3>
         {n.date && <p>{n.date}</p>}
       </a>
     ))}
   </div>
+  </section>
 </BaseLayout>
