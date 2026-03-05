@@ -22,11 +22,21 @@ function resolveProjectStatusTone(status: string) {
     <h1 class="page-title">项目</h1>
   </section>
 
-  <div class="grid grid-3 project-grid" data-reveal-group data-reveal-step="44">
-    {projects.map((item, i) => {
+  <div
+    class="grid grid-3 project-grid"
+    data-reveal-group
+    data-reveal-step="44"
+    data-progressive-list
+    data-initial-count="24"
+    data-batch-size="12"
+    data-remaining-threshold="12"
+    data-trigger-distance="850"
+    data-chunk-size="6"
+  >
+    {projects.map((item) => {
       const meta = projectDisplayMeta(item, 'zh');
       return (
-        <a href={`/projects/${item.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
+        <a href={`/projects/${item.slug}/`} class="card card-hover card-link stack-sm" data-progressive-item data-reveal>
           <h3>{meta.title}</h3>
           <div class="meta">
             {meta.tag && <span class="badge">{meta.tag}</span>}

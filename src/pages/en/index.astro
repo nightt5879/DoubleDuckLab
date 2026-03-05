@@ -10,6 +10,17 @@ const recentProjects = buildLocalizedProjects(projectEntries)
   .filter((item) => item.entry.overview.en)
   .slice(0, 3);
 const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
+
+function resolveProjectStatusTone(status: string) {
+  const value = (status || '').toLowerCase();
+  if (value.includes('completed') || value.includes('alumni') || value.includes('former') || value.includes('已完成') || value.includes('毕业')) {
+    return 'former';
+  }
+  if (value.includes('ongoing') || value.includes('active') || value.includes('current') || value.includes('进行中') || value.includes('在读')) {
+    return 'current';
+  }
+  return '';
+}
 ---
 <BaseLayout title="Home" lang="en" pathPrefix="/en">
   <section class="card hero hero-glow gradient-frame mb-5" data-reveal>
@@ -50,7 +61,7 @@ const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
           <h3>{p.title}</h3>
           <div class="meta">
             <span class="badge">{p.tag}</span>
-            <span class="badge-muted">{p.status}</span>
+            <span class={`status-chip status-${resolveProjectStatusTone(p.status)}`}>{p.status}</span>
           </div>
           <p>Focus area: {p.tag}. Current phase: {p.status}.</p>
         </article>

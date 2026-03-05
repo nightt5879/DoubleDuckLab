@@ -10,6 +10,17 @@ const recentProjects = buildLocalizedProjects(projectEntries)
   .filter((item) => item.entry.overview.zh)
   .slice(0, 3);
 const highlightLinks = ['/projects', '/papers', '/join'];
+
+function resolveProjectStatusTone(status: string) {
+  const value = (status || '').toLowerCase();
+  if (value.includes('已完成') || value.includes('毕业') || value.includes('离开') || value.includes('completed')) {
+    return 'former';
+  }
+  if (value.includes('进行中') || value.includes('在读') || value.includes('在职') || value.includes('ongoing') || value.includes('active')) {
+    return 'current';
+  }
+  return '';
+}
 ---
 <BaseLayout title="首页" lang="zh" pathPrefix="">
   <section class="card hero hero-glow gradient-frame mb-5" data-reveal>
@@ -50,7 +61,7 @@ const highlightLinks = ['/projects', '/papers', '/join'];
           <h3>{p.title}</h3>
           <div class="meta">
             <span class="badge">{p.tag}</span>
-            <span class="badge-muted">{p.status}</span>
+            <span class={`status-chip status-${resolveProjectStatusTone(p.status)}`}>{p.status}</span>
           </div>
           <p>聚焦于 {p.tag} 方向，当前阶段：{p.status}。</p>
         </article>

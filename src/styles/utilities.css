@@ -63,6 +63,11 @@
   }
 }
 
+.progressive-sentinel {
+  height: 1px;
+  width: 100%;
+}
+
 .member-card {
   transition: opacity var(--motion-mid) var(--ease-standard), transform var(--motion-mid) var(--ease-standard);
 }

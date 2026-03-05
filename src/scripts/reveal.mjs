@@ -1,9 +1,9 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const supportsObserver = 'IntersectionObserver' in window;
-const revealNodes = Array.from(document.querySelectorAll('[data-reveal]'));
 const delayMap = new WeakMap();
 const visibleQueue = new Set();
 let rafId = 0;
+let observer = null;
 
 function resolveDelay(el) {
   const directDelay = Number(el.getAttribute('data-reveal-delay') || '0');
@@ -34,8 +34,8 @@ function resolveDelay(el) {
   return 0;
 }
 
-function computeDelays() {
-  revealNodes.forEach((el) => {
+function computeDelays(nodes) {
+  nodes.forEach((el) => {
     delayMap.set(el, resolveDelay(el));
   });
 }
@@ -62,23 +62,30 @@ function enqueueVisible(el) {
   }
 }
 
-if (revealNodes.length > 0) {
-  computeDelays();
+function registerRevealNodes(nodes) {
+  if (!nodes || nodes.length === 0) {
+    return;
+  }
+
+  computeDelays(nodes);
 
   if (reduceMotion || !supportsObserver) {
-    revealNodes.forEach((el) => {
+    nodes.forEach((el) => {
       el.style.setProperty('--reveal-delay', '0ms');
       el.classList.add('is-visible');
     });
-  } else {
-    const observer = new IntersectionObserver(
+    return;
+  }
+
+  if (!observer) {
+    observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
             return;
           }
           enqueueVisible(entry.target);
-          observer.unobserve(entry.target);
+          observer?.unobserve(entry.target);
         });
       },
       {
@@ -87,7 +94,18 @@ if (revealNodes.length > 0) {
         threshold: 0.01,
       }
     );
-
-    revealNodes.forEach((el) => observer.observe(el));
   }
+
+  nodes.forEach((el) => observer?.observe(el));
 }
+
+const initialNodes = Array.from(document.querySelectorAll('[data-reveal]'));
+registerRevealNodes(initialNodes);
+
+window.addEventListener('reveal:refresh', (event) => {
+  const detail = event.detail;
+  const nodes = Array.isArray(detail?.nodes)
+    ? detail.nodes.filter((node) => node && node.nodeType === 1 && node.hasAttribute('data-reveal'))
+    : [];
+  registerRevealNodes(nodes);
+});

@@ -12,9 +12,19 @@ const papers = paperEntries
     <h1 class="page-title">Papers</h1>
   </section>
 
-  <div class="grid">
-    {papers.map((p, i) => (
-      <a href={`/en/papers/${p.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
+  <div
+    class="grid project-grid"
+    data-reveal-group
+    data-reveal-step="44"
+    data-progressive-list
+    data-initial-count="24"
+    data-batch-size="12"
+    data-remaining-threshold="12"
+    data-trigger-distance="850"
+    data-chunk-size="6"
+  >
+    {papers.map((p) => (
+      <a href={`/en/papers/${p.slug}/`} class="card card-hover card-link stack-sm" data-progressive-item data-reveal>
         <h3>{p.title}</h3>
         <p>{p.year} · {p.venue}</p>
         {p.authors && <p class="paper-authors">Authors: {p.authors}</p>}
