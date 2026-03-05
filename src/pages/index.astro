@@ -63,7 +63,6 @@ function resolveProjectStatusTone(status: string) {
             <span class="badge">{p.tag}</span>
             <span class={`status-chip status-${resolveProjectStatusTone(p.status)}`}>{p.status}</span>
           </div>
-          <p>聚焦于 {p.tag} 方向，当前阶段：{p.status}。</p>
         </article>
       )})}
     </div>
