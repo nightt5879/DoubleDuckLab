@@ -9,11 +9,15 @@
     "news": "News"
   },
   "home": {
-    "intro": "Goal: finalize visual language and information architecture locally before any server deployment.",
+    "intro": "A modern lab website template with bilingual content workflow and static deployment.",
+    "sections": {
+      "highlights": "Highlights",
+      "featuredProjects": "Featured Projects"
+    },
     "highlights": [
-      { "title": "Research", "desc": "Embodied AI / HCI / Robotics" },
-      { "title": "Recent Outputs", "desc": "8 papers in 2026, 2 open-source projects" },
-      { "title": "Join & Collaborate", "desc": "Internship, joint training, and industry collaboration welcome" }
+      { "title": "Research", "desc": "Embodied AI / HCI / Robotics, configurable by your own research tracks." },
+      { "title": "Recent Outputs", "desc": "Connected to papers, projects, and news modules with bilingual updates." },
+      { "title": "Recruitment & Collaboration", "desc": "Recruitment directions, collaboration modes, and contact channels are fully bilingual." }
     ],
     "quick": "Quick Links"
   }

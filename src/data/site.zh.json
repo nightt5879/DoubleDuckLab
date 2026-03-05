@@ -9,11 +9,15 @@
     "news": "新闻"
   },
   "home": {
-    "intro": "目标：先在本地把视觉风格与信息结构确定，再上线部署。",
+    "intro": "面向科研团队的现代化官网模板，支持双语内容与静态部署。",
+    "sections": {
+      "highlights": "重点信息",
+      "featuredProjects": "精选项目"
+    },
     "highlights": [
-      { "title": "研究方向", "desc": "Embodied AI / HCI / Robotics" },
-      { "title": "近期成果", "desc": "2026 已发表 8 篇论文，2 个开源项目" },
-      { "title": "招生与合作", "desc": "欢迎本科实习、联合培养、企业课题合作" }
+      { "title": "研究方向", "desc": "Embodied AI / HCI / Robotics，可按课题方向与进展灵活配置。" },
+      { "title": "近期成果", "desc": "按论文、项目与新闻模块联动展示，支持中英文独立更新。" },
+      { "title": "招生与合作", "desc": "招生方向、合作方式、联系方式均可双语配置。" }
     ],
     "quick": "快速入口"
   }

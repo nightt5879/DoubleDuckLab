@@ -15,15 +15,15 @@ const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
     <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.siteName}</h1>
     <p class="hero-subtitle" data-reveal data-reveal-delay="120">{t.home.intro}</p>
     <div class="hero-actions" data-reveal data-reveal-delay="180">
-      <a class="btn btn-primary" href="/en/projects">Explore Projects</a>
+      <a class="btn btn-primary" href="/en/papers">View Papers</a>
+      <a class="btn btn-ghost" href="/en/projects">Explore Projects</a>
       <a class="btn btn-ghost" href="/en/members">Meet Members</a>
     </div>
   </section>
 
   <section class="mb-5">
     <div class="page-head" data-reveal>
-      <h2 class="page-title">Highlights</h2>
-      <p class="page-subtitle">Core updates are displayed with lightweight motion and clear information hierarchy.</p>
+      <h2 class="page-title">{t.home.sections?.highlights ?? 'Highlights'}</h2>
     </div>
     <div class="grid grid-3" data-reveal-group>
       {t.home.highlights.map((h, i) => (
@@ -38,8 +38,7 @@ const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
 
   <section class="mb-5">
     <div class="page-head" data-reveal>
-      <h2 class="page-title">Featured Projects</h2>
-      <p class="page-subtitle">Reusing existing project data for a richer yet restrained homepage showcase.</p>
+      <h2 class="page-title">{t.home.sections?.featuredProjects ?? 'Featured Projects'}</h2>
     </div>
     <div class="grid grid-3" data-reveal-group>
       {featuredProjects.map((p, i) => (

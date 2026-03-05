@@ -15,14 +15,15 @@ const highlightLinks = ['/projects', '/papers', '/join'];
     <h1 class="hero-title" data-reveal data-reveal-delay="70">{t.siteName}</h1>
     <p class="hero-subtitle" data-reveal data-reveal-delay="120">{t.home.intro}</p>
     <div class="hero-actions" data-reveal data-reveal-delay="180">
-      <a class="btn btn-primary" href="/projects">查看项目</a>
+      <a class="btn btn-primary" href="/papers">查看论文</a>
+      <a class="btn btn-ghost" href="/projects">查看项目</a>
       <a class="btn btn-ghost" href="/members">了解成员</a>
     </div>
   </section>
 
   <section class="mb-5">
     <div class="page-head" data-reveal>
-      <h2 class="page-title">Highlights</h2>
+      <h2 class="page-title">{t.home.sections?.highlights ?? '重点信息'}</h2>
     </div>
     <div class="grid grid-3" data-reveal-group>
       {t.home.highlights.map((h, i) => (
@@ -37,7 +38,7 @@ const highlightLinks = ['/projects', '/papers', '/join'];
 
   <section class="mb-5">
     <div class="page-head" data-reveal>
-      <h2 class="page-title">Featured Projects</h2>
+      <h2 class="page-title">{t.home.sections?.featuredProjects ?? '精选项目'}</h2>
     </div>
     <div class="grid grid-3" data-reveal-group>
       {featuredProjects.map((p, i) => (

@@ -128,6 +128,44 @@ npm run preview
 
 ---
 
+## 🏠 首页文案配置（中英文）
+
+首页 Hero、Highlights、Featured Projects 标题都来自：
+
+- `src/data/site.zh.json`（中文）
+- `src/data/site.en.json`（英文）
+
+重点字段（两份文件都建议保持同结构）：
+
+```json
+{
+  "siteName": "DoubleDuckLab",
+  "home": {
+    "intro": "首页 Hero 副标题文案",
+    "sections": {
+      "highlights": "Highlights/重点信息 标题",
+      "featuredProjects": "Featured Projects/精选项目 标题"
+    },
+    "highlights": [
+      { "title": "研究方向", "desc": "研究方向描述" },
+      { "title": "近期成果", "desc": "近期成果描述" },
+      { "title": "招生与合作", "desc": "招生方向、合作方式、联系方式描述" }
+    ]
+  }
+}
+```
+
+说明：
+
+- 第 3 张卡可自定义标题（如“招生与合作 / Recruitment & Collaboration”）。
+- `highlights[].desc` 支持中英文独立配置，可分别写研究方向、近期成果、联系方式等信息。
+- 首页 CTA 默认顺序已调整为：
+  - 主按钮：查看论文 / View Papers
+  - 次按钮：查看项目 / Explore Projects
+  - 次按钮：了解成员 / Meet Members
+
+---
+
 ## 📄 Papers 内容配置
 
 论文内容使用 Astro Content Collections，文件位置：

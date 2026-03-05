@@ -1,5 +1,5 @@
 ---
-title: "Multimodal Tutor"
+title: "多模态助教"
 tag: "EdTech"
 status: "进行中"
 ---

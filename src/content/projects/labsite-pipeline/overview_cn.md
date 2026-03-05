@@ -1,5 +1,5 @@
 ---
-title: "LabSite Pipeline"
+title: "实验室网站流程"
 tag: "Infra"
 status: "已完成"
 links:
