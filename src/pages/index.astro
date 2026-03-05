@@ -60,7 +60,6 @@ function resolveProjectStatusTone(status: string) {
           <a class="card-link-overlay" href={`/projects/${item.slug}/`} aria-label={`查看项目 ${p.title}`}></a>
           <h3>{p.title}</h3>
           <div class="meta">
-            <span class="badge">{p.tag}</span>
             <span class={`status-chip status-${resolveProjectStatusTone(p.status)}`}>{p.status}</span>
           </div>
         </article>

@@ -44,7 +44,6 @@ const hasLinks = Boolean(links.repo || links.demo || links.paper);
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{meta.title}</h1>
       <div class="detail-meta">
-        {meta.tag && <span class="badge">{meta.tag}</span>}
         {meta.time && <span class="badge-muted">{meta.time}</span>}
         {meta.status && <span class={`status-chip status-${resolveProjectStatusTone(meta.status)}`}>{meta.status}</span>}
       </div>
