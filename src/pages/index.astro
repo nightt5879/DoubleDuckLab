@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteZh from '../data/site.zh.json';
-import projects from '../data/content/projects.json';
+import { getCollection } from 'astro:content';
+import { buildLocalizedProjects, projectDisplayMeta } from '../utils/projects-localized';
 
 const t = siteZh;
-const featuredProjects = projects.slice(0, 3).map((p) => ({
-  ...p,
-  slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-}));
+const projectEntries = await getCollection('projects');
+const recentProjects = buildLocalizedProjects(projectEntries)
+  .filter((item) => item.entry.overview.zh)
+  .slice(0, 3);
 const highlightLinks = ['/projects', '/papers', '/join'];
 ---
 <BaseLayout title="首页" lang="zh" pathPrefix="">
@@ -38,20 +39,22 @@ const highlightLinks = ['/projects', '/papers', '/join'];
 
   <section class="mb-5">
     <div class="page-head" data-reveal>
-      <h2 class="page-title">{t.home.sections?.featuredProjects ?? '精选项目'}</h2>
+      <h2 class="page-title">{t.home.sections?.recentProjects ?? t.home.sections?.featuredProjects ?? '最近项目'}</h2>
     </div>
     <div class="grid grid-3" data-reveal-group>
-      {featuredProjects.map((p, i) => (
+      {recentProjects.map((item, i) => {
+        const p = projectDisplayMeta(item, 'zh');
+        return (
         <article class="card card-hover card-clickable stack-sm" data-reveal data-reveal-order={String(i)}>
-          <a class="card-link-overlay" href={`/projects/${p.slug}/`} aria-label={`查看项目 ${p.title}`}></a>
+          <a class="card-link-overlay" href={`/projects/${item.slug}/`} aria-label={`查看项目 ${p.title}`}></a>
           <h3>{p.title}</h3>
           <div class="meta">
             <span class="badge">{p.tag}</span>
-            <span class="badge-muted">{p.status.zh}</span>
+            <span class="badge-muted">{p.status}</span>
           </div>
-          <p>聚焦于 {p.tag} 方向，当前阶段：{p.status.zh}。</p>
+          <p>聚焦于 {p.tag} 方向，当前阶段：{p.status}。</p>
         </article>
-      ))}
+      )})}
     </div>
   </section>
 

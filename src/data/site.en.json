@@ -12,7 +12,7 @@
     "intro": "A modern lab website template with bilingual content workflow and static deployment.",
     "sections": {
       "highlights": "Highlights",
-      "featuredProjects": "Featured Projects"
+      "recentProjects": "Recent Projects"
     },
     "highlights": [
       { "title": "Research", "desc": "Embodied AI / HCI / Robotics, configurable by your own research tracks." },

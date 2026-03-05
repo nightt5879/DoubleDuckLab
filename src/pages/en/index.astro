@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import siteEn from '../../data/site.en.json';
-import projects from '../../data/content/projects.json';
+import { getCollection } from 'astro:content';
+import { buildLocalizedProjects, projectDisplayMeta } from '../../utils/projects-localized';
 
 const t = siteEn;
-const featuredProjects = projects.slice(0, 3).map((p) => ({
-  ...p,
-  slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-}));
+const projectEntries = await getCollection('projects');
+const recentProjects = buildLocalizedProjects(projectEntries)
+  .filter((item) => item.entry.overview.en)
+  .slice(0, 3);
 const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
 ---
 <BaseLayout title="Home" lang="en" pathPrefix="/en">
@@ -38,20 +39,22 @@ const highlightLinks = ['/en/projects', '/en/papers', '/en/join'];
 
   <section class="mb-5">
     <div class="page-head" data-reveal>
-      <h2 class="page-title">{t.home.sections?.featuredProjects ?? 'Featured Projects'}</h2>
+      <h2 class="page-title">{t.home.sections?.recentProjects ?? t.home.sections?.featuredProjects ?? 'Recent Projects'}</h2>
     </div>
     <div class="grid grid-3" data-reveal-group>
-      {featuredProjects.map((p, i) => (
+      {recentProjects.map((item, i) => {
+        const p = projectDisplayMeta(item, 'en');
+        return (
         <article class="card card-hover card-clickable stack-sm" data-reveal data-reveal-order={String(i)}>
-          <a class="card-link-overlay" href={`/en/projects/${p.slug}/`} aria-label={`View project ${p.title}`}></a>
+          <a class="card-link-overlay" href={`/en/projects/${item.slug}/`} aria-label={`View project ${p.title}`}></a>
           <h3>{p.title}</h3>
           <div class="meta">
             <span class="badge">{p.tag}</span>
-            <span class="badge-muted">{p.status.en}</span>
+            <span class="badge-muted">{p.status}</span>
           </div>
-          <p>Focus area: {p.tag}. Current phase: {p.status.en}.</p>
+          <p>Focus area: {p.tag}. Current phase: {p.status}.</p>
         </article>
-      ))}
+      )})}
     </div>
   </section>
 

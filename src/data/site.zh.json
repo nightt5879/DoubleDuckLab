@@ -12,7 +12,7 @@
     "intro": "面向科研团队的现代化官网模板，支持双语内容与静态部署。",
     "sections": {
       "highlights": "重点信息",
-      "featuredProjects": "精选项目"
+      "recentProjects": "最近项目"
     },
     "highlights": [
       { "title": "研究方向", "desc": "Embodied AI / HCI / Robotics，可按课题方向与进展灵活配置。" },
