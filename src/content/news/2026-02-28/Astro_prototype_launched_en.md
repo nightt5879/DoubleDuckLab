@@ -1,0 +1,11 @@
+---
+date: "2026-02-28"
+---
+
+The prototype now includes bilingual routes, clickable detail pages, and baseline motion, making fast customization straightforward.
+
+At this stage, the priority is validating information architecture and end-to-end browsing flow, rather than filling all real content at once.
+
+In the next phase, we will gradually integrate real materials such as member profiles, project updates, paper abstracts, and full news articles while keeping route compatibility.
+
+![Prototype illustration](/news/news_template.png)

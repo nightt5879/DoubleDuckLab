@@ -387,6 +387,17 @@
   max-width: 76ch;
 }
 
+.news-article p {
+  max-width: 100%;
+}
+
+.news-article img {
+  display: block;
+  margin: 14px auto;
+  max-width: min(100%, 920px);
+  height: auto;
+}
+
 .news-contex {
   color: var(--text-soft);
   font-size: var(--text-sm);

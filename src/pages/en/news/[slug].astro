@@ -1,41 +1,45 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { buildLocalizedNews } from '../../../utils/news-localized';
 
 export async function getStaticPaths() {
   const allNews = await getCollection('news');
-  const sorted = allNews.sort((a, b) => b.data.date.localeCompare(a.data.date));
+  const localized = buildLocalizedNews(allNews).filter((item) => item.entry.en);
 
-  return sorted.map((entry) => ({
-    params: { slug: entry.slug },
-    props: {
-      entry,
-      related: sorted
-        .filter((n) => n.slug !== entry.slug)
-        .slice(0, 3)
-        .map((n) => ({ slug: n.slug, date: n.data.date, title: n.data.title.en })),
-    },
-  }));
+  return localized
+    .filter((item) => item.entry.en)
+    .map((item) => ({
+      params: { slug: item.slug },
+      props: {
+        entry: item.entry.en!,
+        title: item.title.en || item.title.zh || item.slug,
+        date: item.date,
+        related: localized
+          .filter((n) => n.slug !== item.slug)
+          .slice(0, 3)
+          .map((n) => ({
+            slug: n.slug,
+            date: n.date,
+            title: n.title.en || n.title.zh || n.slug,
+          })),
+      },
+    }));
 }
 
-const { entry, related } = Astro.props;
+const { entry, title, date, related } = Astro.props;
 const { Content } = await render(entry);
 ---
-<BaseLayout title={entry.data.title.en} lang="en" pathPrefix="/en">
+<BaseLayout title={title} lang="en" pathPrefix="/en">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
-      <h1 class="page-title">{entry.data.title.en}</h1>
+      <h1 class="page-title">{title}</h1>
       <div class="detail-meta">
-        <span class="badge-muted">{entry.data.date}</span>
+        {date && <span class="badge-muted">{date}</span>}
       </div>
     </article>
 
-    <article class="card detail-content" data-reveal>
-      {entry.data.contex?.en && (
-        <div class="detail-contex">
-          <p>{entry.data.contex.en}</p>
-        </div>
-      )}
+    <article class="card detail-content news-article" data-reveal>
       <Content />
     </article>
 

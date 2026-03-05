@@ -83,7 +83,8 @@ src/content/
 ```
 members/*.md
 papers/*.md
-news/*.md
+news/*/*_cn.md
+news/*/*_en.md
 ```
 
 修改这些文件即可更新网站内容。
@@ -193,6 +194,90 @@ bibtex: |
 ```text
 public/papers/xxx.pdf
 ```
+
+---
+
+## 📰 News 内容配置（双语 Markdown）
+
+新闻模块采用“每条新闻一个目录 + 中英文各一篇 Markdown”的逻辑。  
+你只要按下面 4 步操作，就会自动出现在新闻列表和详情页。
+
+### Step 1) 新建新闻目录（决定详情页 URL）
+
+```text
+src/content/news/<slug>/
+```
+
+`<slug>` 会直接作为详情页路径：
+
+- 中文：`/news/<slug>/`
+- 英文：`/en/news/<slug>/`
+
+示例：
+
+```text
+src/content/news/2026-02-20/
+```
+
+### Step 2) 在目录内放中英文两个文件（必须成对）
+
+```text
+src/content/news/<slug>/
+  实验室春季招新启动_cn.md
+  Spring_recruitment_started_en.md
+```
+
+命名规则：
+
+- 中文文件必须以 `_cn.md` 结尾
+- 英文文件必须以 `_en.md` 结尾
+- 文件名前半部分会作为该语言标题（`_` 会自动转空格）
+
+也就是说，上面示例最终标题会是：
+
+- 中文标题：`实验室春季招新启动`
+- 英文标题：`Spring recruitment started`
+
+### Step 3) 写正文（支持完整 Markdown）
+
+正文可以直接使用 Markdown 语法：
+
+- 段落、标题、列表
+- 图片、链接
+- 代码块、引用等
+
+可选 frontmatter（推荐保留 `date`）：
+
+```md
+---
+date: "2026-02-20"
+---
+```
+
+说明：
+
+- `date` 可选；不写时会尝试从目录名推断（如 `2026-02-20`）
+- 中英文正文互相独立，可分别编辑
+
+### Step 4) 图片资源放 public/news 并在正文引用
+
+建议目录：
+
+```text
+public/news/
+```
+
+在 Markdown 里这样写：
+
+```md
+![配图说明](/news/news_template.png)
+```
+
+### 常见问题
+
+- 只放了 `_cn.md` 或只放了 `_en.md`：该新闻不完整，建议始终成对维护。
+- 文件名后缀写成 `_zh.md`：不会被识别，必须是 `_cn.md`。
+- 图片不显示：确认路径是 `/news/xxx.png`，并且文件真实位于 `public/news/xxx.png`。
 
 ---
 

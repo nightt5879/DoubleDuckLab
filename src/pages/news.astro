@@ -1,16 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { buildLocalizedNews } from '../utils/news-localized';
 
 const newsEntries = await getCollection('news');
-const news = newsEntries
-  .map((e) => ({
-    slug: e.slug,
-    date: e.data.date,
-    title: e.data.title.zh,
-    contex: e.data.contex?.zh ?? ''
-  }))
-  .sort((a, b) => b.date.localeCompare(a.date));
+const news = buildLocalizedNews(newsEntries).filter((item) => item.entry.zh);
 ---
 <BaseLayout title="新闻" lang="zh" pathPrefix="">
   <section class="page-head" data-reveal>
@@ -20,13 +14,8 @@ const news = newsEntries
   <div class="grid">
     {news.map((n, i) => (
       <a href={`/news/${n.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
-        <h3>{n.title}</h3>
-        <p>{n.date}</p>
-        {n.contex && (
-          <div class="news-contex">
-            <p>{n.contex}</p>
-          </div>
-        )}
+        <h3>{n.title.zh || n.title.en || n.slug}</h3>
+        {n.date && <p>{n.date}</p>}
       </a>
     ))}
   </div>

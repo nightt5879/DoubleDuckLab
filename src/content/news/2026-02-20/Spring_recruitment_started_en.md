@@ -1,0 +1,11 @@
+---
+date: "2026-02-20"
+---
+
+Multiple openings are available for undergraduate and graduate students. Please send your CV and a short statement of research interests to `xxxx@xxxx.com`.
+
+This round mainly focuses on embodied AI, HCI, robot planning, and multimodal agents.
+
+In your email, it is recommended to include a brief self-introduction, relevant project links (for example GitHub), and preferred research topics.
+
+![Recruitment illustration](/news/news_template.png)
