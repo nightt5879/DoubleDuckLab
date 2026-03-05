@@ -193,7 +193,59 @@ function initListSearch() {
   });
 }
 
+function initListScrollMemory() {
+  const listPaths = new Set(['/projects', '/en/projects', '/papers', '/en/papers', '/news', '/en/news']);
+  const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+  if (!listPaths.has(currentPath)) {
+    return;
+  }
+
+  const posKey = `scroll:${currentPath}`;
+  const flagKey = `restore:${currentPath}`;
+
+  function restoreScroll(tries = 0) {
+    if (sessionStorage.getItem(flagKey) !== '1') {
+      return;
+    }
+
+    const saved = Number(sessionStorage.getItem(posKey) || '0');
+    const rootList = document.querySelector('[data-progressive-list]');
+    const api = rootList?.__progressiveListApi;
+
+    if (api && typeof api.materializeAll === 'function') {
+      api.materializeAll();
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          window.scrollTo(0, Number.isFinite(saved) ? saved : 0);
+          sessionStorage.removeItem(flagKey);
+        });
+      });
+      return;
+    }
+
+    if (tries < 8) {
+      window.setTimeout(() => restoreScroll(tries + 1), 60);
+      return;
+    }
+
+    window.scrollTo(0, Number.isFinite(saved) ? saved : 0);
+    sessionStorage.removeItem(flagKey);
+  }
+
+  restoreScroll();
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[data-remember-scroll-target]');
+    if (!link) {
+      return;
+    }
+    sessionStorage.setItem(posKey, String(window.scrollY || 0));
+    sessionStorage.setItem(flagKey, '1');
+  });
+}
+
 initThemeToggle();
 initMembersFilter();
 initCopyButtons();
 initListSearch();
+initListScrollMemory();
