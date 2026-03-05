@@ -9,9 +9,36 @@ const roleOrder = ['负责人 (PI)', '博士生', '硕士生', '研究助理'];
 const roleRank = new Map(roleOrder.map((role, index) => [role, index]));
 const currentStatuses = ['在读', '在职'];
 const formerStatuses = ['已毕业', '已离开'];
+const leadRoleKeywordsZh = ['负责人', '导师', '教授', 'pi'];
+
+function isLeadRoleZh(roleZh: string) {
+  const role = (roleZh || '').toLowerCase();
+  return leadRoleKeywordsZh.some((keyword) => role.includes(keyword));
+}
+
+function getRoleRankZh(roleZh: string) {
+  const exact = roleRank.get(roleZh);
+  if (typeof exact === 'number') {
+    return exact;
+  }
+  const role = (roleZh || '').toLowerCase();
+  if (isLeadRoleZh(roleZh)) {
+    return 0;
+  }
+  if (role.includes('博士')) {
+    return 1;
+  }
+  if (role.includes('硕士')) {
+    return 2;
+  }
+  if (role.includes('研究助理') || role.includes('助理') || role.includes('ra')) {
+    return 3;
+  }
+  return Number.MAX_SAFE_INTEGER;
+}
 
 function resolveStatusGroup(roleZh: string, statusZh: string) {
-  if (roleZh === '负责人 (PI)') {
+  if (isLeadRoleZh(roleZh)) {
     return 0;
   }
   if (currentStatuses.includes(statusZh)) {
@@ -45,11 +72,13 @@ const membersWithId = memberEntries
     if (groupA !== groupB) {
       return groupA - groupB;
     }
-    const rankA = roleRank.get(a.role.zh) ?? Number.MAX_SAFE_INTEGER;
-    const rankB = roleRank.get(b.role.zh) ?? Number.MAX_SAFE_INTEGER;
+    const rankA = getRoleRankZh(a.role.zh);
+    const rankB = getRoleRankZh(b.role.zh);
     return rankA - rankB || a.nameText.localeCompare(b.nameText);
   });
-const roles = ['全部', ...roleOrder.filter((role) => membersWithId.some((m) => m.role.zh === role))];
+const roleSet = new Set(membersWithId.map((m) => m.role.zh));
+const extraRoles = Array.from(roleSet).filter((role) => !roleOrder.includes(role)).sort();
+const roles = ['全部', ...roleOrder.filter((role) => roleSet.has(role)), ...extraRoles];
 
 ---
 <BaseLayout title="成员" lang="zh" pathPrefix="">
@@ -93,7 +122,7 @@ const roles = ['全部', ...roleOrder.filter((role) => membersWithId.some((m) =>
           data-reveal
           data-reveal-order={String(i)}
         >
-          {m.statusText && m.role.zh !== '负责人 (PI)' && (
+          {m.statusText && !isLeadRoleZh(m.role.zh) && (
             <span class={`member-status status-${resolveStatusTone(m.statusText)}`}>{m.statusText}</span>
           )}
           <img

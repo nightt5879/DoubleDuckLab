@@ -9,9 +9,36 @@ const roleOrder = ['PI', 'PhD', 'Master', 'RA'];
 const roleRank = new Map(roleOrder.map((role, index) => [role, index]));
 const currentStatuses = ['Current', 'Active'];
 const formerStatuses = ['Alumni', 'Former'];
+const leadRoleKeywordsEn = ['pi', 'advisor', 'professor', 'supervisor', 'faculty', 'director', 'lead'];
+
+function isLeadRoleEn(roleEn: string) {
+  const role = (roleEn || '').toLowerCase();
+  return leadRoleKeywordsEn.some((keyword) => role.includes(keyword));
+}
+
+function getRoleRankEn(roleEn: string) {
+  const exact = roleRank.get(roleEn);
+  if (typeof exact === 'number') {
+    return exact;
+  }
+  const role = (roleEn || '').toLowerCase();
+  if (isLeadRoleEn(roleEn)) {
+    return 0;
+  }
+  if (role.includes('phd') || role.includes('doctoral')) {
+    return 1;
+  }
+  if (role.includes('master')) {
+    return 2;
+  }
+  if (role === 'ra' || role.includes('research assistant') || role.includes('assistant')) {
+    return 3;
+  }
+  return Number.MAX_SAFE_INTEGER;
+}
 
 function resolveStatusGroup(roleEn: string, statusEn: string) {
-  if (roleEn === 'PI') {
+  if (isLeadRoleEn(roleEn)) {
     return 0;
   }
   if (currentStatuses.includes(statusEn)) {
@@ -45,11 +72,13 @@ const membersWithId = memberEntries
     if (groupA !== groupB) {
       return groupA - groupB;
     }
-    const rankA = roleRank.get(a.role.en) ?? Number.MAX_SAFE_INTEGER;
-    const rankB = roleRank.get(b.role.en) ?? Number.MAX_SAFE_INTEGER;
+    const rankA = getRoleRankEn(a.role.en);
+    const rankB = getRoleRankEn(b.role.en);
     return rankA - rankB || a.nameText.localeCompare(b.nameText);
   });
-const roles = ['All', ...roleOrder.filter((role) => membersWithId.some((m) => m.role.en === role))];
+const roleSet = new Set(membersWithId.map((m) => m.role.en));
+const extraRoles = Array.from(roleSet).filter((role) => !roleOrder.includes(role)).sort();
+const roles = ['All', ...roleOrder.filter((role) => roleSet.has(role)), ...extraRoles];
 
 ---
 <BaseLayout title="Members" lang="en" pathPrefix="/en">
@@ -93,7 +122,7 @@ const roles = ['All', ...roleOrder.filter((role) => membersWithId.some((m) => m.
           data-reveal
           data-reveal-order={String(i)}
         >
-          {m.statusText && m.role.en !== 'PI' && (
+          {m.statusText && !isLeadRoleEn(m.role.en) && (
             <span class={`member-status status-${resolveStatusTone(m.statusText)}`}>{m.statusText}</span>
           )}
           <img
