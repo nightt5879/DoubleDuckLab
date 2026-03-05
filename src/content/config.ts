@@ -56,4 +56,20 @@ const members = defineCollection({
   })
 });
 
-export const collections = { news, papers, members };
+const projects = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string().min(1).optional(),
+    tag: z.string().min(1).optional(),
+    status: z.string().min(1).optional(),
+    links: z
+      .object({
+        repo: z.string().min(1).optional(),
+        demo: z.string().min(1).optional(),
+        paper: z.string().min(1).optional()
+      })
+      .optional()
+  })
+});
+
+export const collections = { news, papers, members, projects };

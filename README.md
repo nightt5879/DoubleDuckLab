@@ -197,6 +197,73 @@ public/papers/xxx.pdf
 
 ---
 
+## Projects（prj）内容配置（双语 Markdown）
+
+项目模块采用“每个项目一个目录 + 中英文各两篇 Markdown（概览/背景）”的结构。
+
+目录结构：
+
+```text
+src/content/projects/<slug>/
+  overview_cn.md
+  overview_en.md
+  background_cn.md
+  background_en.md
+```
+
+说明：
+
+- `<slug>` 会作为项目详情页路径：`/projects/<slug>/` 与 `/en/projects/<slug>/`
+- `overview_*` 用于“项目概览”区块
+- `background_*` 用于“背景与目标”区块
+- 正文是标准 Markdown，支持图片、列表、代码块等
+
+`overview` 文件支持可选 frontmatter（建议写）：
+
+```md
+---
+title: "Project Orion"
+tag: "Embodied AI"
+status: "进行中"
+links:
+  repo: "https://github.com/xxx"
+  demo: "https://example.com/demo"
+  paper: "https://example.com/paper"
+---
+```
+
+显示逻辑：
+
+- 详情页固定保留：项目概览、背景与目标
+- `links` 三项（`repo/demo/paper`）全部可选
+- 三项都不写：`Links` 区块不显示
+- 只写某几项：只显示对应按钮
+- 列表卡片只显示上方 badge 状态，不再重复显示“项目状态：xxx”文案
+
+### 项目图片建议（prj）
+
+将项目图片放到：
+
+```text
+public/prj/
+```
+
+在项目 markdown 里引用：
+
+```md
+![项目配图](/prj/prj_template.png)
+```
+
+### 新增一个项目（最短步骤）
+
+1. 新建目录：`src/content/projects/my-new-project/`
+2. 放四个文件：`overview_cn.md`、`overview_en.md`、`background_cn.md`、`background_en.md`
+3. 在 `overview_cn.md / overview_en.md` 顶部填 `title/tag/status/links(可选)`
+4. 正文写 Markdown，图片放 `public/prj` 后用 `/prj/xxx.png` 引用
+5. 运行 `npm run build` 与 `npm run preview` 验证
+
+---
+
 ## 📰 News 内容配置（双语 Markdown）
 
 新闻模块采用“每条新闻一个目录 + 中英文各一篇 Markdown”的逻辑。  

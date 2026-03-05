@@ -9,12 +9,12 @@
     "slug": "labsite-pipeline",
     "title": "LabSite Pipeline",
     "tag": "Infra",
-    "status": { "zh": "原型阶段", "en": "Prototype" }
+    "status": { "zh": "已完成", "en": "Completed" }
   },
   {
     "slug": "multimodal-tutor",
     "title": "Multimodal Tutor",
     "tag": "EdTech",
-    "status": { "zh": "规划中", "en": "Planning" }
+    "status": { "zh": "进行中", "en": "Ongoing" }
   }
 ]

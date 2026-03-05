@@ -1,79 +1,69 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import projects from '../../data/content/projects.json';
+import { getCollection, render } from 'astro:content';
+import { buildLocalizedProjects, projectDisplayMeta } from '../../utils/projects-localized';
 
-export function getStaticPaths() {
-  return projects.map((p) => {
-    const slug = p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    return {
-      params: { slug },
-      props: { project: { ...p, slug } },
-    };
-  });
+export async function getStaticPaths() {
+  const allProjects = await getCollection('projects');
+  const localized = buildLocalizedProjects(allProjects).filter((item) => item.entry.overview.zh);
+
+  return localized.map((item) => ({
+    params: { slug: item.slug },
+    props: {
+      slug: item.slug,
+      overviewEntry: item.entry.overview.zh!,
+      backgroundEntry: item.entry.background.zh,
+      fallbackBackgroundEntry: item.entry.background.en,
+      meta: projectDisplayMeta(item, 'zh'),
+    },
+  }));
 }
 
-const { project } = Astro.props;
-const projectsWithSlug = projects.map((p) => ({
-  ...p,
-  slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-}));
+const { overviewEntry, backgroundEntry, fallbackBackgroundEntry, meta } = Astro.props;
+const { Content: OverviewContent } = await render(overviewEntry);
+const bgEntry = backgroundEntry || fallbackBackgroundEntry;
+const bgRender = bgEntry ? await render(bgEntry) : null;
+const BackgroundContent = bgRender?.Content;
 
-const sections = [
-  {
-    title: '项目概览',
-    body: '该页面为模板示例，用于演示项目详情的完整结构。后续可直接替换成真实项目背景、里程碑与团队分工。',
-  },
-  {
-    title: '背景与目标',
-    body: '当前示例中，项目目标聚焦在可迭代的系统落地：从需求定义、实验设计到评估标准，形成可复用流程。',
-  },
-  {
-    title: '方法与实现',
-    body: '方法部分包含数据采集、模块设计、训练/推理流程与可视化反馈。模板文案用于展示信息层级，不代表真实结论。',
-  },
-  {
-    title: '当前进展',
-    body: `当前状态：${project.status.zh}。已经完成基础模块串联与演示闭环，下一步可替换为真实实验记录与发布计划。`,
-  },
-];
-
-const related = projectsWithSlug.filter((p) => p.slug !== project.slug).slice(0, 3);
+const links = meta.links || {};
+const hasLinks = Boolean(links.repo || links.demo || links.paper);
 ---
-<BaseLayout title={project.title} lang="zh" pathPrefix="">
+<BaseLayout title={meta.title} lang="zh" pathPrefix="">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
-      <span class="badge-muted">项目详情模板</span>
-      <h1 class="page-title">{project.title}</h1>
+      <h1 class="page-title">{meta.title}</h1>
       <div class="detail-meta">
-        <span class="badge">{project.tag}</span>
-        <span class="badge-muted">{project.status.zh}</span>
+        {meta.tag && <span class="badge">{meta.tag}</span>}
+        {meta.status && <span class="badge-muted">{meta.status}</span>}
       </div>
     </article>
 
-    {sections.map((section) => (
+    <article class="card detail-section" data-reveal>
+      <h2>项目概览</h2>
+      <div class="detail-content news-article">
+        <OverviewContent />
+      </div>
+    </article>
+
+    {BackgroundContent && (
       <article class="card detail-section" data-reveal>
-        <h2>{section.title}</h2>
-        <p>{section.body}</p>
+        <h2>背景与目标</h2>
+        <div class="detail-content news-article">
+          <BackgroundContent />
+        </div>
       </article>
-    ))}
+    )}
 
-    <article class="card detail-section" data-reveal>
-      <h2>Links</h2>
-      <div class="detail-links">
-        <a class="btn btn-ghost" href="#">Repo</a>
-        <a class="btn btn-ghost" href="#">Demo</a>
-        <a class="btn btn-ghost" href="#">Paper</a>
-      </div>
-    </article>
-
-    <article class="card detail-section" data-reveal>
-      <h2>Related</h2>
-      <ul class="detail-list">
-        {related.map((item) => (
-          <li><a href={`/projects/${item.slug}/`}>{item.title}</a> · {item.status.zh}</li>
-        ))}
-      </ul>
-    </article>
+    {hasLinks && (
+      <article class="card detail-section" data-reveal>
+        <h2>Links</h2>
+        <div class="detail-links">
+          {links.repo && <a class="btn btn-ghost" href={links.repo} target="_blank" rel="noreferrer">Repo</a>}
+          {links.demo && <a class="btn btn-ghost" href={links.demo} target="_blank" rel="noreferrer">Demo</a>}
+          {links.paper && <a class="btn btn-ghost" href={links.paper} target="_blank" rel="noreferrer">Paper</a>}
+        </div>
+      </article>
+    )}
 
     <div class="back-row" data-reveal>
       <a class="btn btn-primary" href="/projects">返回项目列表</a>

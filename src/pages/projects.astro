@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import projects from '../data/content/projects.json';
+import { getCollection } from 'astro:content';
+import { buildLocalizedProjects, projectDisplayMeta } from '../utils/projects-localized';
 
-const projectsWithSlug = projects.map((p) => ({
-  ...p,
-  slug: p.slug ?? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-}));
+const projectEntries = await getCollection('projects');
+const projects = buildLocalizedProjects(projectEntries).filter((item) => item.entry.overview.zh);
 ---
 <BaseLayout title="项目" lang="zh" pathPrefix="">
   <section class="page-head" data-reveal>
@@ -14,15 +13,17 @@ const projectsWithSlug = projects.map((p) => ({
   </section>
 
   <div class="grid grid-3" data-reveal-group>
-    {projectsWithSlug.map((p, i) => (
-      <a href={`/projects/${p.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
-        <h3>{p.title}</h3>
-        <div class="meta">
-          <span class="badge">{p.tag}</span>
-          <span class="badge-muted">{p.status.zh}</span>
-        </div>
-        <p>项目状态：{p.status.zh}</p>
-      </a>
-    ))}
+    {projects.map((item, i) => {
+      const meta = projectDisplayMeta(item, 'zh');
+      return (
+        <a href={`/projects/${item.slug}/`} class="card card-hover card-link stack-sm" data-reveal data-reveal-order={String(i)}>
+          <h3>{meta.title}</h3>
+          <div class="meta">
+            {meta.tag && <span class="badge">{meta.tag}</span>}
+            {meta.status && <span class="badge-muted">{meta.status}</span>}
+          </div>
+        </a>
+      );
+    })}
   </div>
 </BaseLayout>
