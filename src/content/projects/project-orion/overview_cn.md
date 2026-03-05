@@ -1,6 +1,7 @@
 ---
 title: "猎户座项目"
 tag: "Embodied AI"
+time: "2026-2-20"
 status: "进行中"
 links:
   repo: "https://github.com/nightt5879/DoubleDuckLab"

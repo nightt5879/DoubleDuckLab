@@ -1,6 +1,7 @@
 ---
 title: "实验室网站流程"
 tag: "Infra"
+time: "2024"
 status: "已完成"
 links:
   repo: "https://github.com/nightt5879/DoubleDuckLab"

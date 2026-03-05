@@ -1,6 +1,7 @@
 ---
 title: "LabSite Pipeline"
 tag: "Infra"
+time: "2024"
 status: "Completed"
 links:
   repo: "https://github.com/nightt5879/DoubleDuckLab"

@@ -61,6 +61,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string().min(1).optional(),
     tag: z.string().min(1).optional(),
+    time: z.string().min(1).optional(),
     status: z.string().min(1).optional(),
     links: z
       .object({

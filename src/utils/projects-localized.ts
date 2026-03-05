@@ -9,6 +9,7 @@ type Section = 'overview' | 'background';
 type ProjectMeta = {
   title?: string;
   tag?: string;
+  time?: string;
   status?: string;
   links?: {
     repo?: string;
@@ -53,9 +54,30 @@ function extractMeta(entry?: ProjectEntry): ProjectMeta | undefined {
   return {
     title: data.title,
     tag: data.tag,
+    time: data.time,
     status: data.status,
     links: data.links,
   };
+}
+
+function parseProjectStartTime(value?: string): number {
+  if (!value) {
+    return -1;
+  }
+
+  // Supports: YYYY, YYYY-M, YYYY-M-D, and range-like text where only the first date is used.
+  const matched = value.trim().match(/^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?/);
+  if (!matched) {
+    return -1;
+  }
+
+  const year = Number(matched[1]);
+  const maybeMonth = matched[2] || '1';
+  const isYearRange = maybeMonth.length === 4;
+  const month = isYearRange ? 1 : Math.min(12, Math.max(1, Number(maybeMonth)));
+  const day = Math.min(31, Math.max(1, Number(matched[3] || '1')));
+  const ts = Date.UTC(year, month - 1, day);
+  return Number.isFinite(ts) ? ts : -1;
 }
 
 export function buildLocalizedProjects(entries: ProjectEntry[]): LocalizedProjectItem[] {
@@ -86,7 +108,14 @@ export function buildLocalizedProjects(entries: ProjectEntry[]): LocalizedProjec
     }
   });
 
-  return Array.from(grouped.values()).sort((a, b) => a.slug.localeCompare(b.slug));
+  return Array.from(grouped.values()).sort((a, b) => {
+    const aTime = parseProjectStartTime(a.meta.zh?.time || a.meta.en?.time);
+    const bTime = parseProjectStartTime(b.meta.zh?.time || b.meta.en?.time);
+    if (aTime !== bTime) {
+      return bTime - aTime;
+    }
+    return a.slug.localeCompare(b.slug);
+  });
 }
 
 export function projectDisplayMeta(item: LocalizedProjectItem, lang: Lang) {
@@ -97,6 +126,7 @@ export function projectDisplayMeta(item: LocalizedProjectItem, lang: Lang) {
   return {
     title: merged.title || item.slug,
     tag: merged.tag || '',
+    time: merged.time || '',
     status: merged.status || '',
     links: merged.links || {},
   };

@@ -1,6 +1,7 @@
 ---
 title: "Project Orion"
 tag: "Embodied AI"
+time: "2026-2-20"
 status: "Ongoing"
 links:
   repo: "https://github.com/nightt5879/DoubleDuckLab"

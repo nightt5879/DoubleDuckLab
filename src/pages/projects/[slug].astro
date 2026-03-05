@@ -34,6 +34,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.paper);
       <h1 class="page-title">{meta.title}</h1>
       <div class="detail-meta">
         {meta.tag && <span class="badge">{meta.tag}</span>}
+        {meta.time && <span class="badge-muted">{meta.time}</span>}
         {meta.status && <span class="badge-muted">{meta.status}</span>}
       </div>
     </article>
