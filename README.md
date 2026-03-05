@@ -7,11 +7,41 @@
   中文 | <a href="./README_EN.md">English</a>
 </p>
 
+- [🦆🦆 DoubleDuckLab (DDLab)](#-doubleducklab-ddlab)
+  - [项目特点](#项目特点)
+  - [在线访问](#在线访问)
+  - [项目预览](#项目预览)
+  - [快速开始](#快速开始)
+  - [内容编辑](#内容编辑)
+    - [修改站点品牌与网站名称](#修改站点品牌与网站名称)
+    - [首页文案配置（中英文）](#首页文案配置中英文)
+    - [招生与合作（Join）内容配置（双语 Markdown）](#招生与合作join内容配置双语-markdown)
+    - [Members 内容配置（含头像）](#members-内容配置含头像)
+      - [1) 最小模板（必填字段）](#1-最小模板必填字段)
+      - [2) 完整模板（含可选字段）](#2-完整模板含可选字段)
+      - [3) 头像自动匹配规则](#3-头像自动匹配规则)
+      - [4) 成员排序规则（默认）](#4-成员排序规则默认)
+    - [项目（project）内容配置（双语 Markdown）](#项目project内容配置双语-markdown)
+      - [项目图片建议（prj）](#项目图片建议prj)
+      - [新增一个项目（最短步骤）](#新增一个项目最短步骤)
+    - [Papers 内容配置](#papers-内容配置)
+    - [News 内容配置（双语 Markdown）](#news-内容配置双语-markdown)
+      - [1) 新建新闻目录（决定详情页 URL）](#1-新建新闻目录决定详情页-url)
+      - [2) 在目录内放中英文两个文件（必须成对）](#2-在目录内放中英文两个文件必须成对)
+      - [3) 写正文（支持完整 Markdown）](#3-写正文支持完整-markdown)
+      - [4) 图片资源放 public/news 并在正文引用](#4-图片资源放-publicnews-并在正文引用)
+      - [news模块常见问题](#news模块常见问题)
+  - [部署](#部署)
+  - [🗺 Roadmap](#-roadmap)
+  - [贡献](#贡献)
+  - [开源协议](#开源协议)
+  - [关于项目名称](#关于项目名称)
+
 一个基于 **Astro** 构建的现代化课题组官网模板，
 为**科研团队**设计。
 
 
-## 🦆🦆 项目特点
+##  项目特点
 
 *  基于 **Astro** 构建，静态生成，速度极快
 *  **JSON / Markdown 内容驱动**，无需后端
@@ -20,10 +50,10 @@
 *  **深色 / 浅色模式**
 *  可直接部署到 **Cloudflare Pages / Vercel**
 
-## 🦆🦆 在线访问
+##  在线访问
 👉 https://doubleducklab.com
 
-## 🦆🦆 项目预览
+##  项目预览
 
 <p align="center">
   <a href="https://doubleducklab.com" target="_blank">
@@ -40,7 +70,7 @@
 
 ---
 
-## 🦆🦆 快速开始
+##  快速开始
 
 克隆项目：
 
@@ -73,7 +103,7 @@ http://localhost:4321
 
 ---
 
-## 🦆🦆 内容编辑
+##  内容编辑
 
 网站主要内容存储在：
 
@@ -88,12 +118,13 @@ members/*.md
 papers/*.md
 news/*/*_cn.md
 news/*/*_en.md
+project/
 join/*/overview_cn.md
 join/*/overview_en/md
 ```
 
 修改这些文件即可更新网站内容。接下来将从主页开始讲解能修改的内容：
-###  🦆🦆🦆 修改站点品牌与网站名称
+###  修改站点品牌与网站名称
 
 - `brand`：用于左上角品牌（Header）
 - `siteName`：用于首页 Hero 标题和浏览器标签页标题（`<title>`）
@@ -125,7 +156,7 @@ src/data/site.zh.json
 npm run build
 npm run preview
 ```
-###  🦆🦆🦆 首页文案配置（中英文）
+###  首页文案配置（中英文）
 
 首页 Hero、Highlights、Featured Projects 标题都来自：
 
@@ -153,7 +184,7 @@ npm run preview
 ```
 
 
-### 🦆🦆🦆 招生与合作（Join）内容配置（双语 Markdown）
+### 招生与合作（Join）内容配置（双语 Markdown）
 
 `/join` 与 `/en/join` 采用 Markdown 内容驱动，路径如下：
 
@@ -170,7 +201,7 @@ src/content/join/recruitment/
 - `frontmatter.title` 可选，用于页面主标题
 - 正文支持完整 Markdown（列表、图片、代码块等）
 
-### 🦆🦆🦆 Members 内容配置（含头像）
+### Members 内容配置（含头像）
 
 成员内容使用 Astro Content Collections，文件位置：
 
@@ -318,7 +349,7 @@ links:
 - 只写某几项：只显示对应按钮
 - 列表卡片只显示上方 badge 状态，不再重复显示“项目状态：xxx”文案
 
-### 项目图片建议（prj）
+#### 项目图片建议（prj）
 
 将项目图片放到：
 
@@ -333,7 +364,7 @@ public/prj/
 ```
 或者也可以单独一个项目创建一个文件夹方便管理
 
-### 新增一个项目（最短步骤）
+#### 新增一个项目（最短步骤）
 
 1. 新建目录：`src/content/projects/my-new-project/`
 2. 放四个文件：`overview_cn.md`、`overview_en.md`、`background_cn.md`、`background_en.md`
@@ -343,7 +374,7 @@ public/prj/
 
 ---
 
-###  🦆🦆🦆Papers 内容配置
+### Papers 内容配置
 
 论文内容使用 Astro Content Collections，文件位置：
 
@@ -412,12 +443,12 @@ public/papers/xxx.pdf
 
 
 
-#### 🦆🦆🦆 News 内容配置（双语 Markdown）
+### News 内容配置（双语 Markdown）
 
 新闻模块采用“每条新闻一个目录 + 中英文各一篇 Markdown”的逻辑。  
 你只要按下面 4 步操作，就会自动出现在新闻列表和详情页。
 
-### Step 1) 新建新闻目录（决定详情页 URL）
+#### 1) 新建新闻目录（决定详情页 URL）
 
 ```text
 src/content/news/<slug>/
@@ -434,7 +465,7 @@ src/content/news/<slug>/
 src/content/news/2026-02-20/
 ```
 
-### Step 2) 在目录内放中英文两个文件（必须成对）
+#### 2) 在目录内放中英文两个文件（必须成对）
 
 ```text
 src/content/news/<slug>/
@@ -453,7 +484,7 @@ src/content/news/<slug>/
 - 中文标题：`实验室春季招新启动`
 - 英文标题：`Spring recruitment started`
 
-### Step 3) 写正文（支持完整 Markdown）
+#### 3) 写正文（支持完整 Markdown）
 
 正文可以直接使用 Markdown 语法：
 
@@ -472,7 +503,7 @@ date: "2026-02-20"
 - `date` 可选；不写时会尝试从目录名推断（如 `2026-02-20`）
 - 中英文正文互相独立，可分别编辑
 
-### Step 4) 图片资源放 public/news 并在正文引用
+#### 4) 图片资源放 public/news 并在正文引用
 
 建议目录：
 
@@ -487,14 +518,14 @@ public/news/
 ```
 与project一样，是可以分具体的小文件，方便进行管理
 
-#### 常见问题
+#### news模块常见问题
 
 - 只放了 `_cn.md` 或只放了 `_en.md`：该新闻不完整。
 - 文件名后缀写成 `_zh.md`：不会被识别，必须是 `_cn.md`。
 - 图片不显示：确认路径是 `/news/xxx.png`，并且文件真实位于 `public/news/xxx.png`。
 
 
-## 🦆🦆 部署
+## 部署
 
 推荐使用 **Cloudflare Pages**。
 
@@ -509,7 +540,7 @@ npm run build
 ```
 dist
 ```
-
+上面两行指令就完成了网站的静态编译，接下来会从0开始完成使用cloudflare pages进行配置，具体[请点这里](docs/cloudflare_pages_use.md)
 ## 🗺 Roadmap
 
 计划中的功能：
@@ -520,15 +551,15 @@ dist
 
 ---
 
-## 🦆🦆 贡献
+## 贡献
 
 欢迎提交 Issue 或 Pull Request。
 
-## 🦆🦆 开源协议
+## 开源协议
 
 MIT License
 
-## 🦆🦆 关于项目名称
+## 关于项目名称
 
 **DoubleDuckLab** 来源于中山大学的一个网络昵称 “双鸭山大学”。
 
