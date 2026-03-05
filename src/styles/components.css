@@ -426,6 +426,35 @@
   gap: 8px;
 }
 
+.member-email {
+  max-width: min(100%, 340px);
+  min-height: 40px;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-soft);
+  padding: 10px 12px;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-fast) var(--ease-standard);
+}
+
+.member-email:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+  background: rgba(125, 167, 255, 0.08);
+}
+
 .bibtex-details {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
@@ -520,6 +549,10 @@
   background: rgba(125, 167, 255, 0.18);
 }
 
+.member-card {
+  position: relative;
+}
+
 .member-avatar-lg {
   width: 104px;
   height: 104px;
@@ -529,6 +562,42 @@
 
 .member-role {
   margin-top: 8px;
+}
+
+.member-status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  line-height: 1;
+  border: 1px solid transparent;
+  backdrop-filter: blur(3px);
+}
+
+.member-status.status-current {
+  color: #d6e7ff;
+  background: rgba(87, 146, 255, 0.18);
+  border-color: rgba(118, 170, 255, 0.35);
+}
+
+.member-status.status-former {
+  color: #dbffe8;
+  background: rgba(64, 182, 129, 0.16);
+  border-color: rgba(98, 206, 153, 0.34);
+}
+
+[data-theme='light'] .member-status.status-current {
+  color: #1f4f9b;
+  background: rgba(87, 146, 255, 0.18);
+  border-color: rgba(87, 146, 255, 0.38);
+}
+
+[data-theme='light'] .member-status.status-former {
+  color: #0f6a49;
+  background: rgba(64, 182, 129, 0.2);
+  border-color: rgba(64, 182, 129, 0.4);
 }
 
 .empty-state {

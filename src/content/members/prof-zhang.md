@@ -16,4 +16,5 @@ links:
   scholar: "https://scholar.google.com/"
   github: "https://github.com/nightt5879"
   homepage: "https://doubleducklab.com/"
+  email: "zhang@xxx.com"
 ---

@@ -81,10 +81,9 @@ src/content/
 例如：
 
 ```
-members.json
-projects.json
-papers.json
-news.json
+members/*.md
+papers/*.md
+news/*.md
 ```
 
 修改这些文件即可更新网站内容。
@@ -194,6 +193,117 @@ bibtex: |
 ```text
 public/papers/xxx.pdf
 ```
+
+---
+
+## 👥 Members 内容配置（含头像）
+
+成员内容使用 Astro Content Collections，文件位置：
+
+```text
+src/content/members/*.md
+```
+
+头像资源目录：
+
+```text
+public/member/images/
+```
+
+默认头像（未匹配到成员头像时使用）：
+
+```text
+public/images/avatar-default.png
+```
+
+### 1) 最小模板（必填字段）
+
+```md
+---
+id: "zhang-wei"
+name:
+  zh: "张伟"
+  en: "Wei Zhang"
+role:
+  zh: "博士生"
+  en: "PhD"
+area:
+  zh: "多模态智能体"
+  en: "Multimodal Agents"
+---
+```
+
+### 2) 完整模板（含可选字段）
+
+```md
+---
+id: "li-ming"
+name:
+  zh: "李明"
+  en: "Ming Li"
+role:
+  zh: "硕士生"
+  en: "Master"
+status:
+  zh: "在读"
+  en: "Current"
+area:
+  zh: "机器人规划"
+  en: "Robot Planning"
+bio:
+  zh: "研究方向聚焦于机器人规划与控制。"
+  en: "Focused on robot planning and control."
+avatar: "/member/images/custom-li-ming.png"
+links:
+  scholar: "https://scholar.google.com/"
+  github: "https://github.com/yourname"
+  homepage: "https://example.com"
+  email: "liming@xxx.com"
+---
+```
+
+字段说明：
+
+- 必填：`id`、`name.zh/en`、`role.zh/en`、`area.zh/en`
+- 可选：`status`、`bio`、`avatar`、`links`
+- `links` 子字段可选：`scholar`、`github`、`homepage`、`email`
+
+显示规则（不填即不显示）：
+
+- 不写 `bio`：详情页不显示简介区块
+- `links` 四项都不写：详情页不显示 Links 区块
+- `links.email` 写了：详情页显示完整邮箱文本，可点击复制，长邮箱会自动换行
+- 不写 `status`：列表卡片右上角不显示状态角标（PI 默认也不显示）
+
+### 3) 头像自动匹配规则
+
+如果没有写 `avatar`，系统会自动按 **name** 去找同名头像：
+
+```text
+public/member/images/<name>.png
+public/member/images/<name>.jpg
+public/member/images/<name>.svg
+```
+
+示例：
+
+- `name.zh: "张教授"` -> `public/member/images/张教授.png`
+- `name.en: "Prof. Zhang"` -> `public/member/images/Prof. Zhang.jpg`
+
+支持中文文件名。
+
+### 4) 成员排序规则（默认）
+
+列表页默认按以下顺序展示：
+
+1. PI（负责人）
+2. 在组成员：PhD -> Master -> RA
+3. 离组成员：PhD -> Master -> RA
+
+状态角标颜色：
+
+- 蓝色：`在读 / 在职`（`Current / Active`）
+- 绿色：`已毕业 / 已离开`（`Alumni / Former`）
 
 ---
 

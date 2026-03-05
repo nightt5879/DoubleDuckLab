@@ -6,6 +6,9 @@ name:
 role:
   zh: "博士生"
   en: "PhD"
+status:
+  zh: "在读"
+  en: "Current"
 area:
   zh: "视觉-语言智能体"
   en: "Vision-Language Agents"
@@ -14,4 +17,5 @@ bio:
   en: "Works on multimodal perception and reasoning for vision-language agents."
 links:
   github: "https://github.com/nightt5879"
+  email: "alice@xxx.com"
 ---

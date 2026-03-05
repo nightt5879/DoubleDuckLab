@@ -7,6 +7,28 @@ import { pickI18nText } from '../../utils/i18n-text';
 const memberEntries = await getCollection('members');
 const roleOrder = ['PI', 'PhD', 'Master', 'RA'];
 const roleRank = new Map(roleOrder.map((role, index) => [role, index]));
+const currentStatuses = ['Current', 'Active'];
+const formerStatuses = ['Alumni', 'Former'];
+
+function resolveStatusGroup(roleEn: string, statusEn: string) {
+  if (roleEn === 'PI') {
+    return 0;
+  }
+  if (currentStatuses.includes(statusEn)) {
+    return 1;
+  }
+  if (formerStatuses.includes(statusEn)) {
+    return 2;
+  }
+  return 1;
+}
+
+function resolveStatusTone(statusEn: string) {
+  if (formerStatuses.includes(statusEn)) {
+    return 'former';
+  }
+  return 'current';
+}
 
 const membersWithId = memberEntries
   .map((e) => ({
@@ -14,9 +36,15 @@ const membersWithId = memberEntries
     id: e.data.id ?? e.slug,
     nameText: pickI18nText(e.data.name, 'en'),
     areaText: pickI18nText(e.data.area, 'en'),
+    statusText: pickI18nText(e.data.status, 'en'),
     avatarResolved: resolveMemberAvatar(e.data),
   }))
   .sort((a, b) => {
+    const groupA = resolveStatusGroup(a.role.en, a.statusText);
+    const groupB = resolveStatusGroup(b.role.en, b.statusText);
+    if (groupA !== groupB) {
+      return groupA - groupB;
+    }
     const rankA = roleRank.get(a.role.en) ?? Number.MAX_SAFE_INTEGER;
     const rankB = roleRank.get(b.role.en) ?? Number.MAX_SAFE_INTEGER;
     return rankA - rankB || a.nameText.localeCompare(b.nameText);
@@ -65,6 +93,9 @@ const roles = ['All', ...roleOrder.filter((role) => membersWithId.some((m) => m.
           data-reveal
           data-reveal-order={String(i)}
         >
+          {m.statusText && m.role.en !== 'PI' && (
+            <span class={`member-status status-${resolveStatusTone(m.statusText)}`}>{m.statusText}</span>
+          )}
           <img
             class="member-avatar"
             src={m.avatarResolved}

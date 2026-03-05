@@ -51,6 +51,7 @@ const members = defineCollection({
       zh: z.string().min(1),
       en: z.string().min(1)
     }),
+    status: z.union([z.string().min(1), i18nText]).optional(),
     area: z.union([z.string().min(1), i18nText]),
     avatar: z.string().min(1).optional(),
     bio: z.union([z.string().min(1), i18nText]).optional(),
@@ -58,7 +59,8 @@ const members = defineCollection({
       .object({
         scholar: z.string().min(1).optional(),
         github: z.string().min(1).optional(),
-        homepage: z.string().min(1).optional()
+        homepage: z.string().min(1).optional(),
+        email: z.string().min(1).optional()
       })
       .optional()
   })

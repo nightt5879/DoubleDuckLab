@@ -20,7 +20,7 @@ const nameText = pickI18nText(member.name, 'en');
 const areaText = pickI18nText(member.area, 'en');
 const bio = pickI18nText(member.bio, 'en');
 const links = member.links;
-const hasLinks = Boolean(links?.scholar || links?.github || links?.homepage);
+const hasLinks = Boolean(links?.scholar || links?.github || links?.homepage || links?.email);
 ---
 <BaseLayout title={nameText} lang="en" pathPrefix="/en">
   <section class="detail-shell">
@@ -55,6 +55,18 @@ const hasLinks = Boolean(links?.scholar || links?.github || links?.homepage);
           {links?.scholar && <a class="btn btn-ghost" href={links.scholar} target="_blank" rel="noreferrer">Google Scholar</a>}
           {links?.github && <a class="btn btn-ghost" href={links.github} target="_blank" rel="noreferrer">GitHub</a>}
           {links?.homepage && <a class="btn btn-ghost" href={links.homepage} target="_blank" rel="noreferrer">Homepage</a>}
+          {links?.email && (
+            <button
+              class="member-email"
+              type="button"
+              data-copy-text={links.email}
+              data-copy-label={links.email}
+              data-copy-success="Copied"
+              title="Click to copy email"
+            >
+              {links.email}
+            </button>
+          )}
         </div>
       </article>
     )}
