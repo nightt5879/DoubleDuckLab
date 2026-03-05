@@ -21,6 +21,16 @@ function resolveProjectStatusTone(status: string) {
   }
   return '';
 }
+
+function formatPreviewTimeRange(value: string) {
+  const years = (value || '').match(/\d{4}/g) || [];
+  if (!years.length) {
+    return '';
+  }
+  const start = years[0];
+  const end = years[1] || years[0];
+  return `${start}-${end}`;
+}
 ---
 <BaseLayout title="首页" lang="zh" pathPrefix="">
   <section class="card hero hero-glow gradient-frame mb-5" data-reveal>
@@ -60,6 +70,7 @@ function resolveProjectStatusTone(status: string) {
           <a class="card-link-overlay" href={`/projects/${item.slug}/`} aria-label={`查看项目 ${p.title}`}></a>
           <h3>{p.title}</h3>
           <div class="meta">
+            {p.time && <span class="badge-muted">{formatPreviewTimeRange(p.time)}</span>}
             <span class={`status-chip status-${resolveProjectStatusTone(p.status)}`}>{p.status}</span>
           </div>
         </article>
