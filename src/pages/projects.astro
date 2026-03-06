@@ -46,13 +46,15 @@ function formatPreviewTimeRange(value: string) {
     class="grid grid-3 project-grid"
     data-list-intro
   >
-    {projects.map((item) => {
+    {projects.map((item, i) => {
       const meta = projectDisplayMeta(item, 'zh');
       return (
         <a
           href={`/projects/${item.slug}/`}
           class="card card-hover card-link stack-sm"
           data-list-intro-item
+          {...(i < 32 ? { 'data-list-intro-active': true } : {})}
+          style={i < 32 ? `--list-intro-delay: ${(i % 8) * 36}ms;` : undefined}
           data-list-card
           data-search-text={`${meta.title} ${meta.status} ${meta.time} ${meta.tag || ''}`}
         >

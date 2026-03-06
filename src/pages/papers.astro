@@ -26,11 +26,13 @@ const papers = paperEntries
     class="grid project-grid"
     data-list-intro
   >
-    {papers.map((p) => (
+    {papers.map((p, i) => (
       <a
         href={`/papers/${p.slug}/`}
         class="card card-hover card-link stack-sm"
         data-list-intro-item
+        {...(i < 8 ? { 'data-list-intro-active': true } : {})}
+        style={i < 8 ? `--list-intro-delay: ${(i % 4) * 40}ms;` : undefined}
         data-list-card
         data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
       >
