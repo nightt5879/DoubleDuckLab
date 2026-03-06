@@ -46,12 +46,6 @@ function formatPreviewTimeRange(value: string) {
     class="grid grid-3 project-grid"
     data-reveal-group
     data-reveal-step="44"
-    data-progressive-list
-    data-initial-count="24"
-    data-batch-size="12"
-    data-remaining-threshold="12"
-    data-trigger-distance="850"
-    data-chunk-size="6"
   >
     {projects.map((item) => {
       const meta = projectDisplayMeta(item, 'en');
@@ -59,7 +53,6 @@ function formatPreviewTimeRange(value: string) {
         <a
           href={`/en/projects/${item.slug}/`}
           class="card card-hover card-link stack-sm"
-          data-progressive-item
           data-list-card
           data-search-text={`${meta.title} ${meta.status} ${meta.time} ${meta.tag || ''}`}
           data-reveal

@@ -235,7 +235,46 @@ function initListSearch() {
   });
 }
 
+function initHistoryBackLinks() {
+  const links = Array.from(document.querySelectorAll('a[data-history-back]'));
+  if (!links.length) {
+    return;
+  }
+
+  function normalizePath(value) {
+    return (value || '/').replace(/\/+$/, '') || '/';
+  }
+
+  function cameFromTarget(targetPath) {
+    if (!document.referrer) {
+      return false;
+    }
+
+    try {
+      const refUrl = new URL(document.referrer);
+      if (refUrl.origin !== window.location.origin) {
+        return false;
+      }
+      return normalizePath(refUrl.pathname) === normalizePath(targetPath);
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  links.forEach((link) => {
+    const href = link.getAttribute('href') || '';
+    link.addEventListener('click', (event) => {
+      if (!href || !cameFromTarget(href) || window.history.length <= 1) {
+        return;
+      }
+      event.preventDefault();
+      window.history.back();
+    });
+  });
+}
+
 initThemeToggle();
 initMembersFilter();
 initCopyButtons();
 initListSearch();
+initHistoryBackLinks();

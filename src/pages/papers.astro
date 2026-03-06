@@ -26,19 +26,11 @@ const papers = paperEntries
     class="grid project-grid"
     data-reveal-group
     data-reveal-step="44"
-    data-progressive-list
-    data-progressive-show-immediate
-    data-initial-count="16"
-    data-batch-size="16"
-    data-remaining-threshold="24"
-    data-trigger-distance="1200"
-    data-chunk-size="16"
   >
     {papers.map((p) => (
       <a
         href={`/papers/${p.slug}/`}
         class="card card-hover card-link stack-sm"
-        data-progressive-item
         data-list-card
         data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
         data-reveal
