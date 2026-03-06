@@ -24,8 +24,6 @@ const papers = paperEntries
 
   <div
     class="grid project-grid"
-    data-reveal-group
-    data-reveal-step="44"
   >
     {papers.map((p) => (
       <a
@@ -33,7 +31,6 @@ const papers = paperEntries
         class="card card-hover card-link stack-sm"
         data-list-card
         data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
-        data-reveal
       >
         <h3>{p.title}</h3>
         <p>{p.year} · {p.venue}</p>

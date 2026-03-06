@@ -44,8 +44,6 @@ function formatPreviewTimeRange(value: string) {
 
   <div
     class="grid grid-3 project-grid"
-    data-reveal-group
-    data-reveal-step="44"
   >
     {projects.map((item) => {
       const meta = projectDisplayMeta(item, 'en');
@@ -55,7 +53,6 @@ function formatPreviewTimeRange(value: string) {
           class="card card-hover card-link stack-sm"
           data-list-card
           data-search-text={`${meta.title} ${meta.status} ${meta.time} ${meta.tag || ''}`}
-          data-reveal
         >
           <h3>{meta.title}</h3>
           <div class="meta">

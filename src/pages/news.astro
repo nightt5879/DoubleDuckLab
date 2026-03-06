@@ -28,8 +28,6 @@ const news = buildLocalizedNews(newsEntries).filter((item) => item.entry.zh);
         class="card card-hover card-link stack-sm"
         data-list-card
         data-search-text={`${n.title.zh || ''} ${n.title.en || ''} ${n.date || ''} ${n.slug}`}
-        data-reveal
-        data-reveal-order={String(i)}
       >
         <h3>{n.title.zh || n.title.en || n.slug}</h3>
         {n.date && <p>{n.date}</p>}
