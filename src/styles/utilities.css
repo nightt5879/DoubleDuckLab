@@ -55,6 +55,37 @@
   contain: layout paint style;
 }
 
+@keyframes listIntroIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.js [data-list-intro] > [data-list-intro-item] {
+  opacity: 1;
+  transform: none;
+}
+
+.js [data-list-intro] > [data-list-intro-item]:nth-child(-n + 8) {
+  opacity: 0;
+  transform: translateY(12px) scale(0.992);
+  animation: listIntroIn 420ms var(--ease-standard) both;
+}
+
+.js [data-list-intro] > [data-list-intro-item]:nth-child(1) { animation-delay: 0ms; }
+.js [data-list-intro] > [data-list-intro-item]:nth-child(2) { animation-delay: 40ms; }
+.js [data-list-intro] > [data-list-intro-item]:nth-child(3) { animation-delay: 80ms; }
+.js [data-list-intro] > [data-list-intro-item]:nth-child(4) { animation-delay: 120ms; }
+.js [data-list-intro] > [data-list-intro-item]:nth-child(5) { animation-delay: 160ms; }
+.js [data-list-intro] > [data-list-intro-item]:nth-child(6) { animation-delay: 200ms; }
+.js [data-list-intro] > [data-list-intro-item]:nth-child(7) { animation-delay: 240ms; }
+.js [data-list-intro] > [data-list-intro-item]:nth-child(8) { animation-delay: 280ms; }
+
 @supports (content-visibility: auto) {
   .project-grid > * {
     content-visibility: auto;
@@ -99,6 +130,12 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .js [data-list-intro] > [data-list-intro-item]:nth-child(-n + 8) {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 
   .member-card.is-filter-visible {

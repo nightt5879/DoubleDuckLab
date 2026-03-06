@@ -21,11 +21,12 @@ const news = buildLocalizedNews(newsEntries).filter((item) => item.entry.zh);
     />
     <p class="empty-state" data-empty-state hidden>没有匹配新闻，请调整关键词。</p>
 
-  <div class="grid">
+  <div class="grid" data-list-intro>
     {news.map((n, i) => (
       <a
         href={`/news/${n.slug}/`}
         class="card card-hover card-link stack-sm"
+        data-list-intro-item
         data-list-card
         data-search-text={`${n.title.zh || ''} ${n.title.en || ''} ${n.date || ''} ${n.slug}`}
       >

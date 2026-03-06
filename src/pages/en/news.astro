@@ -21,11 +21,12 @@ const news = buildLocalizedNews(newsEntries).filter((item) => item.entry.en);
     />
     <p class="empty-state" data-empty-state hidden>No matching news found. Try another keyword.</p>
 
-  <div class="grid">
+  <div class="grid" data-list-intro>
     {news.map((n, i) => (
       <a
         href={`/en/news/${n.slug}/`}
         class="card card-hover card-link stack-sm"
+        data-list-intro-item
         data-list-card
         data-search-text={`${n.title.en || ''} ${n.title.zh || ''} ${n.date || ''} ${n.slug}`}
       >

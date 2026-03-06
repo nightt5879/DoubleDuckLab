@@ -24,11 +24,13 @@ const papers = paperEntries
 
   <div
     class="grid project-grid"
+    data-list-intro
   >
     {papers.map((p) => (
       <a
         href={`/papers/${p.slug}/`}
         class="card card-hover card-link stack-sm"
+        data-list-intro-item
         data-list-card
         data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
       >
