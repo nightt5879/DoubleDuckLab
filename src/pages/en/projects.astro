@@ -54,7 +54,6 @@ function formatPreviewTimeRange(value: string) {
           class="card card-hover card-link stack-sm"
           data-list-intro-item
           {...(i < 32 ? { 'data-list-intro-active': true } : {})}
-          style={i < 32 ? `--list-intro-delay: ${(i % 8) * 36}ms;` : undefined}
           data-list-card
           data-search-text={`${meta.title} ${meta.status} ${meta.time} ${meta.tag || ''}`}
         >

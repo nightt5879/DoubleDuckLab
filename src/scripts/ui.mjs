@@ -235,6 +235,32 @@ function initListSearch() {
   });
 }
 
+function initListIntroGroups() {
+  const roots = Array.from(document.querySelectorAll('[data-list-intro]'));
+  if (!roots.length) {
+    return;
+  }
+
+  roots.forEach((root) => {
+    const items = Array.from(root.querySelectorAll('[data-list-intro-item][data-list-intro-active]'));
+    if (!items.length) {
+      return;
+    }
+
+    let currentTop = null;
+    let rowIndex = -1;
+
+    items.forEach((item) => {
+      const top = item.offsetTop;
+      if (currentTop === null || Math.abs(top - currentTop) > 6) {
+        currentTop = top;
+        rowIndex += 1;
+      }
+      item.style.setProperty('--list-intro-delay', `${rowIndex * 72}ms`);
+    });
+  });
+}
+
 function initHistoryBackLinks() {
   const links = Array.from(document.querySelectorAll('a[data-history-back]'));
   if (!links.length) {
@@ -277,4 +303,5 @@ initThemeToggle();
 initMembersFilter();
 initCopyButtons();
 initListSearch();
+initListIntroGroups();
 initHistoryBackLinks();
