@@ -11,15 +11,12 @@
   background: transparent;
   transition: background-color var(--motion-mid) var(--ease-standard),
     border-color var(--motion-mid) var(--ease-standard),
-    box-shadow var(--motion-mid) var(--ease-standard),
-    backdrop-filter var(--motion-mid) var(--ease-standard);
+    box-shadow var(--motion-mid) var(--ease-standard);
 }
 
 .site-header.is-scrolled {
   border-bottom-color: var(--line);
   background: color-mix(in oklab, var(--bg) 76%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
 }
 
@@ -111,7 +108,6 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
   background: linear-gradient(165deg, var(--surface-1), var(--surface-2));
-  backdrop-filter: blur(var(--blur-card));
   box-shadow: var(--shadow-sm);
   padding: 18px;
 }
