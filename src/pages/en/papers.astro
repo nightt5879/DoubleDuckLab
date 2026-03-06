@@ -27,11 +27,12 @@ const papers = paperEntries
     data-reveal-group
     data-reveal-step="44"
     data-progressive-list
+    data-progressive-show-immediate
     data-initial-count="16"
     data-batch-size="16"
-    data-remaining-threshold="16"
+    data-remaining-threshold="24"
     data-trigger-distance="1200"
-    data-chunk-size="6"
+    data-chunk-size="16"
   >
     {papers.map((p) => (
       <a
@@ -39,7 +40,6 @@ const papers = paperEntries
         class="card card-hover card-link stack-sm"
         data-progressive-item
         data-list-card
-        data-remember-scroll-target
         data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
         data-reveal
       >

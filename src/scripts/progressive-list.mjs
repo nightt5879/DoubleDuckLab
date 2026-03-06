@@ -23,6 +23,7 @@ function setupProgressiveList(list) {
   const triggerDistance = toInt(list.getAttribute('data-trigger-distance'), 850);
   const remainingThreshold = toInt(list.getAttribute('data-remaining-threshold'), 12);
   const chunkSize = toInt(list.getAttribute('data-chunk-size'), 6);
+  const showImmediate = list.hasAttribute('data-progressive-show-immediate');
 
   if (items.length <= initialCount) {
     return;
@@ -92,7 +93,14 @@ function setupProgressiveList(list) {
       frag.appendChild(node);
     });
     list.appendChild(frag);
-    dispatchRevealRefresh(chunk);
+    if (showImmediate) {
+      chunk.forEach((node) => {
+        node.style.setProperty('--reveal-delay', '0ms');
+        node.classList.add('is-visible');
+      });
+    } else {
+      dispatchRevealRefresh(chunk);
+    }
 
     rafId = window.requestAnimationFrame(() => appendChunk(nodes, done));
   }
@@ -152,7 +160,14 @@ function setupProgressiveList(list) {
       frag.appendChild(node);
     });
     list.appendChild(frag);
-    dispatchRevealRefresh(nodes);
+    if (showImmediate) {
+      nodes.forEach((node) => {
+        node.style.setProperty('--reveal-delay', '0ms');
+        node.classList.add('is-visible');
+      });
+    } else {
+      dispatchRevealRefresh(nodes);
+    }
   }
 
   list.__progressiveListApi = {

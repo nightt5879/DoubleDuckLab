@@ -27,7 +27,6 @@ const news = buildLocalizedNews(newsEntries).filter((item) => item.entry.zh);
         href={`/news/${n.slug}/`}
         class="card card-hover card-link stack-sm"
         data-list-card
-        data-remember-scroll-target
         data-search-text={`${n.title.zh || ''} ${n.title.en || ''} ${n.date || ''} ${n.slug}`}
         data-reveal
         data-reveal-order={String(i)}
