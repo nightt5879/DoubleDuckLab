@@ -543,7 +543,7 @@ npm run build
 ```
 dist
 ```
-上面两行指令就完成了网站的静态编译，接下来会从0开始完成使用cloudflare pages进行配置，具体[请点这里](docs/cloudflare_pages_use.md)
+上面指令就完成了网站的静态编译，接下来会从0开始完成使用cloudflare pages进行配置，具体[请点这里](docs/cloudflare_pages_use.md)
 ## 🗺 Roadmap
 
 计划中的功能：
