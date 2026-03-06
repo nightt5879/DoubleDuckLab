@@ -30,7 +30,7 @@ const navPath = {
 };
 ---
 <!doctype html>
-<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'} class="js">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,12 +42,22 @@ const navPath = {
     <link rel="apple-touch-icon" href="/images/DDLab_logo.png" />
     <script is:inline>
       (() => {
-        document.documentElement.classList.add('js');
         const saved = localStorage.getItem('lab-theme');
         const preferred = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', preferred);
       })();
     </script>
+    <noscript>
+      <style>
+        .js [data-reveal],
+        .js [data-list-intro] > [data-list-intro-item][data-list-intro-active] {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+          transition: none !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <header class="site-header">
