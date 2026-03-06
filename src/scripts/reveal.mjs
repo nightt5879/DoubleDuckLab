@@ -1,6 +1,7 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const supportsObserver = 'IntersectionObserver' in window;
 const delayMap = new WeakMap();
+const registeredNodes = new WeakSet();
 const visibleQueue = new Set();
 let rafId = 0;
 let observer = null;
@@ -67,10 +68,22 @@ function registerRevealNodes(nodes) {
     return;
   }
 
-  computeDelays(nodes);
+  const freshNodes = nodes.filter((el) => {
+    if (registeredNodes.has(el)) {
+      return false;
+    }
+    registeredNodes.add(el);
+    return true;
+  });
+
+  if (!freshNodes.length) {
+    return;
+  }
+
+  computeDelays(freshNodes);
 
   if (reduceMotion || !supportsObserver) {
-    nodes.forEach((el) => {
+    freshNodes.forEach((el) => {
       el.style.setProperty('--reveal-delay', '0ms');
       el.classList.add('is-visible');
     });
@@ -96,11 +109,12 @@ function registerRevealNodes(nodes) {
     );
   }
 
-  nodes.forEach((el) => observer?.observe(el));
+  freshNodes.forEach((el) => observer?.observe(el));
 }
 
-const initialNodes = Array.from(document.querySelectorAll('[data-reveal]'));
-registerRevealNodes(initialNodes);
+function bootReveal() {
+  registerRevealNodes(Array.from(document.querySelectorAll('[data-reveal]')));
+}
 
 window.addEventListener('reveal:refresh', (event) => {
   const detail = event.detail;
@@ -109,3 +123,6 @@ window.addEventListener('reveal:refresh', (event) => {
     : [];
   registerRevealNodes(nodes);
 });
+
+bootReveal();
+document.addEventListener('astro:page-load', bootReveal);

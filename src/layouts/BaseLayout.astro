@@ -1,6 +1,7 @@
 ---
 import siteZh from '../data/site.zh.json';
 import siteEn from '../data/site.en.json';
+import { ClientRouter } from 'astro:transitions';
 
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -11,7 +12,6 @@ import '../styles/utilities.css';
 import revealScript from '../scripts/reveal.mjs?url';
 import uiScript from '../scripts/ui.mjs?url';
 import navbarScrollScript from '../scripts/navbar-scroll.mjs?url';
-import progressiveListScript from '../scripts/progressive-list.mjs?url';
 
 const {
   title = '',
@@ -36,6 +36,8 @@ const navPath = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title ? `${title} · ${t.siteName}` : t.siteName}</title>
     <meta name="description" content={desc} />
+    <ClientRouter />
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" href="/images/DDLab_logo.png" />
     <link rel="apple-touch-icon" href="/images/DDLab_logo.png" />
     <script is:inline>
@@ -69,26 +71,19 @@ const navPath = {
     </main>
     <footer class="footer">
       <div class="container footer-inner">
-      
-          <span class="lang-switch">
-            <a href="/">中文</a> / <a href="/en/">English</a>
-          </span>
-
-          <span>© 2026 {t.siteName}</span>
-
-          <span>
-            <a href="https://github.com/nightt5879/doubleducklab" target="_blank">
-              GitHub
-            </a>
-          </span>
-
-        </div>
-      </footer>
+        <span class="lang-switch">
+          <a href="/">中文</a> / <a href="/en/">English</a>
+        </span>
+        <span>© 2026 {t.siteName}</span>
+        <span>
+          <a href="https://github.com/nightt5879/doubleducklab" target="_blank">
+            GitHub
+          </a>
+        </span>
       </div>
     </footer>
     <script type="module" src={revealScript}></script>
     <script type="module" src={uiScript}></script>
     <script type="module" src={navbarScrollScript}></script>
-    <script type="module" src={progressiveListScript}></script>
   </body>
 </html>

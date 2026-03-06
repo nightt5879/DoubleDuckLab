@@ -51,6 +51,11 @@ function initThemeToggle() {
     return;
   }
 
+  if (toggle.dataset.themeToggleInit === '1') {
+    return;
+  }
+  toggle.dataset.themeToggleInit = '1';
+
   toggle.addEventListener('click', (event) => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     const supportsInkTransition = typeof document.startViewTransition === 'function';
@@ -89,6 +94,10 @@ function initMembersFilter() {
   }
 
   roots.forEach((root) => {
+    if (root.dataset.membersFilterInit === '1') {
+      return;
+    }
+    root.dataset.membersFilterInit = '1';
     const input = root.querySelector('[data-member-search]');
     const cards = Array.from(root.querySelectorAll('[data-member-card]'));
     const roleButtons = Array.from(root.querySelectorAll('[data-role-filter]'));
@@ -160,6 +169,10 @@ function initCopyButtons() {
   }
 
   buttons.forEach((btn) => {
+    if (btn.dataset.copyInit === '1') {
+      return;
+    }
+    btn.dataset.copyInit = '1';
     btn.addEventListener('click', async () => {
       const explicit = btn.getAttribute('data-copy-text');
       const targetId = btn.getAttribute('data-copy-target');
@@ -192,12 +205,13 @@ function initListSearch() {
   }
 
   roots.forEach((root) => {
+    if (root.dataset.listFilterInit === '1') {
+      return;
+    }
+    root.dataset.listFilterInit = '1';
     const input = root.querySelector('[data-list-search]');
     const cards = Array.from(root.querySelectorAll('[data-list-card]'));
     const emptyState = root.querySelector('[data-empty-state]');
-    const listEl = root.querySelector('[data-progressive-list]');
-    const progressiveApi = listEl?.__progressiveListApi;
-    let materialized = false;
 
     if (!input || !cards.length) {
       return;
@@ -222,14 +236,7 @@ function initListSearch() {
       }
     }
 
-    input.addEventListener('input', () => {
-      const hasQuery = input.value.trim().length > 0;
-      if (hasQuery && progressiveApi && !materialized) {
-        progressiveApi.materializeAll();
-        materialized = true;
-      }
-      applyFilter();
-    });
+    input.addEventListener('input', applyFilter);
 
     applyFilter();
   });
@@ -288,6 +295,10 @@ function initHistoryBackLinks() {
   }
 
   links.forEach((link) => {
+    if (link.dataset.historyBackInit === '1') {
+      return;
+    }
+    link.dataset.historyBackInit = '1';
     const href = link.getAttribute('href') || '';
     link.addEventListener('click', (event) => {
       if (!href || !cameFromTarget(href) || window.history.length <= 1) {
@@ -299,9 +310,14 @@ function initHistoryBackLinks() {
   });
 }
 
-initThemeToggle();
-initMembersFilter();
-initCopyButtons();
-initListSearch();
-initListIntroGroups();
-initHistoryBackLinks();
+function bootUi() {
+  initThemeToggle();
+  initMembersFilter();
+  initCopyButtons();
+  initListSearch();
+  initListIntroGroups();
+  initHistoryBackLinks();
+}
+
+bootUi();
+document.addEventListener('astro:page-load', bootUi);
