@@ -186,6 +186,7 @@ venue: "Conference Name"
 
 - `1.0.1`：基线修复，修乱码、收真源、补 CI / smoke
 - `1.1.0`：生产域名、SEO 元信息、当前页中英互跳与构建后 SEO 校验
+- `1.1.1`：review follow-up，修 alternate 可用性、内部链接 URL 一致性与 `test:seo` 站点地址读取
 - `1.2.0`：先给 `news` 接 CMS
 
 ## License

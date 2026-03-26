@@ -24,3 +24,6 @@
 - 开始梳理站点 URL、布局 SEO 标签、当前页语言互跳与自验证链路。
 - 完成环境变量站点地址、canonical / OG / hreflang / robots、当前页语言互跳与构建后 `test:seo`。
 - 本地自验证通过：`verify.bat --no-pause`。
+- 新增 T-0013：1.1.1 review follow-ups，处理 alternate 可用性、内部链接尾斜杠一致性与 `test:seo` 读取 `.env` 的问题。
+- 完成 1.1.1 follow-up：按对侧页面存在性输出 alternate，统一内部链接 URL 形式，并让 `test:seo` 与 build 共用站点地址解析。
+- 本地自验证通过：`verify.bat --no-pause`。

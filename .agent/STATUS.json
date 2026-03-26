@@ -1,14 +1,14 @@
 {
-  "current_task": "T-0012-seo-i18n-hardening",
+  "current_task": "T-0013-seo-review-followups",
   "phase": "review",
   "progress": 0.95,
-  "last_update": "2026-03-26T15:58:00+08:00",
+  "last_update": "2026-03-26T16:55:00+08:00",
   "next_steps": [
-    "Review staged diff and create a clear commit for the 1.1.0 branch",
-    "Open a PR and hand the branch to cloud Codex for a second review pass"
+    "Review the 1.1.1 staged diff and create a small follow-up commit",
+    "Open the follow-up PR after confirming the final changelog / roadmap wording"
   ],
   "blockers": [],
   "evidence": [
-    ".agent/RUNS/2026-03-26_t0012-seo-i18n/02-evidence/self-check.md"
+    ".agent/RUNS/2026-03-26_t0013-seo-followups/02-evidence/self-check.md"
   ]
 }

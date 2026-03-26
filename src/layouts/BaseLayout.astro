@@ -2,7 +2,8 @@
 import siteZh from '../data/site.zh.json';
 import siteEn from '../data/site.en.json';
 import { ClientRouter } from 'astro:transitions';
-import { buildLocalePath, normalizeSitePath, toAbsoluteUrl } from '../utils/seo';
+import { buildDefaultLocaleAlternates, normalizeSitePath, toAbsoluteUrl } from '../utils/seo';
+import type { LocaleAlternates } from '../utils/seo';
 
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -24,6 +25,7 @@ const {
   noindex = false,
   disableCanonical = false,
   disableLocaleAlternates = false,
+  localeAlternates,
 } = Astro.props as {
   title?: string;
   desc?: string;
@@ -34,17 +36,24 @@ const {
   noindex?: boolean;
   disableCanonical?: boolean;
   disableLocaleAlternates?: boolean;
+  localeAlternates?: LocaleAlternates;
 };
 
 const t = lang === 'en' ? siteEn : siteZh;
 const description = desc || t.home.intro;
 const currentPath = normalizeSitePath(Astro.url.pathname);
-const canonicalPath = lang === 'en' ? buildLocalePath(currentPath, 'en') : buildLocalePath(currentPath, 'zh');
-const zhPath = buildLocalePath(canonicalPath, 'zh');
-const enPath = buildLocalePath(canonicalPath, 'en');
+const hasExplicitLocaleAlternates = Object.prototype.hasOwnProperty.call(Astro.props, 'localeAlternates');
+const resolvedLocaleAlternates = hasExplicitLocaleAlternates ? localeAlternates ?? {} : buildDefaultLocaleAlternates(currentPath);
+const zhPath = resolvedLocaleAlternates.zh ? normalizeSitePath(resolvedLocaleAlternates.zh) : undefined;
+const enPath = resolvedLocaleAlternates.en ? normalizeSitePath(resolvedLocaleAlternates.en) : undefined;
+const xDefaultPath = resolvedLocaleAlternates.xDefault
+  ? normalizeSitePath(resolvedLocaleAlternates.xDefault)
+  : zhPath || enPath;
+const canonicalPath = lang === 'en' ? enPath || currentPath : zhPath || currentPath;
 const canonicalUrl = toAbsoluteUrl(canonicalPath, Astro.site);
 const ogImageUrl = toAbsoluteUrl(ogImage, Astro.site);
-const localeSwitchHref = disableLocaleAlternates ? (lang === 'zh' ? '/en/' : '/') : lang === 'zh' ? enPath : zhPath;
+const localeSwitchHref = disableLocaleAlternates ? undefined : lang === 'zh' ? enPath : zhPath;
+const hasAlternateLocale = Boolean(localeSwitchHref);
 const localeLabel = lang === 'zh' ? '中文' : 'English';
 const alternateLocaleLabel = lang === 'zh' ? 'English' : '中文';
 const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
@@ -73,9 +82,9 @@ const navPathResolved = {
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     {!disableCanonical && <link rel="canonical" href={canonicalUrl} />}
-    {!disableLocaleAlternates && <link rel="alternate" hreflang="zh-CN" href={toAbsoluteUrl(zhPath, Astro.site)} />}
-    {!disableLocaleAlternates && <link rel="alternate" hreflang="en" href={toAbsoluteUrl(enPath, Astro.site)} />}
-    {!disableLocaleAlternates && <link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(zhPath, Astro.site)} />}
+    {!disableLocaleAlternates && zhPath && <link rel="alternate" hreflang="zh-CN" href={toAbsoluteUrl(zhPath, Astro.site)} />}
+    {!disableLocaleAlternates && enPath && <link rel="alternate" hreflang="en" href={toAbsoluteUrl(enPath, Astro.site)} />}
+    {!disableLocaleAlternates && xDefaultPath && <link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(xDefaultPath, Astro.site)} />}
     <meta property="og:site_name" content={t.siteName} />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title ? `${title} · ${t.siteName}` : t.siteName} />
@@ -84,7 +93,7 @@ const navPathResolved = {
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:alt" content={title ? `${title} · ${t.siteName}` : t.siteName} />
     <meta property="og:locale" content={ogLocale} />
-    {!disableLocaleAlternates && <meta property="og:locale:alternate" content={alternateOgLocale} />}
+    {!disableLocaleAlternates && hasAlternateLocale && <meta property="og:locale:alternate" content={alternateOgLocale} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title ? `${title} · ${t.siteName}` : t.siteName} />
     <meta name="twitter:description" content={description} />
@@ -117,11 +126,11 @@ const navPathResolved = {
       <div class="container nav">
         <div class="brand">{t.brand}</div>
         <nav class="nav-links">
-          <a class={`nav-link ${currentPath === navPathResolved.home ? 'is-active' : ''}`} href={navPath.home}>{t.nav.home}</a>
-          <a class={`nav-link ${currentPath.startsWith(navPathResolved.members) ? 'is-active' : ''}`} href={navPath.members}>{t.nav.members}</a>
-          <a class={`nav-link ${currentPath.startsWith(navPathResolved.projects) ? 'is-active' : ''}`} href={navPath.projects}>{t.nav.projects}</a>
-          <a class={`nav-link ${currentPath.startsWith(navPathResolved.papers) ? 'is-active' : ''}`} href={navPath.papers}>{t.nav.papers}</a>
-          <a class={`nav-link ${currentPath.startsWith(navPathResolved.news) ? 'is-active' : ''}`} href={navPath.news}>{t.nav.news}</a>
+          <a class={`nav-link ${currentPath === navPathResolved.home ? 'is-active' : ''}`} href={navPathResolved.home}>{t.nav.home}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.members) ? 'is-active' : ''}`} href={navPathResolved.members}>{t.nav.members}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.projects) ? 'is-active' : ''}`} href={navPathResolved.projects}>{t.nav.projects}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.papers) ? 'is-active' : ''}`} href={navPathResolved.papers}>{t.nav.papers}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.news) ? 'is-active' : ''}`} href={navPathResolved.news}>{t.nav.news}</a>
         </nav>
         <div class="nav-actions">
           <button class="btn btn-ghost" data-theme-toggle type="button" aria-label="Switch theme">Dark</button>
@@ -137,11 +146,23 @@ const navPathResolved = {
         <span class="lang-switch">
           {lang === 'zh' ? (
             <>
-              <span aria-current="page">{localeLabel}</span> / <a href={localeSwitchHref}>{alternateLocaleLabel}</a>
+              <span aria-current="page">{localeLabel}</span>
+              {localeSwitchHref && (
+                <>
+                  {' / '}
+                  <a href={localeSwitchHref}>{alternateLocaleLabel}</a>
+                </>
+              )}
             </>
           ) : (
             <>
-              <a href={localeSwitchHref}>{alternateLocaleLabel}</a> / <span aria-current="page">{localeLabel}</span>
+              {localeSwitchHref && (
+                <>
+                  <a href={localeSwitchHref}>{alternateLocaleLabel}</a>
+                  {' / '}
+                </>
+              )}
+              <span aria-current="page">{localeLabel}</span>
             </>
           )}
         </span>

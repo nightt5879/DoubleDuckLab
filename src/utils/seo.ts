@@ -1,5 +1,11 @@
 const DEFAULT_SITE_URL = 'https://doubleducklab.com/';
 
+export type LocaleAlternates = {
+  zh?: string;
+  en?: string;
+  xDefault?: string;
+};
+
 export function normalizeSitePath(pathname: string | undefined) {
   let value = (pathname || '/').trim();
 
@@ -32,6 +38,18 @@ export function buildLocalePath(pathname: string, lang: 'zh' | 'en') {
   }
 
   return normalizeSitePath(`/en${zhPath}`);
+}
+
+export function buildDefaultLocaleAlternates(pathname: string): LocaleAlternates {
+  const normalized = normalizeSitePath(pathname);
+  const zh = buildLocalePath(normalized, 'zh');
+  const en = buildLocalePath(normalized, 'en');
+
+  return {
+    zh,
+    en,
+    xDefault: zh,
+  };
 }
 
 export function toAbsoluteUrl(pathname: string, site: URL | string | undefined) {

@@ -186,6 +186,7 @@ venue: "Conference Name"
 
 - `1.0.1`: baseline hardening, encoding fix, source-of-truth cleanup, CI and smoke coverage
 - `1.1.0`: production site URL, SEO metadata, current-page locale switching, and post-build SEO checks
+- `1.1.1`: review follow-up for alternate availability, internal URL consistency, and `test:seo` site URL loading
 - `1.2.0`: CMS pilot for `news`
 
 ## License

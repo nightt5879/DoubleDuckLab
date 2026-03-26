@@ -16,6 +16,11 @@ export async function getStaticPaths() {
         entry: item.entry.zh!,
         title: item.title.zh || item.title.en || item.slug,
         date: item.date,
+        localeAlternates: {
+          zh: `/news/${item.slug}/`,
+          en: item.entry.en ? `/en/news/${item.slug}/` : undefined,
+          xDefault: `/news/${item.slug}/`,
+        },
         related: localized
           .filter((n) => n.slug !== item.slug)
           .slice(0, 3)
@@ -28,11 +33,11 @@ export async function getStaticPaths() {
     }));
 }
 
-const { entry, title, date, related } = Astro.props;
+const { entry, title, date, related, localeAlternates } = Astro.props;
 const { Content } = await render(entry);
 const pageDesc = summarizeParts([date, entry.body], 160) || `${title}${date ? ` · ${date}` : ''}`;
 ---
-<BaseLayout title={title} desc={pageDesc} lang="zh" pathPrefix="" ogType="article">
+<BaseLayout title={title} desc={pageDesc} lang="zh" pathPrefix="" ogType="article" localeAlternates={localeAlternates}>
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{title}</h1>
@@ -55,7 +60,7 @@ const pageDesc = summarizeParts([date, entry.body], 160) || `${title}${date ? ` 
     </article>
 
     <div class="back-row" data-reveal>
-      <a class="btn btn-primary" href="/news" data-history-back>返回新闻列表</a>
+      <a class="btn btn-primary" href="/news/" data-history-back>返回新闻列表</a>
       <a class="btn btn-ghost" href="/">回到首页</a>
     </div>
   </section>

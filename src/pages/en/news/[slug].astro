@@ -16,6 +16,11 @@ export async function getStaticPaths() {
         entry: item.entry.en!,
         title: item.title.en || item.title.zh || item.slug,
         date: item.date,
+        localeAlternates: {
+          zh: item.entry.zh ? `/news/${item.slug}/` : undefined,
+          en: `/en/news/${item.slug}/`,
+          xDefault: item.entry.zh ? `/news/${item.slug}/` : `/en/news/${item.slug}/`,
+        },
         related: localized
           .filter((n) => n.slug !== item.slug)
           .slice(0, 3)
@@ -28,11 +33,11 @@ export async function getStaticPaths() {
     }));
 }
 
-const { entry, title, date, related } = Astro.props;
+const { entry, title, date, related, localeAlternates } = Astro.props;
 const { Content } = await render(entry);
 const pageDesc = summarizeParts([date, entry.body], 160) || `${title}${date ? ` · ${date}` : ''}`;
 ---
-<BaseLayout title={title} desc={pageDesc} lang="en" pathPrefix="/en" ogType="article">
+<BaseLayout title={title} desc={pageDesc} lang="en" pathPrefix="/en" ogType="article" localeAlternates={localeAlternates}>
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{title}</h1>
@@ -55,7 +60,7 @@ const pageDesc = summarizeParts([date, entry.body], 160) || `${title}${date ? ` 
     </article>
 
     <div class="back-row" data-reveal>
-      <a class="btn btn-primary" href="/en/news" data-history-back>Back to News</a>
+      <a class="btn btn-primary" href="/en/news/" data-history-back>Back to News</a>
       <a class="btn btn-ghost" href="/en/">Back to Home</a>
     </div>
   </section>
