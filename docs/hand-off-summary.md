@@ -1,76 +1,43 @@
-# Hand-off Summary（基础收官交接摘要）
+# Hand-off Summary（1.0.1 基线）
 
-更新时间：2026-03-01
+更新时间：2026-03-25
 
-## 一、当前已实现功能
+## 一、当前已完成
 
-### 1) 站点与页面
-- Astro 本地站点骨架
-- 中文 + 英文双路由
-- 页面：首页、成员、项目、论文、新闻（中英文各一套）
+### 1. 站点与页面
+- Astro 静态站点
+- 中文 / 英文双路由
+- 首页、成员、项目、论文、新闻、招生与合作页面
 
-### 2) 内容模型
-- JSON：`site.zh/en`、`members`、`projects`
-- Markdown Collections：`news`、`papers`
-- 已具备“非技术同学可改内容”的基础结构
+### 2. 内容模型
+- 站点级文案：`src/data/site.zh.json`、`src/data/site.en.json`
+- 成员：`src/content/members/*.md`
+- 项目：`src/content/projects/<slug>/`
+- 论文：`src/content/papers/*.md`
+- 新闻：`src/content/news/<slug>/`
+- 招生与合作：`src/content/join/recruitment/`
 
-### 3) 工程流程与可观测性
-- `.agent/` 协议与任务体系
-- RUN 留痕：intent / actions / evidence / summary
-- `STATUS.json` + `WORKLOG.md` 状态记录
+### 3. 工程验证
+- `npm run validate:content`
+- `npm run build`
+- `npm run test:smoke`
+- GitHub Actions CI：PR / `main` 自动跑校验、构建、smoke
 
-### 4) 开发辅助脚本
-- `run.sh`：一键本地预览
-- `check.sh`：一键 fetch + 切分支 + pull + run
-- `npm run validate:content`：内容校验
+## 二、1.0.1 做了什么
 
----
+- 修复中文真源和页面文本中的乱码
+- 删除旧的 `src/data/content/*`
+- 把校验脚本切到真实内容源
+- 补上最小 CI 和 smoke test
+- 补上 `CHANGELOG.md` 和版本记录
 
-## 二、你如何验证当前成果
+## 三、当前已知边界
 
-### 快速验证（推荐）
-```bash
-./check.sh
-```
+- 还没接 CMS，仍是文件驱动
+- `astro.config.mjs` 里的生产站点地址、canonical、hreflang、OG 还没进入这一版
+- 当前语言切换仍固定跳首页，详情页中英互跳留到后续版本
 
-### 完整验证
-```bash
-npm run validate:content
-npm run build
-./run.sh
-```
+## 四、下一阶段建议
 
-浏览器检查：
-- `http://localhost:4321/`
-- `http://localhost:4321/en/`
-
----
-
-## 三、后续阶段建议（基础收官后）
-
-1. UI 管理阶段
-- 将 token 扩展为完整设计系统（颜色、字体、间距、组件规范）
-
-2. CMS 接入阶段
-- 先按 T-0009 决策：Decap 主推，Sanity 备选
-- 先接入 news，再扩展到其他内容类型
-
-3. 团队协作阶段
-- 按 `docs/content-ops-checklist.md` 让非技术同学实操一次
-- 形成固定“每周内容发布窗口”
-
----
-
-## 四、已知限制（当前基线）
-- 目前未接 CMS 后台（仍是文件驱动）
-- 设计风格为第一版，不是最终品牌 UI
-- members/projects 仍在 JSON，后续可继续迁移到 markdown 或 CMS
-
----
-
-## 五、结论
-当前项目已达到“基础收官”可交付状态：
-- 能跑（本地稳定预览）
-- 能改（内容结构清晰）
-- 能查（流程有留痕）
-- 能交接（文档可执行）
+1. `1.1.0`：SEO 与 i18n 体验增强
+2. `1.2.0`：先给 `news` 接入 CMS

@@ -22,24 +22,21 @@ const papers = paperEntries
     />
     <p class="empty-state" data-empty-state hidden>No matching paper found. Try another keyword.</p>
 
-  <div
-    class="grid project-grid"
-    data-list-intro
-  >
-    {papers.map((p, i) => (
-      <a
-        href={`/en/papers/${p.slug}/`}
-        class="card card-hover card-link stack-sm"
-        data-list-intro-item
-        {...(i < 8 ? { 'data-list-intro-active': true } : {})}
-        data-list-card
-        data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
-      >
-        <h3>{p.title}</h3>
-        <p>{p.year} · {p.venue}</p>
-        {p.authors && <p class="paper-authors">Authors: {p.authors}</p>}
-      </a>
-    ))}
-  </div>
+    <div class="grid project-grid" data-list-intro>
+      {papers.map((p, i) => (
+        <a
+          href={`/en/papers/${p.slug}/`}
+          class="card card-hover card-link stack-sm"
+          data-list-intro-item
+          {...(i < 8 ? { 'data-list-intro-active': true } : {})}
+          data-list-card
+          data-search-text={`${p.title} ${p.authors || ''} ${p.venue} ${p.year}`}
+        >
+          <h3>{p.title}</h3>
+          <p>{p.year} · {p.venue}</p>
+          {p.authors && <p class="paper-authors">Authors: {p.authors}</p>}
+        </a>
+      ))}
+    </div>
   </section>
 </BaseLayout>

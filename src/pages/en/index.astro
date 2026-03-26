@@ -66,15 +66,16 @@ function formatPreviewTimeRange(value: string) {
       {recentProjects.map((item, i) => {
         const p = projectDisplayMeta(item, 'en');
         return (
-        <article class="card card-hover card-clickable stack-sm" data-reveal data-reveal-order={String(i)}>
-          <a class="card-link-overlay" href={`/en/projects/${item.slug}/`} aria-label={`View project ${p.title}`}></a>
-          <h3>{p.title}</h3>
-          <div class="meta">
-            {p.time && <span class="badge-muted">{formatPreviewTimeRange(p.time)}</span>}
-            <span class={`status-chip status-${resolveProjectStatusTone(p.status)}`}>{p.status}</span>
-          </div>
-        </article>
-      )})}
+          <article class="card card-hover card-clickable stack-sm" data-reveal data-reveal-order={String(i)}>
+            <a class="card-link-overlay" href={`/en/projects/${item.slug}/`} aria-label={`View project ${p.title}`}></a>
+            <h3>{p.title}</h3>
+            <div class="meta">
+              {p.time && <span class="badge-muted">{formatPreviewTimeRange(p.time)}</span>}
+              {p.status && <span class={`status-chip status-${resolveProjectStatusTone(p.status)}`}>{p.status}</span>}
+            </div>
+          </article>
+        );
+      })}
     </div>
   </section>
 

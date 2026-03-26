@@ -67,11 +67,11 @@ const hasLinks = Boolean(links.repo || links.demo || links.paper);
 
     {hasLinks && (
       <article class="card detail-section" data-reveal>
-        <h2>Links</h2>
+        <h2>链接</h2>
         <div class="detail-links">
-          {links.repo && <a class="btn btn-ghost" href={links.repo} target="_blank" rel="noreferrer">Repo</a>}
-          {links.demo && <a class="btn btn-ghost" href={links.demo} target="_blank" rel="noreferrer">Demo</a>}
-          {links.paper && <a class="btn btn-ghost" href={links.paper} target="_blank" rel="noreferrer">Paper</a>}
+          {links.repo && <a class="btn btn-ghost" href={links.repo} target="_blank" rel="noreferrer">代码仓库</a>}
+          {links.demo && <a class="btn btn-ghost" href={links.demo} target="_blank" rel="noreferrer">演示</a>}
+          {links.paper && <a class="btn btn-ghost" href={links.paper} target="_blank" rel="noreferrer">论文</a>}
         </div>
       </article>
     )}

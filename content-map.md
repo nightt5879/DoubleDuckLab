@@ -1,136 +1,106 @@
 # Content Map
 
 本文件用于快速定位“改哪里会影响哪里”。
-适用于当前 Astro 静态站（JSON + Content Collections）。
+当前版本的唯一真源只有两类：
 
-## 1) 站点级文案
+- 站点级文案：`src/data/site.zh.json`、`src/data/site.en.json`
+- 内容集合：`src/content/*`
 
-### 1.1 左上角站点名（Brand）
-- 文件：`src/data/content/site.zh.json`
-- 文件：`src/data/content/site.en.json`
-- 字段：`brand`
-- 影响页面：全站（通过 `BaseLayout.astro`）
+## 1. 站点级文案
 
-### 1.2 导航文案（Nav）
-- 文件：`src/data/content/site.zh.json`
-- 文件：`src/data/content/site.en.json`
-- 字段：`nav.home / nav.members / nav.projects / nav.papers / nav.news`
-- 影响页面：全站顶部导航
+### 1.1 Header / Footer / 首页结构文案
+- 文件：`src/data/site.zh.json`
+- 文件：`src/data/site.en.json`
+- 关键字段：`brand`、`siteName`、`nav.*`、`home.intro`、`home.sections.*`、`home.highlights[]`、`home.quick`
+- 影响页面：
+  - `src/layouts/BaseLayout.astro`
+  - `src/pages/index.astro`
+  - `src/pages/en/index.astro`
 
-## 2) 首页内容
+## 2. 成员
 
-### 2.1 首页标题/简介/卡片文案
-- 文件：`src/data/content/site.zh.json`
-- 文件：`src/data/content/site.en.json`
-- 字段：
-  - `home.title`
-  - `home.intro`
-  - `home.highlights[]`（每项 `title` + `desc`）
-  - `home.quick`
-- 页面：
-  - 中文：`src/pages/index.astro`
-  - 英文：`src/pages/en/index.astro`
+### 2.1 数据来源
+- 目录：`src/content/members/*.md`
+- 必填字段：`id`、`name.zh/en`、`role.zh/en`、`area.zh/en`
+- 可选字段：`status`、`bio`、`avatar`、`links`
 
-### 2.2 首页区块里的“结构性标题/说明文案”
-- 文件：`src/pages/index.astro`（中文）
-- 文件：`src/pages/en/index.astro`（英文）
-- 说明：如 `Highlights` / `Featured Projects` 区块标题、页面说明文字属于页面结构文案，不在 JSON。
+### 2.2 页面映射
+- 列表：`src/pages/members.astro`、`src/pages/en/members.astro`
+- 详情：`src/pages/members/[id].astro`、`src/pages/en/members/[id].astro`
 
-## 3) 成员（Members）
+## 3. 项目
 
-### 3.1 列表数据
-- 文件：`src/data/content/members.json`
-- 建议字段：
-  - `id`（稳定路由 id）
-  - `name`
-  - `role.zh / role.en`
-  - `area`
-- 页面：
-  - 列表：`src/pages/members.astro` / `src/pages/en/members.astro`
-  - 详情：`src/pages/members/[id].astro` / `src/pages/en/members/[id].astro`
+### 3.1 数据来源
+- 目录：`src/content/projects/<slug>/`
+- 必备文件：
+  - `overview_cn.md`
+  - `overview_en.md`
+  - `background_cn.md`
+  - `background_en.md`
+- `overview_*` frontmatter 常用字段：`title`、`tag`、`time`、`status`、`links`
 
-### 3.2 详情模板文案（当前为示例占位）
-- 文件：
-  - `src/pages/members/[id].astro`
-  - `src/pages/en/members/[id].astro`
-- 说明：简介段落、selected works、links 目前是模板示例，可替换为真实内容来源。
+### 3.2 页面映射
+- 列表：`src/pages/projects.astro`、`src/pages/en/projects.astro`
+- 详情：`src/pages/projects/[slug].astro`、`src/pages/en/projects/[slug].astro`
 
-## 4) 项目（Projects）
+## 4. 论文
 
-### 4.1 列表数据
-- 文件：`src/data/content/projects.json`
-- 建议字段：
-  - `slug`（稳定路由 slug）
-  - `title`
-  - `tag`
-  - `status.zh / status.en`
-- 页面：
-  - 列表：`src/pages/projects.astro` / `src/pages/en/projects.astro`
-  - 详情：`src/pages/projects/[slug].astro` / `src/pages/en/projects/[slug].astro`
+### 4.1 数据来源
+- 目录：`src/content/papers/*.md`
+- 必填字段：`year`、`title`、`venue`
+- 可选字段：`authors`、`abstract`、`links`、`bibtex`
 
-### 4.2 详情模板文案（当前为示例占位）
-- 文件：
-  - `src/pages/projects/[slug].astro`
-  - `src/pages/en/projects/[slug].astro`
-- 说明：summary/background/method/progress/related 目前是模板示例，可后续接真实字段。
+### 4.2 页面映射
+- 列表：`src/pages/papers.astro`、`src/pages/en/papers.astro`
+- 详情：`src/pages/papers/[slug].astro`、`src/pages/en/papers/[slug].astro`
 
-## 5) 新闻（News）
+## 5. 新闻
 
 ### 5.1 数据来源
-- 目录：`src/content/news/*.md`
-- frontmatter 字段：
-  - `date`
-  - `title.zh`
-  - `title.en`
-- 正文：Markdown 主体
+- 目录：`src/content/news/<slug>/`
+- 命名规则：
+  - 中文：`*_cn.md`
+  - 英文：`*_en.md`
+- 必填 frontmatter：`date`
 
 ### 5.2 页面映射
-- 列表：`src/pages/news.astro` / `src/pages/en/news.astro`
-- 详情：`src/pages/news/[slug].astro` / `src/pages/en/news/[slug].astro`
+- 列表：`src/pages/news.astro`、`src/pages/en/news.astro`
+- 详情：`src/pages/news/[slug].astro`、`src/pages/en/news/[slug].astro`
 
-## 6) 论文（Papers）
+## 6. 招生与合作
 
 ### 6.1 数据来源
-- 目录：`src/content/papers/*.md`
-- frontmatter 字段：
-  - `year`
-  - `title`
-  - `venue`
+- 目录：`src/content/join/<topic>/`
+- 当前入口：`src/content/join/recruitment/overview_cn.md`、`src/content/join/recruitment/overview_en.md`
 
 ### 6.2 页面映射
-- 列表：`src/pages/papers.astro` / `src/pages/en/papers.astro`
-- 详情：`src/pages/papers/[slug].astro` / `src/pages/en/papers/[slug].astro`
+- 中文：`src/pages/join.astro`
+- 英文：`src/pages/en/join.astro`
 
-## 7) 路由与布局入口
+## 7. 样式与交互
 
-### 7.1 页面入口
-- 中文首页：`src/pages/index.astro`
-- 英文首页：`src/pages/en/index.astro`
-- 其他页面：`src/pages/**` 与 `src/pages/en/**`
+- 样式：
+  - `src/styles/tokens.css`
+  - `src/styles/base.css`
+  - `src/styles/components.css`
+  - `src/styles/effects.css`
+  - `src/styles/utilities.css`
+- 脚本：
+  - `src/scripts/reveal.mjs`
+  - `src/scripts/navbar-scroll.mjs`
+  - `src/scripts/ui.mjs`
 
-### 7.2 全站布局
-- 文件：`src/layouts/BaseLayout.astro`
-- 作用：
-  - 注入全局样式
-  - 顶部导航/底部
-  - 主题切换与全局脚本挂载
+## 8. 验证链路
 
-## 8) 样式与交互层（改 UI 看这里）
+- 内容校验：`npm run validate:content`
+- 构建：`npm run build`
+- 构建后 smoke：`npm run test:smoke`
 
-- 设计 token：`src/styles/tokens.css`
-- 基础排版：`src/styles/base.css`
-- 组件样式：`src/styles/components.css`
-- 特效样式：`src/styles/effects.css`
-- 通用工具类：`src/styles/utilities.css`
+## 9. 维护原则
 
-- reveal 动效：`src/scripts/reveal.mjs`
-- 导航滚动状态：`src/scripts/navbar-scroll.mjs`
-- 主题切换/列表筛选：`src/scripts/ui.mjs`
-
-## 9) 修改建议（避免踩坑）
-
-1. 改文案优先改 `src/data/content/*.json` 与 `src/content/*.md`，少改页面模板硬编码。
-2. `members.json` 的 `id`、`projects.json` 的 `slug` 不建议频繁改动，否则会改变详情页 URL。
-3. 每次内容变更后执行：
+1. 不再使用 `src/data/content/*`。
+2. 改内容优先改 `src/data/site.*.json` 或 `src/content/*`，不要先改页面模板硬编码。
+3. 改完内容后至少跑一次：
    - `npm run validate:content`
    - `npm run build`
+   - `npm run test:smoke`

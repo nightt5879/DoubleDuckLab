@@ -42,29 +42,26 @@ function formatPreviewTimeRange(value: string) {
     />
     <p class="empty-state" data-empty-state hidden>No matching project found. Try another keyword.</p>
 
-  <div
-    class="grid grid-3 project-grid"
-    data-list-intro
-  >
-    {projects.map((item, i) => {
-      const meta = projectDisplayMeta(item, 'en');
-      return (
-        <a
-          href={`/en/projects/${item.slug}/`}
-          class="card card-hover card-link stack-sm"
-          data-list-intro-item
-          {...(i < 32 ? { 'data-list-intro-active': true } : {})}
-          data-list-card
-          data-search-text={`${meta.title} ${meta.status} ${meta.time} ${meta.tag || ''}`}
-        >
-          <h3>{meta.title}</h3>
-          <div class="meta">
-            {meta.time && <span class="badge-muted">{formatPreviewTimeRange(meta.time)}</span>}
-            {meta.status && <span class={`status-chip status-${resolveProjectStatusTone(meta.status)}`}>{meta.status}</span>}
-          </div>
-        </a>
-      );
-    })}
-  </div>
+    <div class="grid grid-3 project-grid" data-list-intro>
+      {projects.map((item, i) => {
+        const meta = projectDisplayMeta(item, 'en');
+        return (
+          <a
+            href={`/en/projects/${item.slug}/`}
+            class="card card-hover card-link stack-sm"
+            data-list-intro-item
+            {...(i < 32 ? { 'data-list-intro-active': true } : {})}
+            data-list-card
+            data-search-text={`${meta.title} ${meta.status} ${meta.time} ${meta.tag || ''}`}
+          >
+            <h3>{meta.title}</h3>
+            <div class="meta">
+              {meta.time && <span class="badge-muted">{formatPreviewTimeRange(meta.time)}</span>}
+              {meta.status && <span class={`status-chip status-${resolveProjectStatusTone(meta.status)}`}>{meta.status}</span>}
+            </div>
+          </a>
+        );
+      })}
+    </div>
   </section>
 </BaseLayout>

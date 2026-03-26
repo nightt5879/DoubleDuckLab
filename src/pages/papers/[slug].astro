@@ -38,31 +38,31 @@ const { Content } = await render(entry);
 
     {hasLinks && (
       <article class="card detail-section" data-reveal>
-        <h2>Links</h2>
+        <h2>链接</h2>
         <div class="detail-links">
-          {links?.online && <a class="btn btn-ghost" href={links.online} target="_blank" rel="noreferrer">Online</a>}
-          {links?.pdf && <a class="btn btn-ghost" href={links.pdf} target="_blank" rel="noreferrer">Paper PDF</a>}
-          {links?.project && <a class="btn btn-ghost" href={links.project} target="_blank" rel="noreferrer">Project Link</a>}
-          {links?.code && <a class="btn btn-ghost" href={links.code} target="_blank" rel="noreferrer">Code</a>}
+          {links?.online && <a class="btn btn-ghost" href={links.online} target="_blank" rel="noreferrer">在线阅读</a>}
+          {links?.pdf && <a class="btn btn-ghost" href={links.pdf} target="_blank" rel="noreferrer">论文 PDF</a>}
+          {links?.project && <a class="btn btn-ghost" href={links.project} target="_blank" rel="noreferrer">项目链接</a>}
+          {links?.code && <a class="btn btn-ghost" href={links.code} target="_blank" rel="noreferrer">代码</a>}
         </div>
       </article>
     )}
 
     {bibtex && (
       <article class="card detail-section" data-reveal>
-        <h2>Citation</h2>
+        <h2>引用</h2>
         <details class="bibtex-details">
-          <summary>Citation (BibTeX)</summary>
+          <summary>BibTeX</summary>
           <pre id={`bibtex-${entry.slug}`}><code>{bibtex}</code></pre>
         </details>
         <button
           class="btn btn-ghost copy-btn"
           type="button"
           data-copy-target={`bibtex-${entry.slug}`}
-          data-copy-label="Copy"
-          data-copy-success="Copied"
+          data-copy-label="复制"
+          data-copy-success="已复制"
         >
-          Copy
+          复制
         </button>
       </article>
     )}

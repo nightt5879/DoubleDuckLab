@@ -17,7 +17,7 @@ const {
   title = '',
   desc = 'Local-first Astro lab website prototype',
   lang = 'zh',
-  pathPrefix = ''
+  pathPrefix = '',
 } = Astro.props as { title?: string; desc?: string; lang?: 'zh' | 'en'; pathPrefix?: string };
 
 const t = lang === 'en' ? siteEn : siteZh;
@@ -26,7 +26,7 @@ const navPath = {
   members: `${pathPrefix}/members`,
   projects: `${pathPrefix}/projects`,
   papers: `${pathPrefix}/papers`,
-  news: `${pathPrefix}/news`
+  news: `${pathPrefix}/news`,
 };
 ---
 <!doctype html>
@@ -86,7 +86,7 @@ const navPath = {
         </span>
         <span>© 2026 {t.siteName}</span>
         <span>
-          <a href="https://github.com/nightt5879/doubleducklab" target="_blank">
+          <a href="https://github.com/nightt5879/doubleducklab" target="_blank" rel="noreferrer">
             GitHub
           </a>
         </span>

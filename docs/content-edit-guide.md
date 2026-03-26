@@ -1,57 +1,142 @@
-# Content Edit Guide (非技术同学版)
+# Content Edit Guide（非技术同学版）
 
-目标：只改内容，不改业务代码。
+目标：只改内容，不改页面代码。
 
-## 1) 你需要改哪些文件
+## 1. 你会编辑哪些文件
 
-### JSON（结构化基础信息）
-目录：`src/data/content/`
-- `site.zh.json`：中文站点文案（导航、首页文案）
-- `site.en.json`：英文站点文案
-- `members.json`：成员列表
-- `projects.json`：项目列表
+### 站点文案
+- `src/data/site.zh.json`
+- `src/data/site.en.json`
 
-### Markdown（更适合连续内容）
-目录：`src/content/`
-- `news/*.md`：新闻条目
-- `papers/*.md`：论文条目
+用于修改：
+- 顶部导航
+- 首页介绍
+- 首页重点信息
+- 页脚品牌名
 
-## 2) JSON 修改规则
+### 成员
+- `src/content/members/*.md`
+
+每位成员一个 Markdown 文件。
+
+### 项目
+- `src/content/projects/<slug>/`
+
+每个项目一个目录，目录里有四个文件：
+- `overview_cn.md`
+- `overview_en.md`
+- `background_cn.md`
+- `background_en.md`
+
+### 论文
+- `src/content/papers/*.md`
+
+### 新闻
+- `src/content/news/<slug>/`
+
+每条新闻一个目录，目录里至少要有：
+- `*_cn.md`
+- `*_en.md`
+
+### 招生与合作
+- `src/content/join/recruitment/overview_cn.md`
+- `src/content/join/recruitment/overview_en.md`
+
+## 2. 修改规则
+
+### JSON
 - 使用双引号 `"..."`
-- 每项之间要有逗号
-- 不要改字段名（如 `title`、`status`）
+- 保留字段名不变
+- 不确定时只改文案内容，不改结构
 
-## 3) Markdown 修改规则
-每个文件顶部必须有 frontmatter：
+### Markdown
+- 文件头部的 frontmatter 不要删
+- 路径、后缀、语言配对要保持一致
+- 中文新闻必须是 `_cn.md`
+- 英文新闻必须是 `_en.md`
 
-### 新闻示例（`src/content/news/2026-03-01.md`）
+## 3. 最常用模板
+
+### 新增成员
 ```md
 ---
-date: '2026-03-01'
-title:
-  zh: '这里写中文标题'
-  en: 'English title here'
+id: "new-member"
+name:
+  zh: "新成员"
+  en: "New Member"
+role:
+  zh: "硕士生"
+  en: "Master"
+status:
+  zh: "在读"
+  en: "Current"
+area:
+  zh: "研究方向"
+  en: "Research Area"
 ---
 ```
 
-### 论文示例（`src/content/papers/2026-xxx.md`）
+### 新增项目目录
+```text
+src/content/projects/my-project/
+  overview_cn.md
+  overview_en.md
+  background_cn.md
+  background_en.md
+```
+
+`overview_cn.md` 示例：
+```md
+---
+title: "项目名"
+tag: "Embodied AI"
+time: "2026"
+status: "进行中"
+---
+这里写项目概览正文。
+```
+
+### 新增新闻目录
+```text
+src/content/news/2026-03-25-my-news/
+  中文标题_cn.md
+  English_title_en.md
+```
+
+新闻文件示例：
+```md
+---
+date: "2026-03-25"
+---
+
+这里写正文。
+```
+
+### 新增论文
 ```md
 ---
 year: 2026
-title: 'Paper Title'
-venue: 'Conference Name'
+title: "Paper Title"
+venue: "Conference Name"
 ---
 ```
 
-## 4) 修改后如何检查
+## 4. 修改后怎么检查
+
 在项目根目录执行：
+
 ```bash
 npm run validate:content
 npm run build
+npm run test:smoke
 ```
 
-## 5) 如何预览
+## 5. 如何预览
+
 ```bash
 ./run.sh
 ```
-浏览器打开 `http://localhost:4321`。
+
+浏览器打开：
+- `http://localhost:4321/`
+- `http://localhost:4321/en/`

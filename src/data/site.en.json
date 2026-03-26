@@ -15,9 +15,18 @@
       "recentProjects": "Recent Projects"
     },
     "highlights": [
-      { "title": "Research", "desc": "Embodied AI / HCI / Robotics, configurable by your own research tracks." },
-      { "title": "Recent Outputs", "desc": "Connected to papers, projects, and news modules with bilingual updates." },
-      { "title": "Recruitment & Collaboration", "desc": "Recruitment directions, collaboration modes, and contact channels are fully bilingual." }
+      {
+        "title": "Research",
+        "desc": "Embodied AI / HCI / Robotics, configurable by your own research tracks."
+      },
+      {
+        "title": "Recent Outputs",
+        "desc": "Connected to papers, projects, and news modules with bilingual updates."
+      },
+      {
+        "title": "Recruitment & Collaboration",
+        "desc": "Recruitment directions, collaboration modes, and contact channels are fully bilingual."
+      }
     ],
     "quick": "Quick Links"
   }

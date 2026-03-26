@@ -50,7 +50,7 @@ const hasLinks = Boolean(links?.scholar || links?.github || links?.homepage || l
 
     {hasLinks && (
       <article class="card detail-section" data-reveal>
-        <h2>Links</h2>
+        <h2>链接</h2>
         <div class="detail-links">
           {links?.scholar && <a class="btn btn-ghost" href={links.scholar} target="_blank" rel="noreferrer">Google Scholar</a>}
           {links?.github && <a class="btn btn-ghost" href={links.github} target="_blank" rel="noreferrer">GitHub</a>}

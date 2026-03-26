@@ -2,8 +2,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const jsonBase = path.resolve('src/data/content');
+const dataBase = path.resolve('src/data');
 const contentBase = path.resolve('src/content');
+const siteFiles = {
+  zh: 'site.zh.json',
+  en: 'site.en.json',
+};
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg);
@@ -14,83 +18,114 @@ function isString(v) {
 }
 
 function readJson(file) {
-  const p = path.join(jsonBase, file);
-  assert(fs.existsSync(p), `Missing file: ${file}`);
-  return JSON.parse(fs.readFileSync(p, 'utf8'));
+  const filePath = path.join(dataBase, file);
+  assert(fs.existsSync(filePath), `Missing file: src/data/${file}`);
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function parseFrontmatter(filePath) {
+function parseMarkdown(filePath, requireFrontmatter = true) {
   const raw = fs.readFileSync(filePath, 'utf8');
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  assert(m, `Missing frontmatter: ${filePath}`);
-  return m[1];
+  const matched = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+
+  if (!matched) {
+    assert(!requireFrontmatter, `Missing frontmatter: ${filePath}`);
+    return { frontmatter: '', body: raw.trim() };
+  }
+
+  return {
+    frontmatter: matched[1],
+    body: raw.slice(matched[0].length).trim(),
+  };
 }
 
 function collectMarkdownFilesRecursive(dir) {
   const files = [];
   for (const name of fs.readdirSync(dir)) {
-    const p = path.join(dir, name);
-    const stat = fs.statSync(p);
+    const filePath = path.join(dir, name);
+    const stat = fs.statSync(filePath);
     if (stat.isDirectory()) {
-      files.push(...collectMarkdownFilesRecursive(p));
+      files.push(...collectMarkdownFilesRecursive(filePath));
     } else if (name.endsWith('.md')) {
-      files.push(p);
+      files.push(filePath);
     }
   }
   return files;
 }
 
-try {
-  // JSON-managed content (still in JSON)
-  const siteZh = readJson('site.zh.json');
-  const siteEn = readJson('site.en.json');
-  const projects = readJson('projects.json');
+function collectDirectories(dir) {
+  return fs
+    .readdirSync(dir)
+    .map((name) => path.join(dir, name))
+    .filter((filePath) => fs.statSync(filePath).isDirectory());
+}
 
-  for (const [name, site] of [['zh', siteZh], ['en', siteEn]]) {
-    assert(isString(site.brand), `site.${name}.brand invalid`);
-    ['home','members','projects','papers','news'].forEach((k)=>assert(isString(site.nav?.[k]), `site.${name}.nav.${k} invalid`));
+function assertFrontmatter(pattern, frontmatter, message) {
+  assert(pattern.test(frontmatter), message);
+}
+
+function validateSite(site, lang) {
+  assert(isString(site.brand), `site.${lang}.brand invalid`);
+  assert(isString(site.siteName), `site.${lang}.siteName invalid`);
+  ['home', 'members', 'projects', 'papers', 'news'].forEach((key) => {
+    assert(isString(site.nav?.[key]), `site.${lang}.nav.${key} invalid`);
+  });
+  assert(isString(site.home?.intro), `site.${lang}.home.intro invalid`);
+  assert(isString(site.home?.quick), `site.${lang}.home.quick invalid`);
+  assert(isString(site.home?.sections?.highlights), `site.${lang}.home.sections.highlights invalid`);
+  assert(isString(site.home?.sections?.recentProjects), `site.${lang}.home.sections.recentProjects invalid`);
+  assert(Array.isArray(site.home?.highlights) && site.home.highlights.length > 0, `site.${lang}.home.highlights invalid`);
+  site.home.highlights.forEach((item, index) => {
+    assert(isString(item?.title), `site.${lang}.home.highlights[${index}].title invalid`);
+    assert(isString(item?.desc), `site.${lang}.home.highlights[${index}].desc invalid`);
+  });
+}
+
+try {
+  for (const [lang, file] of Object.entries(siteFiles)) {
+    validateSite(readJson(file), lang);
   }
 
-  assert(Array.isArray(projects), 'projects.json must be array');
-  projects.forEach((p, i) => {
-    assert(isString(p.title), `projects[${i}].title invalid`);
-    assert(isString(p.status?.zh) && isString(p.status?.en), `projects[${i}].status invalid`);
-  });
-
-  // Markdown collections
   const newsDir = path.join(contentBase, 'news');
   const papersDir = path.join(contentBase, 'papers');
   const membersDir = path.join(contentBase, 'members');
+  const projectsDir = path.join(contentBase, 'projects');
+  const joinDir = path.join(contentBase, 'join');
   assert(fs.existsSync(newsDir), 'Missing src/content/news');
   assert(fs.existsSync(papersDir), 'Missing src/content/papers');
   assert(fs.existsSync(membersDir), 'Missing src/content/members');
+  assert(fs.existsSync(projectsDir), 'Missing src/content/projects');
+  assert(fs.existsSync(joinDir), 'Missing src/content/join');
 
   const newsFiles = collectMarkdownFilesRecursive(newsDir);
-  const paperFiles = fs.readdirSync(papersDir).filter((f) => f.endsWith('.md')).map((f) => path.join(papersDir, f));
-  const memberFiles = fs.readdirSync(membersDir).filter((f) => f.endsWith('.md')).map((f) => path.join(membersDir, f));
+  const paperFiles = fs.readdirSync(papersDir).filter((name) => name.endsWith('.md')).map((name) => path.join(papersDir, name));
+  const memberFiles = fs.readdirSync(membersDir).filter((name) => name.endsWith('.md')).map((name) => path.join(membersDir, name));
+  const projectFolders = collectDirectories(projectsDir);
+  const joinFolders = collectDirectories(joinDir);
+
   assert(newsFiles.length > 0, 'No markdown files in src/content/news');
   assert(paperFiles.length > 0, 'No markdown files in src/content/papers');
   assert(memberFiles.length > 0, 'No markdown files in src/content/members');
+  assert(projectFolders.length > 0, 'No project folders in src/content/projects');
+  assert(joinFolders.length > 0, 'No join folders in src/content/join');
 
-  // news: enforce *_cn.md and *_en.md pairs inside each slug directory.
   const newsLangMap = new Map();
   newsFiles.forEach((filePath) => {
     const rel = path.relative(newsDir, filePath).replaceAll('\\', '/');
     const parts = rel.split('/');
     assert(parts.length >= 2, `news file must be nested under a folder: ${rel}`);
-    const filename = parts[parts.length - 1];
-    const m = filename.match(/^(.*)_(cn|en)\.md$/i);
-    assert(m, `news filename must end with _cn.md or _en.md: ${rel}`);
+    const fileName = parts[parts.length - 1];
+    const matched = fileName.match(/^(.*)_(cn|en)\.md$/i);
+    assert(matched, `news filename must end with _cn.md or _en.md: ${rel}`);
+
     const slug = parts.slice(0, -1).join('/');
     if (!newsLangMap.has(slug)) {
       newsLangMap.set(slug, new Set());
     }
-    newsLangMap.get(slug).add(m[2].toLowerCase());
+    newsLangMap.get(slug).add(matched[2].toLowerCase());
 
-    const fm = parseFrontmatter(filePath);
-    if (fm.trim()) {
-      assert(/date:\s*['"]?\d{4}-\d{2}-\d{2}['"]?/.test(fm), `news frontmatter date invalid: ${rel}`);
-    }
+    const { frontmatter, body } = parseMarkdown(filePath);
+    assertFrontmatter(/date:\s*['"]?\d{4}-\d{2}-\d{2}['"]?/, frontmatter, `news frontmatter date invalid: ${rel}`);
+    assert(isString(body), `news body empty: ${rel}`);
   });
 
   newsLangMap.forEach((langs, slug) => {
@@ -98,22 +133,55 @@ try {
   });
 
   paperFiles.forEach((filePath) => {
-    const fm = parseFrontmatter(filePath);
-    assert(/year:\s*\d{4}/.test(fm), `paper year invalid: ${path.basename(filePath)}`);
-    assert(/title:\s*['"].+['"]/.test(fm), `paper title invalid: ${path.basename(filePath)}`);
-    assert(/venue:\s*['"].+['"]/.test(fm), `paper venue invalid: ${path.basename(filePath)}`);
+    const { frontmatter } = parseMarkdown(filePath);
+    assertFrontmatter(/year:\s*\d{4}/, frontmatter, `paper year invalid: ${path.basename(filePath)}`);
+    assertFrontmatter(/title:\s*['"].+['"]/, frontmatter, `paper title invalid: ${path.basename(filePath)}`);
+    assertFrontmatter(/venue:\s*['"].+['"]/, frontmatter, `paper venue invalid: ${path.basename(filePath)}`);
   });
 
   memberFiles.forEach((filePath) => {
-    const fm = parseFrontmatter(filePath);
-    assert(/id:\s*['"].+['"]/.test(fm), `member id invalid: ${path.basename(filePath)}`);
-    assert(/name:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/.test(fm), `member name zh/en invalid: ${path.basename(filePath)}`);
-    assert(/role:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/.test(fm), `member role zh/en invalid: ${path.basename(filePath)}`);
-    assert(/area:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/.test(fm), `member area zh/en invalid: ${path.basename(filePath)}`);
+    const { frontmatter } = parseMarkdown(filePath);
+    assertFrontmatter(/id:\s*['"].+['"]/, frontmatter, `member id invalid: ${path.basename(filePath)}`);
+    assertFrontmatter(/name:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/, frontmatter, `member name zh/en invalid: ${path.basename(filePath)}`);
+    assertFrontmatter(/role:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/, frontmatter, `member role zh/en invalid: ${path.basename(filePath)}`);
+    assertFrontmatter(/area:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/, frontmatter, `member area zh/en invalid: ${path.basename(filePath)}`);
   });
 
-  console.log('✅ Content validation passed');
+  projectFolders.forEach((folderPath) => {
+    const slug = path.basename(folderPath);
+    const requiredFiles = ['overview_cn.md', 'overview_en.md', 'background_cn.md', 'background_en.md'];
+    requiredFiles.forEach((fileName) => {
+      assert(fs.existsSync(path.join(folderPath, fileName)), `project file missing: ${slug}/${fileName}`);
+    });
+
+    ['overview_cn.md', 'overview_en.md'].forEach((fileName) => {
+      const { frontmatter, body } = parseMarkdown(path.join(folderPath, fileName));
+      assertFrontmatter(/title:\s*['"].+['"]/, frontmatter, `project title invalid: ${slug}/${fileName}`);
+      assertFrontmatter(/status:\s*['"].+['"]/, frontmatter, `project status invalid: ${slug}/${fileName}`);
+      assert(isString(body), `project overview body empty: ${slug}/${fileName}`);
+    });
+
+    ['background_cn.md', 'background_en.md'].forEach((fileName) => {
+      const { body } = parseMarkdown(path.join(folderPath, fileName), false);
+      assert(isString(body), `project background body empty: ${slug}/${fileName}`);
+    });
+  });
+
+  joinFolders.forEach((folderPath) => {
+    const rel = path.relative(joinDir, folderPath).replaceAll('\\', '/');
+    const cnPath = path.join(folderPath, 'overview_cn.md');
+    const enPath = path.join(folderPath, 'overview_en.md');
+    assert(fs.existsSync(cnPath), `join file missing: ${rel}/overview_cn.md`);
+    assert(fs.existsSync(enPath), `join file missing: ${rel}/overview_en.md`);
+
+    [cnPath, enPath].forEach((filePath) => {
+      const { body } = parseMarkdown(filePath);
+      assert(isString(body), `join body empty: ${path.relative(contentBase, filePath).replaceAll('\\', '/')}`);
+    });
+  });
+
+  console.log('Content validation passed');
 } catch (err) {
-  console.error(`❌ Content validation failed: ${err.message}`);
+  console.error(`Content validation failed: ${err.message}`);
   process.exit(1);
 }
