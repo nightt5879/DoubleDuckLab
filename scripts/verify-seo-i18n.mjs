@@ -1,13 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
-
-const DEFAULT_SITE_URL = 'https://doubleducklab.com/';
-
-function normalizeSiteUrl(value) {
-  const site = (value || DEFAULT_SITE_URL).trim();
-  return site.endsWith('/') ? site : `${site}/`;
-}
+import { resolveConfiguredSiteUrl } from './site-url.mjs';
 
 function readHtml(file) {
   const filePath = path.resolve(file);
@@ -24,7 +18,7 @@ function assertIncludes(html, needle, file) {
   }
 }
 
-const siteUrl = normalizeSiteUrl(process.env.PUBLIC_SITE_URL || process.env.SITE_URL);
+const siteUrl = resolveConfiguredSiteUrl(process.env.MODE || 'production');
 const checks = [
   {
     file: 'dist/index.html',
@@ -34,6 +28,10 @@ const checks = [
       `<link rel="alternate" hreflang="en" href="${siteUrl}en/">`,
       `<meta property="og:url" content="${siteUrl}">`,
       'href="/en/"',
+      'href="/members/"',
+      'href="/projects/"',
+      'href="/papers/"',
+      'href="/news/"',
     ],
   },
   {
@@ -44,6 +42,10 @@ const checks = [
       `<link rel="alternate" hreflang="zh-CN" href="${siteUrl}">`,
       `<meta property="og:url" content="${siteUrl}en/">`,
       'href="/"',
+      'href="/en/members/"',
+      'href="/en/projects/"',
+      'href="/en/papers/"',
+      'href="/en/news/"',
     ],
   },
   {

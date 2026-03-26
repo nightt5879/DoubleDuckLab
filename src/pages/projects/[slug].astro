@@ -27,11 +27,16 @@ export async function getStaticPaths() {
       backgroundEntry: item.entry.background.zh,
       fallbackBackgroundEntry: item.entry.background.en,
       meta: projectDisplayMeta(item, 'zh'),
+      localeAlternates: {
+        zh: `/projects/${item.slug}/`,
+        en: item.entry.overview.en ? `/en/projects/${item.slug}/` : undefined,
+        xDefault: `/projects/${item.slug}/`,
+      },
     },
   }));
 }
 
-const { overviewEntry, backgroundEntry, fallbackBackgroundEntry, meta } = Astro.props;
+const { overviewEntry, backgroundEntry, fallbackBackgroundEntry, meta, localeAlternates } = Astro.props;
 const { Content: OverviewContent } = await render(overviewEntry);
 const bgEntry = backgroundEntry || fallbackBackgroundEntry;
 const bgRender = bgEntry ? await render(bgEntry) : null;
@@ -42,7 +47,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.paper);
 const pageDesc =
   summarizeParts([meta.tag, meta.status, meta.time, overviewEntry.body], 160) || '查看 DoubleDuckLab 项目详情。';
 ---
-<BaseLayout title={meta.title} desc={pageDesc} lang="zh" pathPrefix="">
+<BaseLayout title={meta.title} desc={pageDesc} lang="zh" pathPrefix="" localeAlternates={localeAlternates}>
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{meta.title}</h1>
@@ -80,7 +85,7 @@ const pageDesc =
     )}
 
     <div class="back-row" data-reveal>
-      <a class="btn btn-primary" href="/projects" data-history-back>返回项目列表</a>
+      <a class="btn btn-primary" href="/projects/" data-history-back>返回项目列表</a>
       <a class="btn btn-ghost" href="/">回到首页</a>
     </div>
   </section>

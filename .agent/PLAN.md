@@ -16,6 +16,7 @@
 - [x] T-0011：基础收官验收包（交付与交接）
 
 ## M4 线上可索引与双语体验
-- [ ] T-0012：SEO 与 i18n 基础加固
+- [x] T-0012：SEO 与 i18n 基础加固
+- [ ] T-0013：SEO / URL review follow-ups（1.1.1）
 
 参考：`docs/roadmap.md`

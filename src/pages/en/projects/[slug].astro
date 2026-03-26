@@ -27,11 +27,16 @@ export async function getStaticPaths() {
       backgroundEntry: item.entry.background.en,
       fallbackBackgroundEntry: item.entry.background.zh,
       meta: projectDisplayMeta(item, 'en'),
+      localeAlternates: {
+        zh: item.entry.overview.zh ? `/projects/${item.slug}/` : undefined,
+        en: `/en/projects/${item.slug}/`,
+        xDefault: item.entry.overview.zh ? `/projects/${item.slug}/` : `/en/projects/${item.slug}/`,
+      },
     },
   }));
 }
 
-const { overviewEntry, backgroundEntry, fallbackBackgroundEntry, meta } = Astro.props;
+const { overviewEntry, backgroundEntry, fallbackBackgroundEntry, meta, localeAlternates } = Astro.props;
 const { Content: OverviewContent } = await render(overviewEntry);
 const bgEntry = backgroundEntry || fallbackBackgroundEntry;
 const bgRender = bgEntry ? await render(bgEntry) : null;
@@ -42,7 +47,7 @@ const hasLinks = Boolean(links.repo || links.demo || links.paper);
 const pageDesc =
   summarizeParts([meta.tag, meta.status, meta.time, overviewEntry.body], 160) || 'Read the overview of this DoubleDuckLab project.';
 ---
-<BaseLayout title={meta.title} desc={pageDesc} lang="en" pathPrefix="/en">
+<BaseLayout title={meta.title} desc={pageDesc} lang="en" pathPrefix="/en" localeAlternates={localeAlternates}>
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{meta.title}</h1>
@@ -80,7 +85,7 @@ const pageDesc =
     )}
 
     <div class="back-row" data-reveal>
-      <a class="btn btn-primary" href="/en/projects" data-history-back>Back to Projects</a>
+      <a class="btn btn-primary" href="/en/projects/" data-history-back>Back to Projects</a>
       <a class="btn btn-ghost" href="/en/">Back to Home</a>
     </div>
   </section>
