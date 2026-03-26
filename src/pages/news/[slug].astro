@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { buildLocalizedNews } from '../../utils/news-localized';
+import { summarizeParts } from '../../utils/seo';
 
 export async function getStaticPaths() {
   const allNews = await getCollection('news');
@@ -29,8 +30,9 @@ export async function getStaticPaths() {
 
 const { entry, title, date, related } = Astro.props;
 const { Content } = await render(entry);
+const pageDesc = summarizeParts([date, entry.body], 160) || `${title}${date ? ` · ${date}` : ''}`;
 ---
-<BaseLayout title={title} lang="zh" pathPrefix="">
+<BaseLayout title={title} desc={pageDesc} lang="zh" pathPrefix="" ogType="article">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{title}</h1>

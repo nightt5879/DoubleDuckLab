@@ -6,8 +6,9 @@ const paperEntries = await getCollection('papers');
 const papers = paperEntries
   .map((e) => ({ slug: e.slug, ...e.data }))
   .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
+const pageDesc = '查看 DoubleDuckLab 论文列表与发表信息。';
 ---
-<BaseLayout title="论文" lang="zh" pathPrefix="">
+<BaseLayout title="论文" desc={pageDesc} lang="zh" pathPrefix="">
   <section class="page-head" data-reveal>
     <h1 class="page-title">论文</h1>
   </section>

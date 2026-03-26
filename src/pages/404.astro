@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="404" lang="zh" pathPrefix="">
+<BaseLayout
+  title="404"
+  desc="DoubleDuckLab 页面不存在。请返回首页、成员、项目或新闻页面继续浏览。"
+  lang="zh"
+  pathPrefix=""
+  noindex={true}
+  disableCanonical={true}
+  disableLocaleAlternates={true}
+>
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <span class="badge-muted">404</span>

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - Unreleased
+
+### Added
+- Configurable production site URL via `PUBLIC_SITE_URL`, with `https://doubleducklab.com` as the default.
+- Post-build SEO / i18n checks for canonical tags, Open Graph metadata, hreflang alternates, and locale switching.
+
+### Changed
+- Added canonical, Open Graph, Twitter card, and hreflang output in the shared layout.
+- Switched the footer language control from homepage-only links to current-page locale alternates.
+- Expanded `verify.bat` and CI to run SEO / i18n verification after build.
+
 ## [1.0.1] - 2026-03-26
 
 ### Fixed

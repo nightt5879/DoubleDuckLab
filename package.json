@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "validate:content": "node scripts/validate-content.mjs",
-    "test:smoke": "node scripts/smoke-build.mjs"
+    "test:smoke": "node scripts/smoke-build.mjs",
+    "test:seo": "node scripts/verify-seo-i18n.mjs"
   },
   "devDependencies": {
     "astro": "^5.13.0"

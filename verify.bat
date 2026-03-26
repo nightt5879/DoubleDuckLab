@@ -19,14 +19,14 @@ if not exist node_modules (
   )
 )
 
-echo [verify.bat] step 1/3: validate content
+echo [verify.bat] step 1/4: validate content
 call npm.cmd run validate:content
 if errorlevel 1 (
   set "EXIT_CODE=%ERRORLEVEL%"
   goto finish
 )
 
-echo [verify.bat] step 2/3: build site
+echo [verify.bat] step 2/4: build site
 set "ASTRO_TELEMETRY_DISABLED=1"
 call npm.cmd run build
 if errorlevel 1 (
@@ -34,14 +34,21 @@ if errorlevel 1 (
   goto finish
 )
 
-echo [verify.bat] step 3/3: smoke test built routes
+echo [verify.bat] step 3/4: smoke test built routes
 call npm.cmd run test:smoke
 if errorlevel 1 (
   set "EXIT_CODE=%ERRORLEVEL%"
   goto finish
 )
 
-echo [verify.bat] success: validation, build, and smoke test all passed.
+echo [verify.bat] step 4/4: verify SEO and locale alternates
+call npm.cmd run test:seo
+if errorlevel 1 (
+  set "EXIT_CODE=%ERRORLEVEL%"
+  goto finish
+)
+
+echo [verify.bat] success: validation, build, smoke test, and SEO checks all passed.
 
 :finish
 if not "%EXIT_CODE%"=="0" (

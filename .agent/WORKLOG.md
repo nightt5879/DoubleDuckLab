@@ -17,3 +17,10 @@
 - 按要求执行流程限制学习：已阅读 `.agent/CONTRACT.md`、`STATUS.json`、`WORKLOG.md`、`PLAN.md`、`TASKS/*` 与最新 `RUNS` 样例。
 - 新增开发留痕：`.agent/RUNS/2026-03-04_process-audit/`（intent/actions/evidence/summary）。
 - 明确后续执行规范：每次开发继续维护 `STATUS.json`、`WORKLOG.md` 与 `RUNS/*`。
+
+## 2026-03-26
+- 新增 T-0012：1.1.0 的 SEO / i18n 基础加固。
+- 创建 RUN 留痕：`.agent/RUNS/2026-03-26_t0012-seo-i18n/`。
+- 开始梳理站点 URL、布局 SEO 标签、当前页语言互跳与自验证链路。
+- 完成环境变量站点地址、canonical / OG / hreflang / robots、当前页语言互跳与构建后 `test:seo`。
+- 本地自验证通过：`verify.bat --no-pause`。

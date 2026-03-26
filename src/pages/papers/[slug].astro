@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { summarizeParts } from '../../utils/seo';
 
 export async function getStaticPaths() {
   const papers = await getCollection('papers');
@@ -17,8 +18,9 @@ const links = entry.data.links;
 const hasLinks = Boolean(links?.online || links?.pdf || links?.project || links?.code);
 const hasBody = Boolean(entry.body?.trim());
 const { Content } = await render(entry);
+const pageDesc = abstract || summarizeParts([entry.data.authors, entry.data.venue, entry.data.year], 160);
 ---
-<BaseLayout title={entry.data.title} lang="zh" pathPrefix="">
+<BaseLayout title={entry.data.title} desc={pageDesc} lang="zh" pathPrefix="" ogType="article">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{entry.data.title}</h1>

@@ -2,6 +2,7 @@
 import siteZh from '../data/site.zh.json';
 import siteEn from '../data/site.en.json';
 import { ClientRouter } from 'astro:transitions';
+import { buildLocalePath, normalizeSitePath, toAbsoluteUrl } from '../utils/seo';
 
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -15,18 +16,52 @@ import navbarScrollScript from '../scripts/navbar-scroll.mjs?url';
 
 const {
   title = '',
-  desc = 'Local-first Astro lab website prototype',
+  desc,
   lang = 'zh',
   pathPrefix = '',
-} = Astro.props as { title?: string; desc?: string; lang?: 'zh' | 'en'; pathPrefix?: string };
+  ogType = 'website',
+  ogImage = '/images/DDLab_logo.png',
+  noindex = false,
+  disableCanonical = false,
+  disableLocaleAlternates = false,
+} = Astro.props as {
+  title?: string;
+  desc?: string;
+  lang?: 'zh' | 'en';
+  pathPrefix?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  noindex?: boolean;
+  disableCanonical?: boolean;
+  disableLocaleAlternates?: boolean;
+};
 
 const t = lang === 'en' ? siteEn : siteZh;
+const description = desc || t.home.intro;
+const currentPath = normalizeSitePath(Astro.url.pathname);
+const canonicalPath = lang === 'en' ? buildLocalePath(currentPath, 'en') : buildLocalePath(currentPath, 'zh');
+const zhPath = buildLocalePath(canonicalPath, 'zh');
+const enPath = buildLocalePath(canonicalPath, 'en');
+const canonicalUrl = toAbsoluteUrl(canonicalPath, Astro.site);
+const ogImageUrl = toAbsoluteUrl(ogImage, Astro.site);
+const localeSwitchHref = disableLocaleAlternates ? (lang === 'zh' ? '/en/' : '/') : lang === 'zh' ? enPath : zhPath;
+const localeLabel = lang === 'zh' ? '中文' : 'English';
+const alternateLocaleLabel = lang === 'zh' ? 'English' : '中文';
+const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
+const alternateOgLocale = lang === 'zh' ? 'en_US' : 'zh_CN';
 const navPath = {
   home: `${pathPrefix}/`,
   members: `${pathPrefix}/members`,
   projects: `${pathPrefix}/projects`,
   papers: `${pathPrefix}/papers`,
   news: `${pathPrefix}/news`,
+};
+const navPathResolved = {
+  home: normalizeSitePath(navPath.home),
+  members: normalizeSitePath(navPath.members),
+  projects: normalizeSitePath(navPath.projects),
+  papers: normalizeSitePath(navPath.papers),
+  news: normalizeSitePath(navPath.news),
 };
 ---
 <!doctype html>
@@ -35,7 +70,25 @@ const navPath = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title ? `${title} · ${t.siteName}` : t.siteName}</title>
-    <meta name="description" content={desc} />
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    {!disableCanonical && <link rel="canonical" href={canonicalUrl} />}
+    {!disableLocaleAlternates && <link rel="alternate" hreflang="zh-CN" href={toAbsoluteUrl(zhPath, Astro.site)} />}
+    {!disableLocaleAlternates && <link rel="alternate" hreflang="en" href={toAbsoluteUrl(enPath, Astro.site)} />}
+    {!disableLocaleAlternates && <link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(zhPath, Astro.site)} />}
+    <meta property="og:site_name" content={t.siteName} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title ? `${title} · ${t.siteName}` : t.siteName} />
+    <meta property="og:description" content={description} />
+    {!disableCanonical && <meta property="og:url" content={canonicalUrl} />}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title ? `${title} · ${t.siteName}` : t.siteName} />
+    <meta property="og:locale" content={ogLocale} />
+    {!disableLocaleAlternates && <meta property="og:locale:alternate" content={alternateOgLocale} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ? `${title} · ${t.siteName}` : t.siteName} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <ClientRouter />
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" href="/images/DDLab_logo.png" />
@@ -64,11 +117,11 @@ const navPath = {
       <div class="container nav">
         <div class="brand">{t.brand}</div>
         <nav class="nav-links">
-          <a class={`nav-link ${Astro.url.pathname === navPath.home ? 'is-active' : ''}`} href={navPath.home}>{t.nav.home}</a>
-          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.members) ? 'is-active' : ''}`} href={navPath.members}>{t.nav.members}</a>
-          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.projects) ? 'is-active' : ''}`} href={navPath.projects}>{t.nav.projects}</a>
-          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.papers) ? 'is-active' : ''}`} href={navPath.papers}>{t.nav.papers}</a>
-          <a class={`nav-link ${Astro.url.pathname.startsWith(navPath.news) ? 'is-active' : ''}`} href={navPath.news}>{t.nav.news}</a>
+          <a class={`nav-link ${currentPath === navPathResolved.home ? 'is-active' : ''}`} href={navPath.home}>{t.nav.home}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.members) ? 'is-active' : ''}`} href={navPath.members}>{t.nav.members}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.projects) ? 'is-active' : ''}`} href={navPath.projects}>{t.nav.projects}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.papers) ? 'is-active' : ''}`} href={navPath.papers}>{t.nav.papers}</a>
+          <a class={`nav-link ${currentPath.startsWith(navPathResolved.news) ? 'is-active' : ''}`} href={navPath.news}>{t.nav.news}</a>
         </nav>
         <div class="nav-actions">
           <button class="btn btn-ghost" data-theme-toggle type="button" aria-label="Switch theme">Dark</button>
@@ -82,7 +135,15 @@ const navPath = {
     <footer class="footer">
       <div class="container footer-inner">
         <span class="lang-switch">
-          <a href="/">中文</a> / <a href="/en/">English</a>
+          {lang === 'zh' ? (
+            <>
+              <span aria-current="page">{localeLabel}</span> / <a href={localeSwitchHref}>{alternateLocaleLabel}</a>
+            </>
+          ) : (
+            <>
+              <a href={localeSwitchHref}>{alternateLocaleLabel}</a> / <span aria-current="page">{localeLabel}</span>
+            </>
+          )}
         </span>
         <span>© 2026 {t.siteName}</span>
         <span>

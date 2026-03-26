@@ -32,6 +32,7 @@ npm install
 npm run validate:content
 npm run build
 npm run test:smoke
+npm run test:seo
 npm run preview
 ```
 
@@ -45,6 +46,16 @@ Default URLs:
 
 - `http://localhost:4321/`
 - `http://localhost:4321/en/`
+
+## Production Site URL
+
+The build falls back to `https://doubleducklab.com` by default. Override it in a local `.env` file when needed:
+
+```bash
+PUBLIC_SITE_URL=https://your-domain.example
+```
+
+This value is used to generate canonical links, Open Graph URLs, and hreflang alternates.
 
 ## Single Sources of Truth
 
@@ -156,8 +167,10 @@ venue: "Conference Name"
   - Produces the static site
 - `npm run test:smoke`
   - Checks the built `/`, `/en/`, `/members`, `/projects`, `/papers`, and `/news` routes
+- `npm run test:seo`
+  - Checks canonical tags, Open Graph metadata, hreflang alternates, 404 noindex, and current-page locale switching
 - `verify.bat`
-  - Runs `validate:content`, `build`, and `test:smoke` in order
+  - Runs `validate:content`, `build`, `test:smoke`, and `test:seo` in order
   - Sets `ASTRO_TELEMETRY_DISABLED=1` automatically
   - Useful for a one-click verification pass on Windows
 
@@ -172,7 +185,7 @@ venue: "Conference Name"
 ## Roadmap
 
 - `1.0.1`: baseline hardening, encoding fix, source-of-truth cleanup, CI and smoke coverage
-- `1.1.0`: SEO and i18n experience improvements
+- `1.1.0`: production site URL, SEO metadata, current-page locale switching, and post-build SEO checks
 - `1.2.0`: CMS pilot for `news`
 
 ## License

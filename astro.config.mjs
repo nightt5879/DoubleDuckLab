@@ -1,5 +1,15 @@
 import { defineConfig } from 'astro/config';
+import { loadEnv } from 'vite';
 
-export default defineConfig({
-  site: 'http://localhost:4321',
+function normalizeSiteUrl(value) {
+  const site = (value || 'https://doubleducklab.com').trim();
+  return site.endsWith('/') ? site : `${site}/`;
+}
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
+    site: normalizeSiteUrl(env.PUBLIC_SITE_URL || env.SITE_URL),
+  };
 });
