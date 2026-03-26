@@ -1,14 +1,14 @@
 {
-  "current_task": "process-audit",
-  "phase": "closure",
-  "progress": 1.0,
-  "last_update": "2026-03-04T14:58:00+08:00",
+  "current_task": "T-0012-seo-i18n-hardening",
+  "phase": "review",
+  "progress": 0.95,
+  "last_update": "2026-03-26T15:58:00+08:00",
   "next_steps": [
-    "Create a new task ID for the next UI iteration before coding",
-    "Keep RUN evidence updated for each future request"
+    "Review staged diff and create a clear commit for the 1.1.0 branch",
+    "Open a PR and hand the branch to cloud Codex for a second review pass"
   ],
   "blockers": [],
   "evidence": [
-    ".agent/RUNS/2026-03-04_process-audit/02-evidence/terminal.log"
+    ".agent/RUNS/2026-03-26_t0012-seo-i18n/02-evidence/self-check.md"
   ]
 }

@@ -32,3 +32,6 @@ jobs:
 
       - name: Smoke test built routes
         run: npm run test:smoke
+
+      - name: Verify SEO and locale alternates
+        run: npm run test:seo

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { buildLocalizedProjects, projectDisplayMeta } from '../../utils/projects-localized';
+import { summarizeParts } from '../../utils/seo';
 
 function resolveProjectStatusTone(status: string) {
   const value = (status || '').toLowerCase();
@@ -38,8 +39,10 @@ const BackgroundContent = bgRender?.Content;
 
 const links = meta.links || {};
 const hasLinks = Boolean(links.repo || links.demo || links.paper);
+const pageDesc =
+  summarizeParts([meta.tag, meta.status, meta.time, overviewEntry.body], 160) || '查看 DoubleDuckLab 项目详情。';
 ---
-<BaseLayout title={meta.title} lang="zh" pathPrefix="">
+<BaseLayout title={meta.title} desc={pageDesc} lang="zh" pathPrefix="">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{meta.title}</h1>

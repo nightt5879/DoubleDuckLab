@@ -32,6 +32,7 @@ npm install
 npm run validate:content
 npm run build
 npm run test:smoke
+npm run test:seo
 npm run preview
 ```
 
@@ -45,6 +46,16 @@ verify.bat
 
 - `http://localhost:4321/`
 - `http://localhost:4321/en/`
+
+## 生产域名配置
+
+默认生产域名兜底为 `https://doubleducklab.com`。如需替换，请在本地 `.env` 中设置：
+
+```bash
+PUBLIC_SITE_URL=https://your-domain.example
+```
+
+构建时会使用这个地址生成 canonical、Open Graph URL 与 hreflang。
 
 ## 当前唯一真源
 
@@ -156,8 +167,10 @@ venue: "Conference Name"
   - 生成静态站点
 - `npm run test:smoke`
   - 检查 `/`、`/en/`、`/members`、`/projects`、`/papers`、`/news` 的构建结果
+- `npm run test:seo`
+  - 检查 canonical、Open Graph、hreflang、404 noindex 与当前页语言互跳
 - `verify.bat`
-  - 依次执行 `validate:content`、`build`、`test:smoke`
+  - 依次执行 `validate:content`、`build`、`test:smoke`、`test:seo`
   - 自动设置 `ASTRO_TELEMETRY_DISABLED=1`
   - 适合 Windows 下双击或命令行一键验收
 
@@ -172,7 +185,7 @@ venue: "Conference Name"
 ## Roadmap
 
 - `1.0.1`：基线修复，修乱码、收真源、补 CI / smoke
-- `1.1.0`：SEO 与 i18n 体验
+- `1.1.0`：生产域名、SEO 元信息、当前页中英互跳与构建后 SEO 校验
 - `1.2.0`：先给 `news` 接 CMS
 
 ## License

@@ -21,8 +21,9 @@ const areaText = pickI18nText(member.area, 'zh');
 const bio = pickI18nText(member.bio, 'zh');
 const links = member.links;
 const hasLinks = Boolean(links?.scholar || links?.github || links?.homepage || links?.email);
+const pageDesc = bio || `${member.role.zh}，研究方向：${areaText}。`;
 ---
-<BaseLayout title={nameText} lang="zh" pathPrefix="">
+<BaseLayout title={nameText} desc={pageDesc} lang="zh" pathPrefix="">
   <section class="detail-shell">
     <article class="card detail-hero detail-hero-member" data-reveal>
       <div class="detail-hero-main">

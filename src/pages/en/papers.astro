@@ -6,8 +6,9 @@ const paperEntries = await getCollection('papers');
 const papers = paperEntries
   .map((e) => ({ slug: e.slug, ...e.data }))
   .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
+const pageDesc = 'Browse DoubleDuckLab papers and publication metadata.';
 ---
-<BaseLayout title="Papers" lang="en" pathPrefix="/en">
+<BaseLayout title="Papers" desc={pageDesc} lang="en" pathPrefix="/en">
   <section class="page-head" data-reveal>
     <h1 class="page-title">Papers</h1>
   </section>

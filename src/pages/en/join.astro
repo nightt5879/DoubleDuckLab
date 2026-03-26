@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { summarizeText } from '../../utils/seo';
 
 const joinEntries = await getCollection('join');
 const entry =
@@ -13,8 +14,9 @@ if (!entry) {
 
 const { Content } = await render(entry);
 const pageTitle = entry.data.title || 'Recruitment & Collaboration';
+const pageDesc = summarizeText(entry.body) || 'Explore recruitment and collaboration information for DoubleDuckLab.';
 ---
-<BaseLayout title={pageTitle} lang="en" pathPrefix="/en">
+<BaseLayout title={pageTitle} desc={pageDesc} lang="en" pathPrefix="/en">
   <section class="detail-shell">
     <article class="card detail-hero" data-reveal>
       <h1 class="page-title">{pageTitle}</h1>

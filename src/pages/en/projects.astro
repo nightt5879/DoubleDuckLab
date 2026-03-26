@@ -5,6 +5,7 @@ import { buildLocalizedProjects, projectDisplayMeta } from '../../utils/projects
 
 const projectEntries = await getCollection('projects');
 const projects = buildLocalizedProjects(projectEntries).filter((item) => item.entry.overview.en);
+const pageDesc = 'Browse ongoing and completed DoubleDuckLab projects.';
 
 function resolveProjectStatusTone(status: string) {
   const value = (status || '').toLowerCase();
@@ -27,7 +28,7 @@ function formatPreviewTimeRange(value: string) {
   return `${start}-${end}`;
 }
 ---
-<BaseLayout title="Projects" lang="en" pathPrefix="/en">
+<BaseLayout title="Projects" desc={pageDesc} lang="en" pathPrefix="/en">
   <section class="page-head" data-reveal>
     <h1 class="page-title">Projects</h1>
   </section>

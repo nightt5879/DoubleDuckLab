@@ -5,6 +5,7 @@ import { buildLocalizedProjects, projectDisplayMeta } from '../utils/projects-lo
 
 const projectEntries = await getCollection('projects');
 const projects = buildLocalizedProjects(projectEntries).filter((item) => item.entry.overview.zh);
+const pageDesc = '查看 DoubleDuckLab 的在研与历史项目列表。';
 
 function resolveProjectStatusTone(status: string) {
   const value = (status || '').toLowerCase();
@@ -27,7 +28,7 @@ function formatPreviewTimeRange(value: string) {
   return `${start}-${end}`;
 }
 ---
-<BaseLayout title="项目" lang="zh" pathPrefix="">
+<BaseLayout title="项目" desc={pageDesc} lang="zh" pathPrefix="">
   <section class="page-head" data-reveal>
     <h1 class="page-title">项目</h1>
   </section>
