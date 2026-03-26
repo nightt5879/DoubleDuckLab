@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Only emit locale alternates and footer language-switch links when the counterpart page is explicitly available.
 - Aligned internal navigation and back links with the canonical trailing-slash URL form.
 - Made `test:seo` load the same configured site URL source as `astro build`, including `.env` values.
+- Declared `vite` explicitly as a dev dependency because the repo imports `loadEnv` directly.
 
 ## [1.1.0] - Unreleased
 

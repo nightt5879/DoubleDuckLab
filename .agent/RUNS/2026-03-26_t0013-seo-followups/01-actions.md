@@ -6,4 +6,5 @@
 - 2026-03-26: 更新 `BaseLayout.astro`，支持按显式 `localeAlternates` 输出 hreflang / 切换链接，并统一导航链接 URL 形式。
 - 2026-03-26: 更新首页、详情页与返回入口，把站内内部链接统一成尾斜杠形式。
 - 2026-03-26: 为 news / projects 详情页显式传入 `localeAlternates`，避免未来单语内容时生成错误 alternate。
+- 2026-03-26: 显式声明 `vite` 为 dev dependency，避免直接依赖 Astro 的传递依赖。
 - 2026-03-26: 自验证通过：`verify.bat --no-pause`。

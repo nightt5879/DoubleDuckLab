@@ -5,6 +5,7 @@
 - 限制 locale alternates 与页脚语言切换只在对侧页面存在时输出
 - 统一导航、首页入口与详情页返回链接到 canonical 尾斜杠形式
 - 让 `test:seo` 与 `astro build` 共用站点 URL 解析来源
+- 显式声明 `vite` 为 dev dependency
 - 更新 `1.1.1` changelog 与 roadmap 记录
 
 ## Evidence
