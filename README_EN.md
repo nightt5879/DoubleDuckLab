@@ -29,10 +29,7 @@ A bilingual Astro template for academic lab websites, built around a local-first
 git clone https://github.com/nightt5879/doubleducklab.git
 cd doubleducklab
 npm install
-npm run validate:content
-npm run build
-npm run test:smoke
-npm run test:seo
+npm run verify
 npm run preview
 ```
 
@@ -161,18 +158,20 @@ venue: "Conference Name"
 
 ## Validation Pipeline
 
+- `npm run verify`
+  - Recommended one-click verification entrypoint
+  - Runs `validate:content`, `build`, `test:smoke`, and `test:seo` in order
+  - Keeps local, Windows, and CI verification aligned
 - `npm run validate:content`
   - Validates site copy and all content collections
 - `npm run build`
-  - Produces the static site
+  - Produces the static site with a clean `dist/` and telemetry disabled by default
 - `npm run test:smoke`
   - Checks the built `/`, `/en/`, `/members`, `/projects`, `/papers`, and `/news` routes
 - `npm run test:seo`
   - Checks canonical tags, Open Graph metadata, hreflang alternates, 404 noindex, and current-page locale switching
 - `verify.bat`
-  - Runs `validate:content`, `build`, `test:smoke`, and `test:seo` in order
-  - Sets `ASTRO_TELEMETRY_DISABLED=1` automatically
-  - Useful for a one-click verification pass on Windows
+  - Windows one-click verification entrypoint kept in sync with `npm run verify`
 
 ## Docs
 
@@ -186,7 +185,8 @@ venue: "Conference Name"
 
 - `1.0.1`: baseline hardening, encoding fix, source-of-truth cleanup, CI and smoke coverage
 - `1.1.0`: production site URL, SEO metadata, current-page locale switching, and post-build SEO checks
-- `1.1.1`: review follow-up for alternate availability, internal URL consistency, and `test:seo` site URL loading
+- `1.1.1`: review follow-up for alternate availability, internal URL consistency, and `test:seo` site URL loading, completed
+- `1.1.2`: stability hardening, unified verification entrypoint, and clean-build guardrails
 - `1.2.0`: CMS pilot for `news`
 
 ## License

@@ -92,6 +92,7 @@
 
 ## 8. 验证链路
 
+- 推荐一键验收：`npm run verify`
 - 内容校验：`npm run validate:content`
 - 构建：`npm run build`
 - 构建后 smoke：`npm run test:smoke`
@@ -101,6 +102,4 @@
 1. 不再使用 `src/data/content/*`。
 2. 改内容优先改 `src/data/site.*.json` 或 `src/content/*`，不要先改页面模板硬编码。
 3. 改完内容后至少跑一次：
-   - `npm run validate:content`
-   - `npm run build`
-   - `npm run test:smoke`
+   - `npm run verify`

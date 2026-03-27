@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2026-03-27
+
+### Changed
+- Unified the verification entrypoint around `npm run verify` and `verify.bat` to keep local, Windows, and CI checks aligned.
+- Tightened the build flow so verification uses clean build output instead of relying on existing `dist/` artifacts.
+- Updated the release and ops documentation to describe `1.1.2` as stability hardening, without adding outward site features.
+
 ## [1.1.1] - 2026-03-26
 
 ### Added

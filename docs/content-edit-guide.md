@@ -126,9 +126,7 @@ venue: "Conference Name"
 在项目根目录执行：
 
 ```bash
-npm run validate:content
-npm run build
-npm run test:smoke
+npm run verify
 ```
 
 ## 5. 如何预览

@@ -22,9 +22,7 @@ git checkout -b content/YYYYMMDD-topic
 
 3. 运行检查
 ```bash
-npm run validate:content
-npm run build
-npm run test:smoke
+npm run verify
 ```
 
 4. 本地预览确认
@@ -75,8 +73,6 @@ git push origin content/YYYYMMDD-topic
 ## C. 交付前 30 秒检查
 
 - [ ] 内容改动只落在 `src/data/site.*.json` 或 `src/content/*`
-- [ ] `npm run validate:content` 通过
-- [ ] `npm run build` 通过
-- [ ] `npm run test:smoke` 通过
+- [ ] `npm run verify` 通过
 - [ ] 中英文页面都看过
 - [ ] PR 描述写清楚影响范围
