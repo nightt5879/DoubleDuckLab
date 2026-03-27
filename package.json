@@ -1,16 +1,17 @@
 {
   "name": "double-duck-lab",
   "type": "module",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/build-site.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "validate:content": "node scripts/validate-content.mjs",
     "test:smoke": "node scripts/smoke-build.mjs",
-    "test:seo": "node scripts/verify-seo-i18n.mjs"
+    "test:seo": "node scripts/verify-seo-i18n.mjs",
+    "verify": "node scripts/verify.mjs"
   },
   "devDependencies": {
     "astro": "^5.13.0",

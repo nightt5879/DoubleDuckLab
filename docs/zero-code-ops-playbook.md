@@ -37,9 +37,7 @@
 ## 2. 每次修改后的标准验证
 
 ```bash
-npm run validate:content
-npm run build
-npm run test:smoke
+npm run verify
 ./run.sh
 ```
 

@@ -29,10 +29,7 @@
 git clone https://github.com/nightt5879/doubleducklab.git
 cd doubleducklab
 npm install
-npm run validate:content
-npm run build
-npm run test:smoke
-npm run test:seo
+npm run verify
 npm run preview
 ```
 
@@ -161,18 +158,19 @@ venue: "Conference Name"
 
 ## 验证链路
 
+- `npm run verify`
+  - 推荐的一键验收入口，依次执行 `validate:content`、`build`、`test:smoke`、`test:seo`
+  - 统一本地、Windows 和 CI 的稳定性检查流程
 - `npm run validate:content`
   - 校验站点文案、成员、项目、论文、新闻、招生与合作的文件结构
 - `npm run build`
-  - 生成静态站点
+  - 生成静态站点，并默认清理旧 `dist/` 与关闭 Astro telemetry
 - `npm run test:smoke`
   - 检查 `/`、`/en/`、`/members`、`/projects`、`/papers`、`/news` 的构建结果
 - `npm run test:seo`
   - 检查 canonical、Open Graph、hreflang、404 noindex 与当前页语言互跳
 - `verify.bat`
-  - 依次执行 `validate:content`、`build`、`test:smoke`、`test:seo`
-  - 自动设置 `ASTRO_TELEMETRY_DISABLED=1`
-  - 适合 Windows 下双击或命令行一键验收
+  - Windows 下的一键验收入口，与 `npm run verify` 保持一致
 
 ## 文档入口
 
@@ -186,7 +184,8 @@ venue: "Conference Name"
 
 - `1.0.1`：基线修复，修乱码、收真源、补 CI / smoke
 - `1.1.0`：生产域名、SEO 元信息、当前页中英互跳与构建后 SEO 校验
-- `1.1.1`：review follow-up，修 alternate 可用性、内部链接 URL 一致性与 `test:seo` 站点地址读取
+- `1.1.1`：review follow-up，修 alternate 可用性、内部链接 URL 一致性与 `test:seo` 站点地址读取，已完成
+- `1.1.2`：稳定性硬化，统一 `verify` 入口、干净构建与发布验收流程
 - `1.2.0`：先给 `news` 接 CMS
 
 ## License

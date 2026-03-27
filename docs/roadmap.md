@@ -1,6 +1,6 @@
 # Roadmap
 
-更新时间：2026-03-26（1.1.1 follow-up）
+更新时间：2026-03-27（1.1.2 stability hardening）
 
 ## 1.0.1 基线修复
 
@@ -19,12 +19,19 @@
 - 当前页面中英互跳
 - build 后补 SEO / i18n 校验
 
-## 1.1.1 SEO / URL follow-up（进行中）
+## 1.1.1 SEO / URL follow-up（已完成）
 
 计划项：
 - alternate / hreflang 按对侧页面存在性输出
 - 站内内部链接统一为 canonical 尾斜杠形式
 - `test:seo` 与 build 共用站点 URL 解析逻辑
+
+## 1.1.2 Stability hardening
+
+已完成：
+- 统一 `verify` 作为本地、Windows 和 CI 的验收入口
+- 让构建流程默认走干净产物，避免旧 `dist/` 影响验收
+- 收口发布验收与文档叙事，保持对外行为不变
 
 ## 1.2.0 CMS 试点
 

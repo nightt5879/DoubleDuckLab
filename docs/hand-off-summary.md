@@ -18,10 +18,8 @@
 - 招生与合作：`src/content/join/recruitment/`
 
 ### 3. 工程验证
-- `npm run validate:content`
-- `npm run build`
-- `npm run test:smoke`
-- GitHub Actions CI：PR / `main` 自动跑校验、构建、smoke
+- `npm run verify`
+- GitHub Actions CI：PR / `main` 自动跑统一验收链路（内容校验、构建、smoke、SEO）
 
 ## 二、1.0.1 做了什么
 

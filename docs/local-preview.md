@@ -13,7 +13,7 @@ npm run dev
 
 ## 3. 生产构建验证
 ```bash
-npm run build
+npm run verify
 npm run preview
 ```
 
