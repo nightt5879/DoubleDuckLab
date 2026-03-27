@@ -14,7 +14,7 @@
 - 成员：`src/content/members/*.md`
 - 项目：`src/content/projects/<slug>/`
 - 论文：`src/content/papers/*.md`
-- 新闻：`src/content/news/<slug>/`
+- 新闻：`src/content/news/<slug>.zh.md`、`src/content/news/<slug>.en.md`
 - 招生与合作：`src/content/join/recruitment/`
 
 ### 3. 工程验证

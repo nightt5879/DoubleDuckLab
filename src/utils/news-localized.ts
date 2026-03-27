@@ -20,21 +20,43 @@ function parseEntryInfo(entry: NewsEntry) {
   const id = entry.id;
   const dirname = path.posix.dirname(id);
   const fileBase = path.posix.parse(path.posix.basename(id)).name;
-  const matched = fileBase.match(/^(.*)_(cn|en)$/i);
-  if (!matched) {
+  const localizedTitle = entry.data.title;
+  const newStyleMatched = fileBase.match(/^(.*)\.(zh|en)$/i);
+  const legacyMatched = fileBase.match(/^(.*)_(cn|en)$/i);
+
+  let slug = '';
+  let lang: 'zh' | 'en' | undefined;
+  let inferredTitleZh = localizedTitle?.zh || '';
+  let inferredTitleEn = localizedTitle?.en || '';
+
+  if (newStyleMatched) {
+    slug = dirname === '.' ? newStyleMatched[1].trim() : `${dirname}/${newStyleMatched[1].trim()}`;
+    lang = newStyleMatched[2].toLowerCase() === 'zh' ? 'zh' : 'en';
+  } else if (legacyMatched) {
+    const legacyTitle = legacyMatched[1].trim().replace(/_/g, ' ');
+    slug = dirname === '.' ? fileBase : dirname;
+    lang = legacyMatched[2].toLowerCase() === 'cn' ? 'zh' : 'en';
+    if (!inferredTitleZh && lang === 'zh') {
+      inferredTitleZh = legacyTitle;
+    }
+    if (!inferredTitleEn && lang === 'en') {
+      inferredTitleEn = legacyTitle;
+    }
+  } else {
     return null;
   }
 
-  const title = matched[1].trim().replace(/_/g, ' ');
-  const lang = matched[2].toLowerCase() === 'cn' ? 'zh' : 'en';
-  const slug = dirname === '.' ? fileBase : dirname;
-  const folderName = slug.split('/').pop() || '';
-  const inferredDate = /^\d{4}-\d{2}-\d{2}$/.test(folderName) ? folderName : '';
+  const slugLeaf = slug.split('/').pop() || '';
+  const inferredDateMatched = slugLeaf.match(/^(\d{4}-\d{2}-\d{2})(?:-|$)/);
+  const inferredDate = inferredDateMatched ? inferredDateMatched[1] : '';
 
   return {
     slug,
-    lang: lang as 'zh' | 'en',
-    title,
+    lang,
+    title: {
+      zh: inferredTitleZh,
+      en: inferredTitleEn,
+    },
     date: entry.data.date || inferredDate,
   };
 }
@@ -61,7 +83,12 @@ export function buildLocalizedNews(entries: NewsEntry[]): LocalizedNewsItem[] {
     if (!item.date && info.date) {
       item.date = info.date;
     }
-    item.title[info.lang] = info.title;
+    if (info.title.zh) {
+      item.title.zh = info.title.zh;
+    }
+    if (info.title.en) {
+      item.title.en = info.title.en;
+    }
     item.entry[info.lang] = entry;
   });
 

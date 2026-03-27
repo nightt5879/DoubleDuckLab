@@ -57,11 +57,11 @@
 ## 5. 新闻
 
 ### 5.1 数据来源
-- 目录：`src/content/news/<slug>/`
+- 文件：`src/content/news/<slug>.zh.md`、`src/content/news/<slug>.en.md`
 - 命名规则：
-  - 中文：`*_cn.md`
-  - 英文：`*_en.md`
-- 必填 frontmatter：`date`
+  - 中文：`*.zh.md`
+  - 英文：`*.en.md`
+- 必填 frontmatter：`date`、`title.zh`、`title.en`
 
 ### 5.2 页面映射
 - 列表：`src/pages/news.astro`、`src/pages/en/news.astro`

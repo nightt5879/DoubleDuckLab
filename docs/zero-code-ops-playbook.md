@@ -25,8 +25,8 @@
 - 验证页面：`/papers`、`/en/papers`
 
 ### 新闻
-- 位置：`src/content/news/<slug>/`
-- 可改：日期、正文、中英文标题文件
+- 位置：`src/content/news/<slug>.zh.md`、`src/content/news/<slug>.en.md`
+- 可改：日期、`title.zh/en`、中英文正文
 - 验证页面：`/news`、`/en/news`
 
 ### 招生与合作

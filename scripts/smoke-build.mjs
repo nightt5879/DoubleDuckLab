@@ -2,6 +2,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+const cmsRepo = (process.env.CMS_GITHUB_REPO || '').trim();
+const cmsOauthBaseUrl = (process.env.CMS_OAUTH_BASE_URL || '').trim();
+const cmsBranch = (process.env.CMS_BRANCH || 'main').trim() || 'main';
+const cmsConfigured = Boolean(cmsRepo && cmsOauthBaseUrl);
+
 const checks = [
   {
     file: 'dist/index.html',
@@ -27,6 +32,31 @@ const checks = [
     file: 'dist/news/index.html',
     includes: ['新闻动态', '搜索新闻标题'],
   },
+  cmsConfigured
+    ? {
+        file: 'dist/admin/index.html',
+        includes: ['Loading Decap CMS', 'Decap CMS'],
+      }
+    : {
+        file: 'dist/admin/index.html',
+        includes: ['CMS setup required', 'CMS_GITHUB_REPO', 'CMS_OAUTH_BASE_URL'],
+      },
+  cmsConfigured
+    ? {
+        file: 'dist/admin/config.yml',
+        includes: [
+          'name: github',
+          `repo: "${cmsRepo}"`,
+          `branch: "${cmsBranch}"`,
+          `base_url: "${cmsOauthBaseUrl.replace(/\/$/, '')}"`,
+          'publish_mode: editorial_workflow',
+          'structure: multiple_files',
+        ],
+      }
+    : {
+        file: 'dist/admin/config.yml',
+        includes: ['Decap CMS is not configured', 'CMS_GITHUB_REPO', 'CMS_OAUTH_BASE_URL'],
+      },
 ];
 
 function assert(cond, message) {
