@@ -54,6 +54,30 @@ PUBLIC_SITE_URL=https://your-domain.example
 
 This value is used to generate canonical links, Open Graph URLs, and hreflang alternates.
 
+## `1.2.0` News CMS Pilot
+
+The template now includes a Decap CMS pilot for `news` only. Content editors can draft bilingual news in the CMS, then publish changes through GitHub pull requests for review and merge.
+
+Pilot constraints:
+
+- `news` only
+- GitHub backend plus `editorial_workflow`
+- editors must have write access to the target repository
+- CMS config should be environment-driven, not hard-coded to one repo, branch, or OAuth endpoint
+
+`1.2.1` closes the loop around this pilot by aligning docs and ops guidance, keeping CMS support explicitly `news`-only, and documenting the environment / OAuth / Cloudflare Pages prerequisites required before enablement.
+
+Recommended environment variables:
+
+```bash
+CMS_GITHUB_REPO=owner-name/repo-name
+CMS_BRANCH=main
+CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
+PUBLIC_SITE_URL=https://your-domain.example
+```
+
+`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. Starting in `1.2.1`, the CMS only enables when `CMS_GITHUB_REPO`, `CMS_OAUTH_BASE_URL`, and `PUBLIC_SITE_URL` are all set; enabling it still requires matching Cloudflare Pages and OAuth callback settings.
+
 ## Single Sources of Truth
 
 ### Site-level copy
@@ -64,7 +88,7 @@ This value is used to generate canonical links, Open Graph URLs, and hreflang al
 - Members: `src/content/members/*.md`
 - Projects: `src/content/projects/<slug>/`
 - Papers: `src/content/papers/*.md`
-- News: `src/content/news/<slug>/`
+- News: `src/content/news/<slug>.zh.md` and `src/content/news/<slug>.en.md`
 - Join / recruitment: `src/content/join/recruitment/`
 
 > `src/data/content/*` is deprecated and no longer used.
@@ -122,12 +146,11 @@ Write the overview here.
 
 ### News
 
-One directory per news item:
+Each news item is stored as two Markdown files, one per locale:
 
 ```text
-src/content/news/<slug>/
-  中文标题_cn.md
-  English_title_en.md
+src/content/news/<slug>.zh.md
+src/content/news/<slug>.en.md
 ```
 
 Minimal body file:
@@ -135,6 +158,9 @@ Minimal body file:
 ```md
 ---
 date: "2026-03-25"
+title:
+  zh: "中文标题"
+  en: "English Title"
 ---
 
 Write the article body here.
@@ -187,7 +213,8 @@ venue: "Conference Name"
 - `1.1.0`: production site URL, SEO metadata, current-page locale switching, and post-build SEO checks
 - `1.1.1`: review follow-up for alternate availability, internal URL consistency, and `test:seo` site URL loading, completed
 - `1.1.2`: stability hardening, unified verification entrypoint, and clean-build guardrails
-- `1.2.0`: CMS pilot for `news`
+- `1.2.0`: `news` CMS pilot implemented with a GitHub PR review flow and template-safe configuration
+- `1.2.1`: CMS pilot closure / ops hardening, plus locale/news validation and CMS enablement hardening
 
 ## License
 

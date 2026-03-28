@@ -32,11 +32,10 @@
 - `src/content/papers/*.md`
 
 ### 新闻
-- `src/content/news/<slug>/`
+- `src/content/news/<slug>.zh.md`
+- `src/content/news/<slug>.en.md`
 
-每条新闻一个目录，目录里至少要有：
-- `*_cn.md`
-- `*_en.md`
+`1.2.0` 试点启用后，新闻会优先通过 Decap CMS 编辑，不再要求非技术同学手改文件。后台提交的内容仍会落回 Git 仓库，最终走 PR 审核和合并。
 
 ### 招生与合作
 - `src/content/join/recruitment/overview_cn.md`
@@ -52,8 +51,8 @@
 ### Markdown
 - 文件头部的 frontmatter 不要删
 - 路径、后缀、语言配对要保持一致
-- 中文新闻必须是 `_cn.md`
-- 英文新闻必须是 `_en.md`
+- 中文新闻必须是 `.zh.md`
+- 英文新闻必须是 `.en.md`
 
 ## 3. 最常用模板
 
@@ -96,21 +95,33 @@ status: "进行中"
 这里写项目概览正文。
 ```
 
-### 新增新闻目录
+### 新增新闻文件
 ```text
-src/content/news/2026-03-25-my-news/
-  中文标题_cn.md
-  English_title_en.md
+src/content/news/2026-03-25-my-news.zh.md
+src/content/news/2026-03-25-my-news.en.md
 ```
 
 新闻文件示例：
 ```md
 ---
 date: "2026-03-25"
+title:
+  zh: "中文标题"
+  en: "English Title"
 ---
 
 这里写正文。
 ```
+
+CMS 试点启用后的编辑步骤：
+
+1. 打开站点的 `/admin/`
+2. 新建一条 `news` 草稿，填写 `slug`、`date`、中英文标题和正文
+3. 保存草稿后，通过 GitHub Pull Request 走审核
+4. 审核通过后合并，站点会自动重新构建
+
+如果 CMS 还没启用，继续沿用当前的 Markdown 文件更新流程即可。
+这时要手动维护一对 `.zh.md` / `.en.md` 文件，并保证两边 `date`、`title.zh`、`title.en` 一致。
 
 ### 新增论文
 ```md

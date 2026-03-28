@@ -63,6 +63,44 @@ function assertFrontmatter(pattern, frontmatter, message) {
   assert(pattern.test(frontmatter), message);
 }
 
+function hasLocalizedValue(block, key) {
+  return new RegExp(`^\\s+["']?${key}["']?:\\s*(?:["'][^\\n]+["']|\\S.*)\\s*$`, 'm').test(block);
+}
+
+function assertLocalizedFrontmatterObject(frontmatter, field, message) {
+  const matched = frontmatter.match(new RegExp(`^${field}:\\s*\\r?\\n((?:^\\s+.+(?:\\r?\\n|$))+)`, 'm'));
+  assert(matched, message);
+  const block = matched[1];
+  assert(hasLocalizedValue(block, 'zh') && hasLocalizedValue(block, 'en'), message);
+}
+
+function parseNewsFileInfo(relPath) {
+  const normalized = relPath.replaceAll('\\', '/');
+  const parts = normalized.split('/');
+
+  if (parts.length === 1) {
+    const matched = parts[0].match(/^(.+)\.(zh|en)\.md$/i);
+    assert(matched, `news filename must end with .zh.md or .en.md: ${normalized}`);
+    return {
+      slug: matched[1],
+      lang: matched[2].toLowerCase(),
+      format: 'flat',
+    };
+  }
+
+  if (parts.length === 2) {
+    const matched = parts[1].match(/^(.*)_(cn|en)\.md$/i);
+    assert(matched, `legacy news filename must end with _cn.md or _en.md: ${normalized}`);
+    return {
+      slug: parts[0],
+      lang: matched[2].toLowerCase() === 'cn' ? 'zh' : 'en',
+      format: 'legacy',
+    };
+  }
+
+  throw new Error(`news path depth invalid: ${normalized}`);
+}
+
 function validateSite(site, lang) {
   assert(isString(site.brand), `site.${lang}.brand invalid`);
   assert(isString(site.siteName), `site.${lang}.siteName invalid`);
@@ -111,25 +149,22 @@ try {
   const newsLangMap = new Map();
   newsFiles.forEach((filePath) => {
     const rel = path.relative(newsDir, filePath).replaceAll('\\', '/');
-    const parts = rel.split('/');
-    assert(parts.length >= 2, `news file must be nested under a folder: ${rel}`);
-    const fileName = parts[parts.length - 1];
-    const matched = fileName.match(/^(.*)_(cn|en)\.md$/i);
-    assert(matched, `news filename must end with _cn.md or _en.md: ${rel}`);
+    const { slug, lang } = parseNewsFileInfo(rel);
+    assert(/^\d{4}-\d{2}-\d{2}(?:-[a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(slug), `news slug invalid: ${rel}`);
 
-    const slug = parts.slice(0, -1).join('/');
     if (!newsLangMap.has(slug)) {
       newsLangMap.set(slug, new Set());
     }
-    newsLangMap.get(slug).add(matched[2].toLowerCase());
+    newsLangMap.get(slug).add(lang);
 
     const { frontmatter, body } = parseMarkdown(filePath);
     assertFrontmatter(/date:\s*['"]?\d{4}-\d{2}-\d{2}['"]?/, frontmatter, `news frontmatter date invalid: ${rel}`);
+    assertLocalizedFrontmatterObject(frontmatter, 'title', `news frontmatter title zh\/en invalid: ${rel}`);
     assert(isString(body), `news body empty: ${rel}`);
   });
 
   newsLangMap.forEach((langs, slug) => {
-    assert(langs.has('cn') && langs.has('en'), `news cn/en pair missing in folder: ${slug}`);
+    assert(langs.has('zh') && langs.has('en'), `news zh/en pair missing for slug: ${slug}`);
   });
 
   paperFiles.forEach((filePath) => {

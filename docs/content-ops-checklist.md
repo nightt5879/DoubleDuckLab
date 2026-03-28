@@ -17,7 +17,7 @@ git checkout -b content/YYYYMMDD-topic
 - 成员：`src/content/members/*.md`
 - 项目：`src/content/projects/<slug>/`
 - 论文：`src/content/papers/*.md`
-- 新闻：`src/content/news/<slug>/`
+- 新闻：`src/content/news/<slug>.zh.md`、`src/content/news/<slug>.en.md`
 - 招生与合作：`src/content/join/recruitment/overview_cn.md`、`overview_en.md`
 
 3. 运行检查
@@ -63,12 +63,15 @@ git push origin content/YYYYMMDD-topic
   - `venue`
 
 ### 4. 新增新闻
-- 新建目录：`src/content/news/<slug>/`
+- 新建文件：
+  - `src/content/news/<slug>.zh.md`
+  - `src/content/news/<slug>.en.md`
 - 必备文件：
-  - `*_cn.md`
-  - `*_en.md`
+  - `*.zh.md`
+  - `*.en.md`
 - 必填字段：
   - `date`
+  - `title.zh/en`
 
 ## C. 交付前 30 秒检查
 
@@ -76,3 +79,11 @@ git push origin content/YYYYMMDD-topic
 - [ ] `npm run verify` 通过
 - [ ] 中英文页面都看过
 - [ ] PR 描述写清楚影响范围
+
+## D. `news` CMS 试点启用后
+
+- 编辑入口固定为 `/admin/`
+- 只在 `news` 上启用 CMS，不扩到其他内容类型
+- 内容同学保存后会生成可审阅的 GitHub Pull Request，而不是直接写入 `main`
+- 编辑者需要目标仓库的写权限
+- 如果发布失败，先回退对应的内容 PR，再检查 Cloudflare Pages、OAuth 回调和环境变量配置

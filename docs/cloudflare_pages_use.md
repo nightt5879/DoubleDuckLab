@@ -48,3 +48,25 @@ cesar.ns.cloudflare.com
 一样的再次去输入doubleducklab.com（这里的例子），然后continue。这时候就会有activate domain，正常是有两个DNS record的（上面步骤新增的）。选择【active domain】即可，稍等他initializing就可以了。
 
 后面看到active就是成功了！！！你的官网已经发布了 ！！！
+
+## `1.2.0` 新闻 CMS 试点需要的额外配置
+
+如果后续启用 `news` 的 Decap CMS 试点，Cloudflare Pages 这边还要补三类配置：
+
+1. 构建环境变量
+```bash
+PUBLIC_SITE_URL=https://your-domain.example
+CMS_GITHUB_REPO=owner-name/repo-name
+CMS_BRANCH=main
+CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
+```
+
+2. OAuth 回调
+- OAuth 代理地址要和 `CMS_OAUTH_BASE_URL` 保持一致
+- GitHub OAuth App 的回调地址要指向这个代理，而不是站点页面本身
+
+3. 仓库权限
+- 参与编辑 `news` 的同学需要目标仓库写权限
+- CMS 通过 GitHub Pull Request 走审核流，不做直接写入 `main`
+
+如果 CMS 暂时还没启用，可以先保留现有 Pages / 域名配置不变。

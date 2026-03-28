@@ -8,7 +8,8 @@ const i18nText = z.object({
 const news = defineCollection({
   type: 'content',
   schema: z.object({
-    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional()
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    title: i18nText,
   })
 });
 
