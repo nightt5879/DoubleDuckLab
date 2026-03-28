@@ -1,7 +1,13 @@
-import path from 'node:path';
-import type { CollectionEntry } from 'astro:content';
-
-type NewsEntry = CollectionEntry<'news'>;
+type NewsEntry = {
+  id: string;
+  data: {
+    date?: string;
+    title?: {
+      zh?: string;
+      en?: string;
+    };
+  };
+};
 
 type LocalizedNewsItem = {
   slug: string;
@@ -17,11 +23,15 @@ type LocalizedNewsItem = {
 };
 
 function parseEntryInfo(entry: NewsEntry) {
-  const id = entry.id;
-  const dirname = path.posix.dirname(id);
-  const fileBase = path.posix.parse(path.posix.basename(id)).name;
+  const normalizedId = entry.id.split('\\').join('/');
+  const slashIndex = normalizedId.lastIndexOf('/');
+  const dirname = slashIndex >= 0 ? normalizedId.slice(0, slashIndex) : '.';
+  const basename = slashIndex >= 0 ? normalizedId.slice(slashIndex + 1) : normalizedId;
+  const fileBase = basename.endsWith('.md') ? basename.slice(0, -3) : basename;
   const localizedTitle = entry.data.title;
-  const newStyleMatched = fileBase.match(/^(.*)\.(zh|en)$/i);
+  const localeSeparatorIndex = fileBase.lastIndexOf('.');
+  const localeSuffix = localeSeparatorIndex >= 0 ? fileBase.slice(localeSeparatorIndex + 1).toLowerCase() : '';
+  const newStyleSlug = localeSeparatorIndex >= 0 ? fileBase.slice(0, localeSeparatorIndex).trim() : '';
   const legacyMatched = fileBase.match(/^(.*)_(cn|en)$/i);
 
   let slug = '';
@@ -29,9 +39,9 @@ function parseEntryInfo(entry: NewsEntry) {
   let inferredTitleZh = localizedTitle?.zh || '';
   let inferredTitleEn = localizedTitle?.en || '';
 
-  if (newStyleMatched) {
-    slug = dirname === '.' ? newStyleMatched[1].trim() : `${dirname}/${newStyleMatched[1].trim()}`;
-    lang = newStyleMatched[2].toLowerCase() === 'zh' ? 'zh' : 'en';
+  if (newStyleSlug && (localeSuffix === 'zh' || localeSuffix === 'en')) {
+    slug = dirname === '.' ? newStyleSlug : `${dirname}/${newStyleSlug}`;
+    lang = localeSuffix;
   } else if (legacyMatched) {
     const legacyTitle = legacyMatched[1].trim().replace(/_/g, ' ');
     slug = dirname === '.' ? fileBase : dirname;

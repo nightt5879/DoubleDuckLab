@@ -73,9 +73,10 @@ PUBLIC_SITE_URL=https://your-domain.example
 CMS_GITHUB_REPO=owner-name/repo-name
 CMS_BRANCH=main
 CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
+PUBLIC_SITE_URL=https://your-domain.example
 ```
 
-`PUBLIC_SITE_URL` 继续作为站点域名来源，用于构建 canonical、Open Graph URL 和 hreflang。CMS 启用后，还需要在 Cloudflare Pages 和 OAuth 代理上对齐回调地址与仓库权限。
+`PUBLIC_SITE_URL` 继续作为站点域名来源，用于构建 canonical、Open Graph URL 和 hreflang。`1.2.1` 起，CMS 只有在 `CMS_GITHUB_REPO`、`CMS_OAUTH_BASE_URL` 和 `PUBLIC_SITE_URL` 都配置完成后才会启用；同时还需要在 Cloudflare Pages 和 OAuth 代理上对齐回调地址与仓库权限。
 
 ## 当前唯一真源
 
@@ -212,7 +213,7 @@ venue: "Conference Name"
 - `1.1.1`：review follow-up，修 alternate 可用性、内部链接 URL 一致性与 `test:seo` 站点地址读取，已完成
 - `1.1.2`：稳定性硬化，统一 `verify` 入口、干净构建与发布验收流程
 - `1.2.0`：`news` CMS 试点，Decap + GitHub PR 审核流已落地，保持模板化配置
-- `1.2.1`：CMS 试点收口 / ops hardening，同步文档、交接和操作路径
+- `1.2.1`：CMS 试点收口 / ops hardening，补 locale/news 校验与启用前置条件硬化
 
 ## License
 

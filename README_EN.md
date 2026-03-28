@@ -73,9 +73,10 @@ Recommended environment variables:
 CMS_GITHUB_REPO=owner-name/repo-name
 CMS_BRANCH=main
 CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
+PUBLIC_SITE_URL=https://your-domain.example
 ```
 
-`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. Enabling the CMS also requires matching Cloudflare Pages and OAuth callback settings.
+`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. Starting in `1.2.1`, the CMS only enables when `CMS_GITHUB_REPO`, `CMS_OAUTH_BASE_URL`, and `PUBLIC_SITE_URL` are all set; enabling it still requires matching Cloudflare Pages and OAuth callback settings.
 
 ## Single Sources of Truth
 
@@ -213,7 +214,7 @@ venue: "Conference Name"
 - `1.1.1`: review follow-up for alternate availability, internal URL consistency, and `test:seo` site URL loading, completed
 - `1.1.2`: stability hardening, unified verification entrypoint, and clean-build guardrails
 - `1.2.0`: `news` CMS pilot implemented with a GitHub PR review flow and template-safe configuration
-- `1.2.1`: CMS pilot closure / ops hardening, aligning docs, handoff notes, and operator guidance
+- `1.2.1`: CMS pilot closure / ops hardening, plus locale/news validation and CMS enablement hardening
 
 ## License
 

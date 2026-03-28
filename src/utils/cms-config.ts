@@ -21,13 +21,22 @@ function normalizeUrl(value: string | undefined, fallback = '') {
   return normalized.endsWith('/') ? normalized.slice(0, -1) : normalized;
 }
 
+function getUrlHostname(value: string) {
+  try {
+    return new URL(`${value}/`).hostname;
+  } catch {
+    return '';
+  }
+}
+
 function readEnv(source: EnvSource, key: string) {
   const value = source[key];
   if (typeof value === 'string' && value.trim()) {
     return value.trim();
   }
 
-  const processValue = process.env[key];
+  const processEnv = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env;
+  const processValue = processEnv?.[key];
   return typeof processValue === 'string' ? processValue.trim() : '';
 }
 
@@ -41,9 +50,10 @@ export function getCmsRuntimeConfig(
   const repo = readEnv(source, 'CMS_GITHUB_REPO');
   const branch = readEnv(source, 'CMS_BRANCH') || 'main';
   const oauthBaseUrl = normalizeUrl(readEnv(source, 'CMS_OAUTH_BASE_URL'));
-  const siteUrl = normalizeUrl(readEnv(source, 'PUBLIC_SITE_URL'), DEFAULT_SITE_URL);
-  const siteDomain = new URL(`${siteUrl}/`).hostname;
-  const missing = [];
+  const configuredSiteUrl = normalizeUrl(readEnv(source, 'PUBLIC_SITE_URL'));
+  const siteUrl = configuredSiteUrl || normalizeUrl(DEFAULT_SITE_URL);
+  const siteDomain = getUrlHostname(configuredSiteUrl);
+  const missing: string[] = [];
 
   if (!repo) {
     missing.push('CMS_GITHUB_REPO');
@@ -51,6 +61,10 @@ export function getCmsRuntimeConfig(
 
   if (!oauthBaseUrl) {
     missing.push('CMS_OAUTH_BASE_URL');
+  }
+
+  if (!configuredSiteUrl || !siteDomain) {
+    missing.push('PUBLIC_SITE_URL');
   }
 
   return {

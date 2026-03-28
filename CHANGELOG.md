@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2026-03-28
+
+### Fixed
+- Preserved `.zh` / `.en` news entries when building localized news groups so bilingual news items are not dropped by locale parsing.
+- Made `news` title frontmatter validation tolerant of `zh` / `en` key order and optional quoted values.
+- Required `PUBLIC_SITE_URL` alongside the GitHub repo and OAuth base URL before enabling the `news` CMS build output.
+
+### Changed
+- Updated smoke checks, README docs, roadmap, and handoff notes to reflect the `1.2.1` CMS ops-hardening follow-up.
+
 ## [1.2.0] - 2026-03-27
 
 ### Added

@@ -32,6 +32,7 @@
 - 把 README、roadmap、handoff 与 ops 文档统一到 `1.2.1` 口径
 - 不再把 CMS 描述为“未接入”，改为“news-only 已接入模板，并采用 PR 审核流作为目标发布路径”
 - 明确 CMS 运维前提是环境变量、OAuth 代理和 Cloudflare Pages 配置一致
+- 追加 `1.2.1` hardening follow-up：保留 `.zh/.en` 新闻配对、放宽 `title.zh/en` frontmatter 键顺序校验，并要求 `PUBLIC_SITE_URL` 后才启用 CMS
 
 ## 三、当前已知边界
 

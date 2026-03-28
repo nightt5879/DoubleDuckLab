@@ -47,3 +47,4 @@
 - 收口 README、handoff、ops playbook 与 agent 任务留痕，统一说明 news CMS 已接入模板并可按前提启用
 - 明确当前 CMS 仍然只覆盖 `news`，继续使用 Decap + GitHub backend + `editorial_workflow`
 - 明确运营前提：仓库环境变量、OAuth 代理和 Cloudflare Pages 回调地址需保持一致
+- 补 locale 新闻文件识别、标题 frontmatter 校验与 `PUBLIC_SITE_URL` 作为 CMS 启用前提的硬化修正

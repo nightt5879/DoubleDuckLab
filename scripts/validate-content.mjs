@@ -63,6 +63,17 @@ function assertFrontmatter(pattern, frontmatter, message) {
   assert(pattern.test(frontmatter), message);
 }
 
+function hasLocalizedValue(block, key) {
+  return new RegExp(`^\\s+["']?${key}["']?:\\s*(?:["'][^\\n]+["']|\\S.*)\\s*$`, 'm').test(block);
+}
+
+function assertLocalizedFrontmatterObject(frontmatter, field, message) {
+  const matched = frontmatter.match(new RegExp(`^${field}:\\s*\\r?\\n((?:^\\s+.+(?:\\r?\\n|$))+)`, 'm'));
+  assert(matched, message);
+  const block = matched[1];
+  assert(hasLocalizedValue(block, 'zh') && hasLocalizedValue(block, 'en'), message);
+}
+
 function parseNewsFileInfo(relPath) {
   const normalized = relPath.replaceAll('\\', '/');
   const parts = normalized.split('/');
@@ -148,7 +159,7 @@ try {
 
     const { frontmatter, body } = parseMarkdown(filePath);
     assertFrontmatter(/date:\s*['"]?\d{4}-\d{2}-\d{2}['"]?/, frontmatter, `news frontmatter date invalid: ${rel}`);
-    assertFrontmatter(/title:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/, frontmatter, `news frontmatter title zh\/en invalid: ${rel}`);
+    assertLocalizedFrontmatterObject(frontmatter, 'title', `news frontmatter title zh\/en invalid: ${rel}`);
     assert(isString(body), `news body empty: ${rel}`);
   });
 
