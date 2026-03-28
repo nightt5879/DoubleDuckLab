@@ -25,8 +25,11 @@
 - 验证页面：`/papers`、`/en/papers`
 
 ### 新闻
-- 位置：`src/content/news/<slug>.zh.md`、`src/content/news/<slug>.en.md`
+- 后台入口：`/admin/`
+- 内容落点：`src/content/news/<slug>.zh.md`、`src/content/news/<slug>.en.md`
 - 可改：日期、`title.zh/en`、中英文正文
+- 发布路径：Decap CMS → GitHub backend → `editorial_workflow` → Pull Request 审核合并
+- 使用前提：编辑人具备目标仓库写权限，且 `CMS_GITHUB_REPO`、`CMS_BRANCH`、`CMS_OAUTH_BASE_URL`、`PUBLIC_SITE_URL` 与 OAuth / Cloudflare Pages 回调配置一致
 - 验证页面：`/news`、`/en/news`
 
 ### 招生与合作
@@ -49,7 +52,6 @@ npm run verify
 
 ## 3. 后续可扩展能力
 
-- [TODO] 用 CMS 后台新增新闻
 - [TODO] 用 CMS 后台新增论文
 - [TODO] 用 CMS 后台维护成员与项目
 - [TODO] 表单提交与审核发布

@@ -1,6 +1,6 @@
 # Roadmap
 
-更新时间：2026-03-27（1.2.0 news CMS pilot）
+更新时间：2026-03-28（1.2.1 CMS pilot closure / ops hardening）
 
 ## 1.0.1 基线修复
 
@@ -37,6 +37,13 @@
 
 已完成：
 - 先接 `news`，只做双语新闻的 Decap CMS 试点
-- 跑通 GitHub backend + `editorial_workflow` 的编辑、校验、PR 审核、合并链路
+- 在模板中接入 GitHub backend + `editorial_workflow` 的编辑与 PR 审核链路
 - 用环境变量驱动 repo / branch / OAuth 地址，保持模板仓库可复用
 - 将新闻内容模型切到显式标题 + `.zh.md` / `.en.md` 文件配对
+
+## 1.2.1 CMS 试点收口 / ops hardening
+
+已完成：
+- 收口 README、handoff、ops playbook 与 agent 任务留痕，统一说明 news CMS 已接入模板并可按前提启用
+- 明确当前 CMS 仍然只覆盖 `news`，继续使用 Decap + GitHub backend + `editorial_workflow`
+- 明确运营前提：仓库环境变量、OAuth 代理和 Cloudflare Pages 回调地址需保持一致

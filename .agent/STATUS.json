@@ -1,14 +1,14 @@
 {
-  "current_task": "T-0013-seo-review-followups",
-  "phase": "review",
-  "progress": 0.95,
-  "last_update": "2026-03-26T16:55:00+08:00",
+  "current_task": "T-0014-cms-pilot-closure-ops-hardening",
+  "phase": "qa",
+  "progress": 0.98,
+  "last_update": "2026-03-28T13:00:00+08:00",
   "next_steps": [
-    "Review the 1.1.1 staged diff and create a small follow-up commit",
-    "Open the follow-up PR after confirming the final changelog / roadmap wording"
+    "Prepare final founder report for the docs-only 1.2.1 closure pass",
+    "Wait for founder decision on commit / follow-up ops verification"
   ],
   "blockers": [],
   "evidence": [
-    ".agent/RUNS/2026-03-26_t0013-seo-followups/02-evidence/self-check.md"
+    ".agent/TASKS/T-0014-cms-pilot-closure-ops-hardening.md"
   ]
 }

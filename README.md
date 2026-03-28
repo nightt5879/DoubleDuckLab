@@ -56,7 +56,7 @@ PUBLIC_SITE_URL=https://your-domain.example
 
 ## `1.2.0` 新闻 CMS 试点
 
-下一阶段会先给 `news` 接入 Decap CMS，目标是让内容同学通过后台提交双语新闻草稿，再走 GitHub Pull Request 审核流合并到主分支。
+当前已为 `news` 接入 Decap CMS，内容同学可通过后台提交双语新闻草稿，再走 GitHub Pull Request 审核流合并到主分支。
 
 试点约束如下：
 
@@ -64,6 +64,8 @@ PUBLIC_SITE_URL=https://your-domain.example
 - 仅使用 `GitHub backend + editorial_workflow`
 - 参与编辑的人需要目标仓库的写权限
 - CMS 配置通过环境变量驱动，不把仓库、分支和 OAuth 地址写死在模板里
+
+`1.2.1` 为这条试点链路做收口：统一文档和运维叙事，明确当前 CMS 仍然只覆盖 `news`，并且依赖仓库环境变量、OAuth 代理与 Cloudflare Pages 回调地址对齐。
 
 建议配置的环境变量如下：
 
@@ -209,7 +211,8 @@ venue: "Conference Name"
 - `1.1.0`：生产域名、SEO 元信息、当前页中英互跳与构建后 SEO 校验
 - `1.1.1`：review follow-up，修 alternate 可用性、内部链接 URL 一致性与 `test:seo` 站点地址读取，已完成
 - `1.1.2`：稳定性硬化，统一 `verify` 入口、干净构建与发布验收流程
-- `1.2.0`：`news` CMS 试点，优先 Decap + GitHub PR 审核流，保持模板化配置
+- `1.2.0`：`news` CMS 试点，Decap + GitHub PR 审核流已落地，保持模板化配置
+- `1.2.1`：CMS 试点收口 / ops hardening，同步文档、交接和操作路径
 
 ## License
 

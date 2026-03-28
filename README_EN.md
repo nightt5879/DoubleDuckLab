@@ -56,14 +56,16 @@ This value is used to generate canonical links, Open Graph URLs, and hreflang al
 
 ## `1.2.0` News CMS Pilot
 
-The next step is a Decap CMS pilot for `news` only. The intended workflow is: content editors draft bilingual news in the CMS, then publish changes through GitHub pull requests for review and merge.
+The template now includes a Decap CMS pilot for `news` only. Content editors can draft bilingual news in the CMS, then publish changes through GitHub pull requests for review and merge.
 
 Pilot constraints:
 
 - `news` only
 - GitHub backend plus `editorial_workflow`
-- editors must have push access to the target repository
+- editors must have write access to the target repository
 - CMS config should be environment-driven, not hard-coded to one repo, branch, or OAuth endpoint
+
+`1.2.1` closes the loop around this pilot by aligning docs and ops guidance, keeping CMS support explicitly `news`-only, and documenting the environment / OAuth / Cloudflare Pages prerequisites required before enablement.
 
 Recommended environment variables:
 
@@ -73,7 +75,7 @@ CMS_BRANCH=main
 CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
 ```
 
-`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. Enabling the CMS will also require matching Cloudflare Pages and OAuth callback settings.
+`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. Enabling the CMS also requires matching Cloudflare Pages and OAuth callback settings.
 
 ## Single Sources of Truth
 
@@ -210,7 +212,8 @@ venue: "Conference Name"
 - `1.1.0`: production site URL, SEO metadata, current-page locale switching, and post-build SEO checks
 - `1.1.1`: review follow-up for alternate availability, internal URL consistency, and `test:seo` site URL loading, completed
 - `1.1.2`: stability hardening, unified verification entrypoint, and clean-build guardrails
-- `1.2.0`: `news` CMS pilot with a GitHub PR review flow and template-safe configuration
+- `1.2.0`: `news` CMS pilot implemented with a GitHub PR review flow and template-safe configuration
+- `1.2.1`: CMS pilot closure / ops hardening, aligning docs, handoff notes, and operator guidance
 
 ## License
 
