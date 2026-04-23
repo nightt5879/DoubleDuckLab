@@ -1,13 +1,11 @@
 ---
-title: "Project Orion"
+title: "Embodied AI Workflow Sample"
 tag: "Embodied AI"
 time: "2026-2-20"
 status: "Ongoing"
 links:
   repo: "https://github.com/nightt5879/DoubleDuckLab"
-  demo: "https://example.com/orion-demo"
-  paper: "https://example.com/orion-paper"
 ---
-Project Orion builds a reusable embodied-AI pipeline that connects task framing, data collection, training, evaluation, and reporting in one consistent workflow.
+This entry preserves the embodied-AI project-detail structure. Replace it with a confirmed task definition, data source, validation method, and public materials before launch.
 
-![Project Orion preview](/prj/prj_template.png)
+![Embodied AI workflow sample preview](/prj/prj_template.png)

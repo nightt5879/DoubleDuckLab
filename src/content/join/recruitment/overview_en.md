@@ -4,17 +4,18 @@ title: "Recruitment & Collaboration"
 
 ## Open Positions
 
-- Undergraduate interns: rolling recruitment for students interested in HCI, robotics, and intelligent systems.
-- MS/PhD applicants: focus areas include embodied intelligence, multimodal agents, evaluation, and system deployment.
-- Joint supervision: cross-lab and cross-institution collaboration is welcome.
+- Undergraduate interns: topics and capacity are pending PI confirmation.
+- MS/PhD applicants: research tracks, advisor capacity, and application requirements must be confirmed before launch.
+- Joint supervision: collaboration scope, contacts, and application steps are pending operations review.
 
 ## Collaboration Modes
 
-We support academic collaboration, industry co-research, scenario validation, and joint engineering tracks.  
-Please include your problem statement, expected outcomes, and available resources in the first contact.
+Public collaboration wording should be finalized only after the owner, response cadence, and contact channel are confirmed.
+
+Before launch, add the problem statement, expected outcomes, and available resources to the content replacement inventory.
 
 ## Contact
 
-- Email: join@example-lab.org
-- Address: Intelligent Systems Lab, Building XX, 5F
-- Office Hours: Weekdays 10:00 - 18:00 (appointment recommended)
+- Email: To be confirmed before launch
+- Address: To be confirmed before launch
+- Office Hours: To be confirmed

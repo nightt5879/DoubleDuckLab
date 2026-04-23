@@ -1,5 +1,5 @@
-Cross-scene transfer for robotic policies often suffers from perception shift and strategy drift. This track focuses on sample-efficient adaptation and interpretable evaluation.
+Real embodied-AI project pages should state the task setting, data source, evaluation protocol, system boundary, and public materials.
 
-This block is template-friendly: replace text and figures directly while keeping the visual system and interaction pattern unchanged.
+This entry only preserves the structure needed to rehearse the project-detail page and does not claim an actual research result. Replace it with owner-approved project materials before launch.
 
-![Project Orion background](/prj/prj_template.png)
+![Embodied AI workflow sample background](/prj/prj_template.png)

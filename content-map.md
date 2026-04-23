@@ -103,3 +103,6 @@
 2. 改内容优先改 `src/data/site.*.json` 或 `src/content/*`，不要先改页面模板硬编码。
 3. 改完内容后至少跑一次：
    - `npm run verify`
+4. 上线前对照：
+   - `docs/go-live-rehearsal.md`
+   - `docs/content-replacement-inventory.md`

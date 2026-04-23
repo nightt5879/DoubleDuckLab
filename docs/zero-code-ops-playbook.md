@@ -4,6 +4,11 @@
 
 ## 1. 当前可直接维护的内容
 
+上线前先看两份 T-0015 记录：
+
+- 上线演练记录：`docs/go-live-rehearsal.md`
+- 真实素材替换清单：`docs/content-replacement-inventory.md`
+
 ### 站点文案
 - 位置：`src/data/site.zh.json`、`src/data/site.en.json`
 - 可改：首页介绍、导航、首页重点信息
@@ -35,6 +40,7 @@
 ### 招生与合作
 - 位置：`src/content/join/recruitment/overview_cn.md`、`overview_en.md`
 - 可改：招生方向、合作方式、联系方式
+- 当前状态：真实联系方式待确认，上线前不要保留“待确认”文案
 - 验证页面：`/join`、`/en/join`
 
 ## 2. 每次修改后的标准验证
@@ -52,6 +58,7 @@ npm run verify
 
 ## 3. 后续可扩展能力
 
+- [TODO] 用 `/admin/` 完成一次真实新闻 PR、预览、合并上线
 - [TODO] 用 CMS 后台新增论文
 - [TODO] 用 CMS 后台维护成员与项目
 - [TODO] 表单提交与审核发布

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- Added a T-0015 go-live rehearsal log and a content replacement inventory.
+- Added a bilingual `2026-04-23-go-live-rehearsal` news entry to preserve the news-only CMS file shape.
+
+### Changed
+- Reworked obvious placeholder content so fake emails, `example.com` links, and unverified research claims are not presented as real launch-ready content.
+
 ## [1.2.1] - 2026-03-28
 
 ### Fixed
