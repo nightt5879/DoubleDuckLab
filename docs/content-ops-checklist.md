@@ -79,6 +79,7 @@ git push origin content/YYYYMMDD-topic
 - [ ] `npm run verify` 通过
 - [ ] 中英文页面都看过
 - [ ] PR 描述写清楚影响范围
+- [ ] 如准备上线，对照 `docs/content-replacement-inventory.md` 确认没有假邮箱、假地址或未确认成果
 
 ## D. `news` CMS 试点启用后
 
@@ -87,3 +88,4 @@ git push origin content/YYYYMMDD-topic
 - 内容同学保存后会生成可审阅的 GitHub Pull Request，而不是直接写入 `main`
 - 编辑者需要目标仓库的写权限
 - 如果发布失败，先回退对应的内容 PR，再检查 Cloudflare Pages、OAuth 回调和环境变量配置
+- 首次真实上线演练请同时更新 `docs/go-live-rehearsal.md`

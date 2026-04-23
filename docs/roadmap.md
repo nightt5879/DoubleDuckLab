@@ -1,6 +1,6 @@
 # Roadmap
 
-更新时间：2026-03-28（1.2.1 CMS pilot closure / ops hardening）
+更新时间：2026-04-23（T-0015 go-live rehearsal）
 
 ## 1.0.1 基线修复
 
@@ -48,3 +48,15 @@
 - 明确当前 CMS 仍然只覆盖 `news`，继续使用 Decap + GitHub backend + `editorial_workflow`
 - 明确运营前提：仓库环境变量、OAuth 代理和 Cloudflare Pages 回调地址需保持一致
 - 补 locale 新闻文件识别、标题 frontmatter 校验与 `PUBLIC_SITE_URL` 作为 CMS 启用前提的硬化修正
+
+## T-0015 真实上线闭环演练
+
+已完成：
+- 保持 CMS 范围为 `news` only，不扩到其他内容类型
+- 新增上线演练记录与真实素材替换清单
+- 新增 `2026-04-23-go-live-rehearsal` 双语新闻，验证 news CMS 目标文件形态
+- 清理明显会误导上线验收的假邮箱、假外链和虚假成果表述
+
+待线上完成：
+- 使用 `/admin/` 创建真实新闻 PR
+- 检查 Cloudflare Pages 预览、OAuth 回调、环境变量与合并上线

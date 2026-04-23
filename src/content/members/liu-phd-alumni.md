@@ -15,7 +15,4 @@ area:
 bio:
   zh: "已毕业博士，研究方向为多智能体协作与可解释决策。"
   en: "PhD alumnus focused on multi-agent collaboration and interpretable decision systems."
-links:
-  scholar: "https://scholar.google.com/"
-  email: "liubowen@xxx.com"
 ---

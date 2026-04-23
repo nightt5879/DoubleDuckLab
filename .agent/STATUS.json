@@ -1,14 +1,15 @@
 {
-  "current_task": "T-0014-cms-pilot-closure-ops-hardening",
-  "phase": "qa",
+  "current_task": "T-0015-go-live-rehearsal",
+  "phase": "handoff",
   "progress": 0.98,
-  "last_update": "2026-03-28T13:00:00+08:00",
+  "last_update": "2026-04-23T21:26:15+08:00",
   "next_steps": [
-    "Prepare final founder report for the docs-only 1.2.1 closure pass",
-    "Wait for founder decision on commit / follow-up ops verification"
+    "Use a configured online environment to complete the real Decap CMS PR and Cloudflare Pages preview rehearsal"
   ],
   "blockers": [],
   "evidence": [
-    ".agent/TASKS/T-0014-cms-pilot-closure-ops-hardening.md"
+    ".agent/TASKS/T-0015-go-live-rehearsal.md",
+    "docs/go-live-rehearsal.md",
+    "docs/content-replacement-inventory.md"
   ]
 }

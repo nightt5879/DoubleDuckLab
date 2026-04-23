@@ -4,6 +4,6 @@ tag: "EdTech"
 time: "2025-5-24 - 2026-1"
 status: "Ongoing"
 ---
-A multimodal tutoring assistant for education workflows, combining text, image, and voice interaction in a single demonstration-oriented pipeline.
+This project sample preserves the project-detail information structure for education-related work. Replace it with a confirmed project goal, progress summary, and owner before launch.
 
 ![Multimodal Tutor preview](/prj/prj_template.png)

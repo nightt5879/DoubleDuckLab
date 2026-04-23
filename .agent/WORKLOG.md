@@ -27,3 +27,10 @@
 - 新增 T-0013：1.1.1 review follow-ups，处理 alternate 可用性、内部链接尾斜杠一致性与 `test:seo` 读取 `.env` 的问题。
 - 完成 1.1.1 follow-up：按对侧页面存在性输出 alternate，统一内部链接 URL 形式，并让 `test:seo` 与 build 共用站点地址解析。
 - 本地自验证通过：`verify.bat --no-pause`。
+
+## 2026-04-23
+- 新增 T-0015：真实上线闭环演练，保持 CMS 只覆盖 `news`。
+- 新增上线演练记录与内容替换清单，明确真实 CMS PR / Pages 预览需要线上权限。
+- 新增 `2026-04-23-go-live-rehearsal` 双语新闻，作为 news CMS 目标文件形态样本。
+- 清理 fake email、fake address、`example.com` 外链与未验证成果表述。
+- 本地验证通过：`npm run validate:content`、`npm run test:smoke`、`npm run test:seo`、`npm run verify`。

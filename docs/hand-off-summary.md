@@ -1,6 +1,6 @@
-# Hand-off Summary（1.2.1 CMS pilot closure / ops hardening）
+# Hand-off Summary（1.2.1 CMS pilot closure / ops hardening + T-0015 rehearsal）
 
-更新时间：2026-03-28
+更新时间：2026-04-23
 
 ## 一、当前已完成
 
@@ -44,3 +44,11 @@
 
 1. 保持 `news` CMS 试点稳定运行，先验证编辑与审核协作成本
 2. 如需扩类型，优先单独评估 `papers` / `members` / `projects` 的内容模型与权限边界
+
+## 五、T-0015 上线演练补充
+
+- 已新增 `docs/go-live-rehearsal.md`，记录本地内容闭环、线上 CMS 验收前提与待解决问题
+- 已新增 `docs/content-replacement-inventory.md`，明确哪些内容仍缺真实素材
+- 已新增一条双语新闻 `2026-04-23-go-live-rehearsal`，用于验证 news CMS 目标文件形态
+- 已清理明显会误导上线验收的假邮箱、`example.com` 外链和虚假成果表述
+- 真实 CMS 登录、GitHub PR、Cloudflare Pages 预览和合并上线仍需在线上环境完成

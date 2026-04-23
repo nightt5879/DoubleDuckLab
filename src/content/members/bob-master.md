@@ -12,8 +12,4 @@ status:
 area:
   zh: "具身规划"
   en: "Embodied Planning"
-links:
-  scholar: "https://scholar.google.com/"
-  homepage: "https://doubleducklab.com/"
-  email: "bob@xxx.com"
 ---

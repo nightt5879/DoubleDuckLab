@@ -9,7 +9,7 @@
     "news": "News"
   },
   "home": {
-    "intro": "A modern lab website template with bilingual content workflow and static deployment.",
+    "intro": "A bilingual lab website in go-live rehearsal, with static deployment, content validation, and a news-only CMS pilot in place.",
     "sections": {
       "highlights": "Highlights",
       "recentProjects": "Recent Projects"
@@ -17,15 +17,15 @@
     "highlights": [
       {
         "title": "Research",
-        "desc": "Embodied AI / HCI / Robotics, configurable by your own research tracks."
+        "desc": "Embodied AI / HCI / Robotics, pending replacement with confirmed research tracks and member profiles before public launch."
       },
       {
         "title": "Recent Outputs",
-        "desc": "Connected to papers, projects, and news modules with bilingual updates."
+        "desc": "Papers, projects, and news are covered by validation, while news can enter PR review through the CMS workflow."
       },
       {
         "title": "Recruitment & Collaboration",
-        "desc": "Recruitment directions, collaboration modes, and contact channels are fully bilingual."
+        "desc": "Recruitment directions, collaboration modes, and contact channels remain bilingual and require confirmed contacts before launch."
       }
     ],
     "quick": "Quick Links"

@@ -15,7 +15,4 @@ area:
 bio:
   zh: "已毕业硕士，主要工作聚焦在机器人路径规划与控制系统落地。"
   en: "Master alumnus working on robot path planning and control deployment."
-links:
-  github: "https://github.com/nightt5879"
-  email: "yangshuo@xxx.com"
 ---
