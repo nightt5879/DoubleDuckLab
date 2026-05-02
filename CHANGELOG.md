@@ -4,12 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-05-02
+
 ### Added
+- Expanded `/admin/` into a content file management CMS for news, members, papers, recruitment pages, and existing project files.
+- Added CMS collections for creating, editing, and deleting member and paper Markdown entries through the GitHub PR workflow.
+- Added fixed-file CMS entries for recruitment and existing project overview/background files, with deletion disabled to protect required site structure.
 - Added a T-0015 go-live rehearsal log and a content replacement inventory.
 - Added a bilingual `2026-04-23-go-live-rehearsal` news entry to preserve the news-only CMS file shape.
 
 ### Changed
+- Bumped the package version from `1.2.1` to `1.3.0` for the backward-compatible CMS file management feature.
+- Updated CMS smoke checks and content validation to cover the expanded admin surface and member filename/id consistency.
 - Reworked obvious placeholder content so fake emails, `example.com` links, and unverified research claims are not presented as real launch-ready content.
+
+### Fixed
+- Preserved the Decap CMS CDN script as an inline external script so configured `/admin/` builds load the CMS bundle directly.
 
 ## [1.2.1] - 2026-03-28
 

@@ -1,6 +1,6 @@
-# Hand-off Summary（1.2.1 CMS pilot closure / ops hardening + T-0015 rehearsal）
+# Hand-off Summary（1.3.0 CMS file management）
 
-更新时间：2026-04-23
+更新时间：2026-05-02
 
 ## 一、当前已完成
 
@@ -22,28 +22,32 @@
 - GitHub Actions CI：PR / `main` 自动跑统一验收链路（内容校验、构建、smoke、SEO）
 
 ### 4. CMS 运营边界
-- 已为 `news` 接入 Decap CMS
-- 当前仅开放新闻双语内容，不扩到成员 / 项目 / 论文 / 招生
+- 已将 `/admin/` 扩展为内容文件管理后台
+- 新闻、成员、论文支持新增 / 编辑 / 删除
+- 招生与合作只编辑固定中英文页面，不支持新增 / 删除
+- 项目只编辑现有 overview/background 四文件内容，不支持新增 / 删除项目
 - 编辑流使用 GitHub backend + `editorial_workflow`，通过 Pull Request 审核后合并
 - 运营依赖 `CMS_GITHUB_REPO`、`CMS_BRANCH`、`CMS_OAUTH_BASE_URL` 与 `PUBLIC_SITE_URL` 配置，以及 OAuth / Cloudflare Pages 回调地址对齐
 
 ## 二、当前版本收口了什么
 
-- 把 README、roadmap、handoff 与 ops 文档统一到 `1.2.1` 口径
-- 不再把 CMS 描述为“未接入”，改为“news-only 已接入模板，并采用 PR 审核流作为目标发布路径”
+- 将版本升级到 `1.3.0`，作为向后兼容的 CMS 文件管理功能版本
+- 把 README、roadmap、handoff 与 ops 文档统一到 `1.3.0` 口径
+- 不再把 CMS 描述为“news-only”，改为“按内容类型受控管理文件”
 - 明确 CMS 运维前提是环境变量、OAuth 代理和 Cloudflare Pages 配置一致
-- 追加 `1.2.1` hardening follow-up：保留 `.zh/.en` 新闻配对、放宽 `title.zh/en` frontmatter 键顺序校验，并要求 `PUBLIC_SITE_URL` 后才启用 CMS
+- 保留 Decap CDN 脚本加载修复，并用 smoke check 覆盖配置完整 / 未配置两种后台状态
 
 ## 三、当前已知边界
 
-- CMS 目前只覆盖 `news`，其他内容类型仍以文件驱动为主
+- CMS 不是任意文件浏览器，只开放明确内容类型
+- 项目第一版不支持新增 / 删除，因为现有项目由四个 Markdown 文件组成
 - 运营侧仍需要维护 GitHub 权限、OAuth 代理和 Cloudflare Pages 回调地址的一致性
-- 后续如要扩到论文、成员、项目或招生，需要单独定义内容模型与审核路径
+- 后续如要新增 / 删除项目，建议先迁移项目内容结构
 
 ## 四、下一阶段建议
 
-1. 保持 `news` CMS 试点稳定运行，先验证编辑与审核协作成本
-2. 如需扩类型，优先单独评估 `papers` / `members` / `projects` 的内容模型与权限边界
+1. 在线上完成一次真实 CMS 登录、PR、预览和合并闭环
+2. 收集成员、论文、项目编辑体验反馈，再决定是否迁移项目结构
 
 ## 五、T-0015 上线演练补充
 

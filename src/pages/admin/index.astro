@@ -71,16 +71,16 @@ const title = 'DoubleDuckLab CMS';
       <>
         <main class="card">
           <h1>{title}</h1>
-          <p class="muted">Loading Decap CMS for the `news` editorial workflow.</p>
+          <p class="muted">Loading Decap CMS for the content management workflow.</p>
           <p class="muted">Repository: <code>{cms.repo}</code></p>
         </main>
-        <script src="https://unpkg.com/decap-cms@3.10.1/dist/decap-cms.js"></script>
+        <script is:inline src="https://unpkg.com/decap-cms@3.10.1/dist/decap-cms.js"></script>
       </>
     ) : (
       <main>
         <section class="card">
           <h1>CMS setup required</h1>
-          <p>The `news` CMS is included in this template, but this build is missing the environment variables needed to point it at a real GitHub repository, OAuth proxy, and production site URL.</p>
+          <p>The content CMS is included in this template, but this build is missing the environment variables needed to point it at a real GitHub repository, OAuth proxy, and production site URL.</p>
           <p>Set the following variables and rebuild before using <code>/admin/</code>:</p>
           <ul>
             {cms.missing.map((item) => (

@@ -1,6 +1,6 @@
 # Roadmap
 
-更新时间：2026-04-23（T-0015 go-live rehearsal）
+更新时间：2026-05-02（1.3.0 CMS file management）
 
 ## 1.0.1 基线修复
 
@@ -48,6 +48,15 @@
 - 明确当前 CMS 仍然只覆盖 `news`，继续使用 Decap + GitHub backend + `editorial_workflow`
 - 明确运营前提：仓库环境变量、OAuth 代理和 Cloudflare Pages 回调地址需保持一致
 - 补 locale 新闻文件识别、标题 frontmatter 校验与 `PUBLIC_SITE_URL` 作为 CMS 启用前提的硬化修正
+
+## 1.3.0 CMS 文件管理后台
+
+已完成：
+- 将 `/admin/` 从 news-only 试点扩展为内容文件管理后台
+- 支持新闻、成员、论文的新增、编辑、删除
+- 支持招生与合作固定页面编辑，禁止新增/删除
+- 支持现有项目 overview/background 文件编辑，禁止新增/删除项目以保护四文件结构
+- 保持 Decap + GitHub backend + `editorial_workflow`，不引入数据库或自研后端
 
 ## T-0015 真实上线闭环演练
 

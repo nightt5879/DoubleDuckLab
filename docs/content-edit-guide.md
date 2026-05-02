@@ -35,7 +35,7 @@
 - `src/content/news/<slug>.zh.md`
 - `src/content/news/<slug>.en.md`
 
-`1.2.0` 试点启用后，新闻会优先通过 Decap CMS 编辑，不再要求非技术同学手改文件。后台提交的内容仍会落回 Git 仓库，最终走 PR 审核和合并。
+`1.3.0` 起，新闻、成员、论文、招生与现有项目文件会优先通过 Decap CMS 编辑，不再要求非技术同学手改这些 Markdown 文件。后台提交的内容仍会落回 Git 仓库，最终走 PR 审核和合并。
 
 ### 招生与合作
 - `src/content/join/recruitment/overview_cn.md`
@@ -120,8 +120,7 @@ CMS 试点启用后的编辑步骤：
 3. 保存草稿后，通过 GitHub Pull Request 走审核
 4. 审核通过后合并，站点会自动重新构建
 
-如果 CMS 还没启用，继续沿用当前的 Markdown 文件更新流程即可。
-这时要手动维护一对 `.zh.md` / `.en.md` 文件，并保证两边 `date`、`title.zh`、`title.en` 一致。
+如果 CMS 还没启用，继续沿用当前的 Markdown 文件更新流程即可。手动新增新闻时仍要维护一对 `.zh.md` / `.en.md` 文件，并保证两边 `date`、`title.zh`、`title.en` 一致。
 
 ### 新增论文
 ```md

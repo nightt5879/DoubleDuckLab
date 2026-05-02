@@ -82,12 +82,12 @@ const checks = [
   cmsConfigured
     ? {
         file: 'dist/admin/index.html',
-        includes: ['Loading Decap CMS', 'Decap CMS'],
+        includes: ['Loading Decap CMS', 'Decap CMS', 'https://unpkg.com/decap-cms@3.10.1/dist/decap-cms.js'],
       }
     : {
         file: 'dist/admin/index.html',
         includes: ['CMS setup required', ...expectedMissingCmsVars],
-        excludes: unexpectedMissingCmsVars,
+        excludes: [...unexpectedMissingCmsVars, 'https://unpkg.com/decap-cms@3.10.1/dist/decap-cms.js'],
       },
   cmsConfigured
     ? {
@@ -100,6 +100,16 @@ const checks = [
           `site_domain: "${cmsSiteDomain}"`,
           'publish_mode: editorial_workflow',
           'structure: multiple_files',
+          '  - name: news',
+          '  - name: members',
+          '    folder: src/content/members',
+          '  - name: papers',
+          '    folder: src/content/papers',
+          '  - name: join',
+          '    delete: false',
+          '    file: src/content/join/recruitment/overview_cn.md',
+          '  - name: projects',
+          '    file: "src/content/projects/project-orion/overview_cn.md"',
         ],
       }
     : {

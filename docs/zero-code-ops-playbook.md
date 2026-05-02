@@ -15,31 +15,40 @@
 - 验证页面：`/`、`/en/`
 
 ### 成员
+- 后台入口：`/admin/`
 - 位置：`src/content/members/*.md`
 - 可改：姓名、角色、状态、研究方向、简介、头像链接、外链
+- 后台能力：可新增、编辑、删除；成员 `id` 必须与文件名保持一致
 - 验证页面：`/members`、`/en/members`
 
 ### 项目
+- 后台入口：`/admin/`
 - 位置：`src/content/projects/<slug>/`
 - 可改：项目概览、背景、状态、链接
+- 后台能力：只编辑现有项目四文件内容，不新增/删除项目
 - 验证页面：`/projects`、`/en/projects`
 
 ### 论文
+- 后台入口：`/admin/`
 - 位置：`src/content/papers/*.md`
 - 可改：年份、标题、会议、摘要、链接、BibTeX
+- 后台能力：可新增、编辑、删除
 - 验证页面：`/papers`、`/en/papers`
 
 ### 新闻
 - 后台入口：`/admin/`
 - 内容落点：`src/content/news/<slug>.zh.md`、`src/content/news/<slug>.en.md`
 - 可改：日期、`title.zh/en`、中英文正文
+- 后台能力：可新增、编辑、删除
 - 发布路径：Decap CMS → GitHub backend → `editorial_workflow` → Pull Request 审核合并
 - 使用前提：编辑人具备目标仓库写权限，且 `CMS_GITHUB_REPO`、`CMS_BRANCH`、`CMS_OAUTH_BASE_URL`、`PUBLIC_SITE_URL` 与 OAuth / Cloudflare Pages 回调配置一致
 - 验证页面：`/news`、`/en/news`
 
 ### 招生与合作
+- 后台入口：`/admin/`
 - 位置：`src/content/join/recruitment/overview_cn.md`、`overview_en.md`
 - 可改：招生方向、合作方式、联系方式
+- 后台能力：只编辑固定中英文页面，不新增/删除
 - 当前状态：真实联系方式待确认，上线前不要保留“待确认”文案
 - 验证页面：`/join`、`/en/join`
 
@@ -59,8 +68,7 @@ npm run verify
 ## 3. 后续可扩展能力
 
 - [TODO] 用 `/admin/` 完成一次真实新闻 PR、预览、合并上线
-- [TODO] 用 CMS 后台新增论文
-- [TODO] 用 CMS 后台维护成员与项目
+- [TODO] 评估是否迁移项目内容结构，以支持后台新增/删除项目
 - [TODO] 表单提交与审核发布
 - [TODO] 双语缺失提醒
 - [TODO] 内容变更通知

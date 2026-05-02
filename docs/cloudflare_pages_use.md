@@ -49,9 +49,9 @@ cesar.ns.cloudflare.com
 
 后面看到active就是成功了！！！你的官网已经发布了 ！！！
 
-## `1.2.0` 新闻 CMS 试点需要的额外配置
+## `1.3.0` 内容 CMS 需要的额外配置
 
-如果后续启用 `news` 的 Decap CMS 试点，Cloudflare Pages 这边还要补三类配置：
+如果后续启用 Decap CMS 内容文件管理后台，Cloudflare Pages 这边还要补三类配置：
 
 1. 构建环境变量
 ```bash
@@ -66,7 +66,7 @@ CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
 - GitHub OAuth App 的回调地址要指向这个代理，而不是站点页面本身
 
 3. 仓库权限
-- 参与编辑 `news` 的同学需要目标仓库写权限
+- 参与编辑内容的同学需要目标仓库写权限
 - CMS 通过 GitHub Pull Request 走审核流，不做直接写入 `main`
 
 如果 CMS 暂时还没启用，可以先保留现有 Pages / 域名配置不变。

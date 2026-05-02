@@ -176,7 +176,10 @@ try {
 
   memberFiles.forEach((filePath) => {
     const { frontmatter } = parseMarkdown(filePath);
+    const fileSlug = path.basename(filePath, '.md');
+    const idMatched = frontmatter.match(/^id:\s*['"]([^'"]+)['"]\s*$/m);
     assertFrontmatter(/id:\s*['"].+['"]/, frontmatter, `member id invalid: ${path.basename(filePath)}`);
+    assert(idMatched?.[1] === fileSlug, `member id must match filename: ${path.basename(filePath)}`);
     assertFrontmatter(/name:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/, frontmatter, `member name zh/en invalid: ${path.basename(filePath)}`);
     assertFrontmatter(/role:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/, frontmatter, `member role zh/en invalid: ${path.basename(filePath)}`);
     assertFrontmatter(/area:\s*[\s\S]*zh:\s*['"].+['"][\s\S]*en:\s*['"].+['"]/, frontmatter, `member area zh/en invalid: ${path.basename(filePath)}`);

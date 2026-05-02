@@ -12,7 +12,7 @@ git pull
 git checkout -b content/YYYYMMDD-topic
 ```
 
-2. 修改内容文件
+2. 修改内容文件，或在 CMS 启用后通过 `/admin/` 修改受控内容
 - 站点文案：`src/data/site.zh.json`、`src/data/site.en.json`
 - 成员：`src/content/members/*.md`
 - 项目：`src/content/projects/<slug>/`
@@ -40,6 +40,7 @@ git push origin content/YYYYMMDD-topic
 ## B. 常见新增操作
 
 ### 1. 新增成员
+- CMS 能力：可通过 `/admin/` 新增 / 编辑 / 删除
 - 新建文件：`src/content/members/<id>.md`
 - 最少包含：
   - `id`
@@ -48,6 +49,7 @@ git push origin content/YYYYMMDD-topic
   - `area.zh/en`
 
 ### 2. 新增项目
+- CMS 能力：当前只编辑现有项目，不新增 / 删除项目
 - 新建目录：`src/content/projects/<slug>/`
 - 必备文件：
   - `overview_cn.md`
@@ -56,6 +58,7 @@ git push origin content/YYYYMMDD-topic
   - `background_en.md`
 
 ### 3. 新增论文
+- CMS 能力：可通过 `/admin/` 新增 / 编辑 / 删除
 - 新建文件：`src/content/papers/<slug>.md`
 - 必填字段：
   - `year`
@@ -63,6 +66,7 @@ git push origin content/YYYYMMDD-topic
   - `venue`
 
 ### 4. 新增新闻
+- CMS 能力：可通过 `/admin/` 新增 / 编辑 / 删除
 - 新建文件：
   - `src/content/news/<slug>.zh.md`
   - `src/content/news/<slug>.en.md`
@@ -81,10 +85,12 @@ git push origin content/YYYYMMDD-topic
 - [ ] PR 描述写清楚影响范围
 - [ ] 如准备上线，对照 `docs/content-replacement-inventory.md` 确认没有假邮箱、假地址或未确认成果
 
-## D. `news` CMS 试点启用后
+## D. `1.3.0` CMS 文件管理启用后
 
 - 编辑入口固定为 `/admin/`
-- 只在 `news` 上启用 CMS，不扩到其他内容类型
+- 新闻、成员、论文可新增 / 编辑 / 删除
+- 招生与合作只编辑固定页面，不新增 / 删除
+- 项目只编辑现有 overview/background 文件，不新增 / 删除项目
 - 内容同学保存后会生成可审阅的 GitHub Pull Request，而不是直接写入 `main`
 - 编辑者需要目标仓库的写权限
 - 如果发布失败，先回退对应的内容 PR，再检查 Cloudflare Pages、OAuth 回调和环境变量配置
