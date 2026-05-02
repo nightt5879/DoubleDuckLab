@@ -27,8 +27,24 @@ function getUrlHostname(value) {
   }
 }
 
+function listProjectSlugs() {
+  const projectsDir = path.resolve('src/content/projects');
+  if (!fs.existsSync(projectsDir)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(projectsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+}
+
 const normalizedPublicSiteUrl = normalizeUrl(publicSiteUrl);
 const cmsSiteDomain = getUrlHostname(normalizedPublicSiteUrl);
+const projectCmsConfigNeedles = listProjectSlugs().map(
+  (slug) => `file: "src/content/projects/${slug}/overview_cn.md"`,
+);
 
 function getExpectedMissingCmsVars() {
   const missing = [];
@@ -82,12 +98,12 @@ const checks = [
   cmsConfigured
     ? {
         file: 'dist/admin/index.html',
-        includes: ['Loading Decap CMS', 'Decap CMS'],
+        includes: ['Loading Decap CMS', 'Decap CMS', 'https://unpkg.com/decap-cms@3.10.1/dist/decap-cms.js'],
       }
     : {
         file: 'dist/admin/index.html',
         includes: ['CMS setup required', ...expectedMissingCmsVars],
-        excludes: unexpectedMissingCmsVars,
+        excludes: [...unexpectedMissingCmsVars, 'https://unpkg.com/decap-cms@3.10.1/dist/decap-cms.js'],
       },
   cmsConfigured
     ? {
@@ -100,6 +116,16 @@ const checks = [
           `site_domain: "${cmsSiteDomain}"`,
           'publish_mode: editorial_workflow',
           'structure: multiple_files',
+          '  - name: news',
+          '  - name: members',
+          '    folder: src/content/members',
+          '  - name: papers',
+          '    folder: src/content/papers',
+          '  - name: join',
+          '    delete: false',
+          '    file: src/content/join/recruitment/overview_cn.md',
+          '  - name: projects',
+          ...projectCmsConfigNeedles,
         ],
       }
     : {

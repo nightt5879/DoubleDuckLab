@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 const DEFAULT_SITE_URL = 'https://doubleducklab.com/';
 
 type EnvSource = Record<string, string | boolean | undefined>;
@@ -42,6 +45,291 @@ function readEnv(source: EnvSource, key: string) {
 
 function yamlString(value: string) {
   return JSON.stringify(value);
+}
+
+function stringField(label: string, name: string, options: { required?: boolean; widget?: string; indent?: number } = {}) {
+  const pad = ' '.repeat(options.indent ?? 6);
+  const widget = options.widget || 'string';
+  const lines = [
+    `${pad}- label: ${yamlString(label)}`,
+    `${pad}  name: ${name}`,
+    `${pad}  widget: ${widget}`,
+  ];
+
+  if (options.required === false) {
+    lines.push(`${pad}  required: false`);
+  }
+
+  return lines;
+}
+
+function nestedStringField(label: string, name: string, options: { required?: boolean; indent?: number } = {}) {
+  const pad = ' '.repeat(options.indent ?? 10);
+  const lines = [
+    `${pad}- label: ${yamlString(label)}`,
+    `${pad}  name: ${name}`,
+    `${pad}  widget: string`,
+  ];
+
+  if (options.required === false) {
+    lines.push(`${pad}  required: false`);
+  }
+
+  return lines;
+}
+
+function localizedTextField(label: string, name: string, options: { required?: boolean } = {}) {
+  const lines = [
+    `      - label: ${yamlString(label)}`,
+    `        name: ${name}`,
+    '        widget: object',
+  ];
+
+  if (options.required === false) {
+    lines.push('        required: false');
+  }
+
+  return [
+    ...lines,
+    '        fields:',
+    ...nestedStringField('Chinese', 'zh'),
+    ...nestedStringField('English', 'en'),
+  ];
+}
+
+function optionalLinksField(fieldNames: Array<[string, string]>, indent = 6) {
+  const pad = ' '.repeat(indent);
+  const nestedIndent = indent + 4;
+  return [
+    `${pad}- label: "Links"`,
+    `${pad}  name: links`,
+    `${pad}  widget: object`,
+    `${pad}  required: false`,
+    `${pad}  fields:`,
+    ...fieldNames.flatMap(([label, name]) => nestedStringField(label, name, { required: false, indent: nestedIndent })),
+  ];
+}
+
+function bodyField(options: { required?: boolean; indent?: number } = {}) {
+  const pad = ' '.repeat(options.indent ?? 6);
+  const lines = [
+    `${pad}- label: "Body"`,
+    `${pad}  name: body`,
+    `${pad}  widget: markdown`,
+  ];
+
+  if (options.required === false) {
+    lines.push(`${pad}  required: false`);
+  }
+
+  return lines;
+}
+
+function listProjectSlugs() {
+  const projectsDir = path.resolve('src/content/projects');
+  try {
+    return fs
+      .readdirSync(projectsDir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort((a, b) => a.localeCompare(b));
+  } catch {
+    return [];
+  }
+}
+
+function projectFileName(slug: string, section: 'overview' | 'background', locale: 'cn' | 'en') {
+  return `${slug.replace(/[^a-z0-9]+/gi, '_')}_${section}_${locale}`;
+}
+
+function projectOverviewFile(slug: string, locale: 'cn' | 'en') {
+  const labelLocale = locale === 'cn' ? 'Chinese' : 'English';
+  return [
+    `      - label: ${yamlString(`${slug} Overview (${labelLocale})`)}`,
+    `        name: ${projectFileName(slug, 'overview', locale)}`,
+    `        file: ${yamlString(`src/content/projects/${slug}/overview_${locale}.md`)}`,
+    '        fields:',
+    ...stringField('Title', 'title', { indent: 10 }),
+    ...stringField('Tag', 'tag', { required: false, indent: 10 }),
+    ...stringField('Time', 'time', { required: false, indent: 10 }),
+    ...stringField('Status', 'status', { indent: 10 }),
+    ...optionalLinksField([
+      ['Repository URL', 'repo'],
+      ['Demo URL', 'demo'],
+      ['Paper URL', 'paper'],
+    ], 10),
+    ...bodyField({ indent: 10 }),
+  ];
+}
+
+function projectBackgroundFile(slug: string, locale: 'cn' | 'en') {
+  const labelLocale = locale === 'cn' ? 'Chinese' : 'English';
+  return [
+    `      - label: ${yamlString(`${slug} Background (${labelLocale})`)}`,
+    `        name: ${projectFileName(slug, 'background', locale)}`,
+    `        file: ${yamlString(`src/content/projects/${slug}/background_${locale}.md`)}`,
+    '        fields:',
+    ...bodyField({ indent: 10 }),
+  ];
+}
+
+function projectFilesCollection() {
+  const projectFiles = listProjectSlugs().flatMap((slug) => [
+    ...projectOverviewFile(slug, 'cn'),
+    ...projectOverviewFile(slug, 'en'),
+    ...projectBackgroundFile(slug, 'cn'),
+    ...projectBackgroundFile(slug, 'en'),
+  ]);
+
+  return [
+    '  - name: projects',
+    '    label: Projects',
+    '    label_singular: Project File',
+    '    delete: false',
+    '    editor:',
+    '      preview: false',
+    '    files:',
+    ...projectFiles,
+  ];
+}
+
+function cmsCollections() {
+  return [
+    '  - name: news',
+    '    label: News',
+    '    label_singular: News Item',
+    '    folder: src/content/news',
+    '    create: true',
+    '    delete: true',
+    '    extension: md',
+    '    format: frontmatter',
+    '    identifier_field: slug',
+    '    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"',
+    '    summary: "{{slug}} · {{date}}"',
+    '    i18n: true',
+    '    editor:',
+    '      preview: false',
+    '    fields:',
+    '      - label: Slug',
+    '        name: slug',
+    '        widget: string',
+    '        i18n: duplicate',
+    '        hint: Use a short lowercase slug; Decap prefixes the selected date to build the final filename.',
+    '        pattern:',
+    "          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'",
+    "          - 'Use lowercase letters, numbers, and hyphens only.'",
+    '      - label: Date',
+    '        name: date',
+    '        widget: string',
+    '        i18n: duplicate',
+    '        hint: Use YYYY-MM-DD.',
+    '        pattern:',
+    "          - '^\\d{4}-\\d{2}-\\d{2}$'",
+    "          - 'Date must use YYYY-MM-DD.'",
+    '      - label: Title',
+    '        name: title',
+    '        widget: object',
+    '        i18n: true',
+    '        fields:',
+    '          - label: Chinese Title',
+    '            name: zh',
+    '            widget: string',
+    '            i18n: duplicate',
+    '          - label: English Title',
+    '            name: en',
+    '            widget: string',
+    '            i18n: duplicate',
+    ...bodyField(),
+    '        i18n: true',
+    '',
+    '  - name: members',
+    '    label: Members',
+    '    label_singular: Member',
+    '    folder: src/content/members',
+    '    create: true',
+    '    delete: true',
+    '    extension: md',
+    '    format: frontmatter',
+    '    identifier_field: id',
+    '    slug: "{{slug}}"',
+    '    summary: "{{id}} · {{name.zh}}"',
+    '    editor:',
+    '      preview: false',
+    '    fields:',
+    ...stringField('ID', 'id'),
+    '        hint: Use the same lowercase id as the generated filename, for example alice-phd.',
+    '        pattern:',
+    "          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'",
+    "          - 'Use lowercase letters, numbers, and hyphens only.'",
+    ...localizedTextField('Name', 'name'),
+    ...localizedTextField('Role', 'role'),
+    ...localizedTextField('Status', 'status', { required: false }),
+    ...localizedTextField('Research Area', 'area'),
+    ...stringField('Avatar Path', 'avatar', { required: false }),
+    ...localizedTextField('Bio', 'bio', { required: false }),
+    ...optionalLinksField([
+      ['Google Scholar URL', 'scholar'],
+      ['GitHub URL', 'github'],
+      ['Homepage URL', 'homepage'],
+      ['Email', 'email'],
+    ]),
+    '',
+    '  - name: papers',
+    '    label: Papers',
+    '    label_singular: Paper',
+    '    folder: src/content/papers',
+    '    create: true',
+    '    delete: true',
+    '    extension: md',
+    '    format: frontmatter',
+    '    identifier_field: title',
+    '    slug: "{{year}}-{{slug}}"',
+    '    summary: "{{year}} · {{title}}"',
+    '    editor:',
+    '      preview: false',
+    '    fields:',
+    '      - label: "Year"',
+    '        name: year',
+    '        widget: number',
+    '        value_type: int',
+    '        min: 1900',
+    '        max: 2100',
+    ...stringField('Title', 'title'),
+    ...stringField('Venue', 'venue'),
+    ...stringField('Authors', 'authors', { required: false }),
+    ...stringField('Abstract', 'abstract', { required: false, widget: 'markdown' }),
+    ...optionalLinksField([
+      ['Online URL', 'online'],
+      ['PDF URL', 'pdf'],
+      ['Project URL', 'project'],
+      ['Code URL', 'code'],
+    ]),
+    ...stringField('BibTeX', 'bibtex', { required: false, widget: 'text' }),
+    ...bodyField({ required: false }),
+    '',
+    '  - name: join',
+    '    label: Recruitment & Collaboration',
+    '    label_singular: Recruitment Page',
+    '    delete: false',
+    '    editor:',
+    '      preview: false',
+    '    files:',
+    '      - label: "Recruitment Overview (Chinese)"',
+    '        name: recruitment_overview_cn',
+    '        file: src/content/join/recruitment/overview_cn.md',
+    '        fields:',
+    ...stringField('Title', 'title', { indent: 10 }),
+    ...bodyField({ indent: 10 }),
+    '      - label: "Recruitment Overview (English)"',
+    '        name: recruitment_overview_en',
+    '        file: src/content/join/recruitment/overview_en.md',
+    '        fields:',
+    ...stringField('Title', 'title', { indent: 10 }),
+    ...bodyField({ indent: 10 }),
+    '',
+    ...projectFilesCollection(),
+    '',
+  ];
 }
 
 export function getCmsRuntimeConfig(
@@ -104,53 +392,7 @@ export function renderCmsConfigYml(config: CmsRuntimeConfig) {
     '  locales: [zh, en]',
     '  default_locale: zh',
     'collections:',
-    '  - name: news',
-    '    label: News',
-    '    label_singular: News Item',
-    '    folder: src/content/news',
-    '    create: true',
-    '    extension: md',
-    '    format: frontmatter',
-    '    identifier_field: slug',
-    '    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"',
-    '    summary: "{{slug}} · {{date}}"',
-    '    i18n: true',
-    '    editor:',
-    '      preview: false',
-    '    fields:',
-    '      - label: Slug',
-    '        name: slug',
-    '        widget: string',
-    '        i18n: duplicate',
-    '        hint: Use a short lowercase slug; Decap prefixes the selected date to build the final filename.',
-    '        pattern:',
-    "          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'",
-    "          - 'Use lowercase letters, numbers, and hyphens only.'",
-    '      - label: Date',
-    '        name: date',
-    '        widget: string',
-    '        i18n: duplicate',
-    '        hint: Use YYYY-MM-DD.',
-    '        pattern:',
-    "          - '^\\d{4}-\\d{2}-\\d{2}$'",
-    "          - 'Date must use YYYY-MM-DD.'",
-    '      - label: Title',
-    '        name: title',
-    '        widget: object',
-    '        i18n: true',
-    '        fields:',
-    '          - label: Chinese Title',
-    '            name: zh',
-    '            widget: string',
-    '            i18n: duplicate',
-    '          - label: English Title',
-    '            name: en',
-    '            widget: string',
-    '            i18n: duplicate',
-    '      - label: Body',
-    '        name: body',
-    '        widget: markdown',
-    '        i18n: true',
+    ...cmsCollections(),
     '',
   ].join('\n');
 }

@@ -54,18 +54,24 @@ PUBLIC_SITE_URL=https://your-domain.example
 
 This value is used to generate canonical links, Open Graph URLs, and hreflang alternates.
 
-## `1.2.0` News CMS Pilot
+## `1.3.0` Content File Management CMS
 
-The template now includes a Decap CMS pilot for `news` only. Content editors can draft bilingual news in the CMS, then publish changes through GitHub pull requests for review and merge.
+The `/admin/` route now expands the original `news` pilot into a Decap CMS content file management surface. Editors can update controlled Markdown files in the CMS, then publish changes through GitHub pull requests for review and merge.
 
-Pilot constraints:
+Current CMS scope:
 
-- `news` only
+- `news`: create, edit, and delete bilingual news entries.
+- `members`: create, edit, and delete member files.
+- `papers`: create, edit, and delete paper files.
+- `join`: edit fixed recruitment and collaboration pages only; no create/delete.
+- `projects`: edit existing project overview/background files only; no project create/delete in this version.
+
+Constraints:
+
 - GitHub backend plus `editorial_workflow`
 - editors must have write access to the target repository
 - CMS config should be environment-driven, not hard-coded to one repo, branch, or OAuth endpoint
-
-`1.2.1` closes the loop around this pilot by aligning docs and ops guidance, keeping CMS support explicitly `news`-only, and documenting the environment / OAuth / Cloudflare Pages prerequisites required before enablement.
+- no arbitrary file browser, to protect bilingual pairing, routes, and content schemas
 
 Recommended environment variables:
 
@@ -76,7 +82,7 @@ CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
 PUBLIC_SITE_URL=https://your-domain.example
 ```
 
-`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. Starting in `1.2.1`, the CMS only enables when `CMS_GITHUB_REPO`, `CMS_OAUTH_BASE_URL`, and `PUBLIC_SITE_URL` are all set; enabling it still requires matching Cloudflare Pages and OAuth callback settings.
+`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. The CMS only enables when `CMS_GITHUB_REPO`, `CMS_OAUTH_BASE_URL`, and `PUBLIC_SITE_URL` are all set; enabling it still requires matching Cloudflare Pages and OAuth callback settings.
 
 ## Single Sources of Truth
 
@@ -215,6 +221,7 @@ venue: "Conference Name"
 - `1.1.2`: stability hardening, unified verification entrypoint, and clean-build guardrails
 - `1.2.0`: `news` CMS pilot implemented with a GitHub PR review flow and template-safe configuration
 - `1.2.1`: CMS pilot closure / ops hardening, plus locale/news validation and CMS enablement hardening
+- `1.3.0`: CMS file management for news, members, papers, recruitment pages, and existing project files
 
 ## License
 

@@ -54,18 +54,24 @@ PUBLIC_SITE_URL=https://your-domain.example
 
 构建时会使用这个地址生成 canonical、Open Graph URL 与 hreflang。
 
-## `1.2.0` 新闻 CMS 试点
+## `1.3.0` 内容文件管理 CMS
 
-当前已为 `news` 接入 Decap CMS，内容同学可通过后台提交双语新闻草稿，再走 GitHub Pull Request 审核流合并到主分支。
+当前 `/admin/` 已从 `news` 试点扩展为 Decap CMS 内容文件管理后台。内容同学可以通过后台修改受控 Markdown 文件，再走 GitHub Pull Request 审核流合并到主分支。
 
-试点约束如下：
+当前后台范围如下：
 
-- 只覆盖 `news`
-- 仅使用 `GitHub backend + editorial_workflow`
+- `news`：可新增、编辑、删除双语新闻。
+- `members`：可新增、编辑、删除成员文件。
+- `papers`：可新增、编辑、删除论文文件。
+- `join`：只编辑固定招生与合作页面，不允许新增/删除。
+- `projects`：只编辑现有项目的 overview/background 四文件内容，不允许新增/删除项目。
+
+约束如下：
+
+- 仍使用 `GitHub backend + editorial_workflow`
 - 参与编辑的人需要目标仓库的写权限
 - CMS 配置通过环境变量驱动，不把仓库、分支和 OAuth 地址写死在模板里
-
-`1.2.1` 为这条试点链路做收口：统一文档和运维叙事，明确当前 CMS 仍然只覆盖 `news`，并且依赖仓库环境变量、OAuth 代理与 Cloudflare Pages 回调地址对齐。
+- 不提供任意文件浏览器，避免破坏双语配对、路由和内容 schema
 
 建议配置的环境变量如下：
 
@@ -76,7 +82,7 @@ CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
 PUBLIC_SITE_URL=https://your-domain.example
 ```
 
-`PUBLIC_SITE_URL` 继续作为站点域名来源，用于构建 canonical、Open Graph URL 和 hreflang。`1.2.1` 起，CMS 只有在 `CMS_GITHUB_REPO`、`CMS_OAUTH_BASE_URL` 和 `PUBLIC_SITE_URL` 都配置完成后才会启用；同时还需要在 Cloudflare Pages 和 OAuth 代理上对齐回调地址与仓库权限。
+`PUBLIC_SITE_URL` 继续作为站点域名来源，用于构建 canonical、Open Graph URL 和 hreflang。CMS 只有在 `CMS_GITHUB_REPO`、`CMS_OAUTH_BASE_URL` 和 `PUBLIC_SITE_URL` 都配置完成后才会启用；同时还需要在 Cloudflare Pages 和 OAuth 代理上对齐回调地址与仓库权限。
 
 ## 当前唯一真源
 
@@ -214,6 +220,7 @@ venue: "Conference Name"
 - `1.1.2`：稳定性硬化，统一 `verify` 入口、干净构建与发布验收流程
 - `1.2.0`：`news` CMS 试点，Decap + GitHub PR 审核流已落地，保持模板化配置
 - `1.2.1`：CMS 试点收口 / ops hardening，补 locale/news 校验与启用前置条件硬化
+- `1.3.0`：CMS 文件管理后台，扩展到新闻、成员、论文、招生与现有项目文件
 
 ## License
 
