@@ -27,8 +27,24 @@ function getUrlHostname(value) {
   }
 }
 
+function listProjectSlugs() {
+  const projectsDir = path.resolve('src/content/projects');
+  if (!fs.existsSync(projectsDir)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(projectsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+}
+
 const normalizedPublicSiteUrl = normalizeUrl(publicSiteUrl);
 const cmsSiteDomain = getUrlHostname(normalizedPublicSiteUrl);
+const projectCmsConfigNeedles = listProjectSlugs().map(
+  (slug) => `file: "src/content/projects/${slug}/overview_cn.md"`,
+);
 
 function getExpectedMissingCmsVars() {
   const missing = [];
@@ -109,7 +125,7 @@ const checks = [
           '    delete: false',
           '    file: src/content/join/recruitment/overview_cn.md',
           '  - name: projects',
-          '    file: "src/content/projects/project-orion/overview_cn.md"',
+          ...projectCmsConfigNeedles,
         ],
       }
     : {
