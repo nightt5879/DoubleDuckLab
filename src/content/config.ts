@@ -5,10 +5,18 @@ const i18nText = z.object({
   en: z.string().min(1)
 });
 
+const newsDate = z.preprocess((value) => {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value.toISOString().slice(0, 10);
+  }
+
+  return value;
+}, z.string().regex(/^\d{4}-\d{2}-\d{2}$/));
+
 const news = defineCollection({
   type: 'content',
   schema: z.object({
-    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    date: newsDate,
     title: i18nText,
   })
 });
