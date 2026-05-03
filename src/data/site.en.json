@@ -9,7 +9,7 @@
     "news": "News"
   },
   "home": {
-    "intro": "A bilingual lab website in go-live rehearsal, with static deployment, content validation, and a news-only CMS pilot in place.",
+    "intro": "A bilingual lab website in go-live rehearsal, with static deployment, content validation, and content file management CMS integration in place.",
     "sections": {
       "highlights": "Highlights",
       "recentProjects": "Recent Projects"
@@ -21,7 +21,7 @@
       },
       {
         "title": "Recent Outputs",
-        "desc": "Papers, projects, and news are covered by validation, while news can enter PR review through the CMS workflow."
+        "desc": "News, members, papers, and existing project files are now covered by the CMS scope, with content changes still reviewed through pull requests."
       },
       {
         "title": "Recruitment & Collaboration",

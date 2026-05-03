@@ -1,0 +1,11 @@
+{
+  "name": "doubleducklab-cms-oauth-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "npx wrangler deploy",
+    "dev": "npx wrangler dev",
+    "secret:github:id": "npx wrangler secret put GITHUB_OAUTH_ID",
+    "secret:github:secret": "npx wrangler secret put GITHUB_OAUTH_SECRET"
+  }
+}

@@ -54,7 +54,7 @@ PUBLIC_SITE_URL=https://your-domain.example
 
 This value is used to generate canonical links, Open Graph URLs, and hreflang alternates.
 
-## `1.3.0` Content File Management CMS
+## `1.3.x` Content File Management CMS
 
 The `/admin/` route now expands the original `news` pilot into a Decap CMS content file management surface. Editors can update controlled Markdown files in the CMS, then publish changes through GitHub pull requests for review and merge.
 
@@ -76,13 +76,13 @@ Constraints:
 Recommended environment variables:
 
 ```bash
-CMS_GITHUB_REPO=owner-name/repo-name
+CMS_GITHUB_REPO=nightt5879/DoubleDuckLab
 CMS_BRANCH=main
-CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
-PUBLIC_SITE_URL=https://your-domain.example
+CMS_OAUTH_BASE_URL=https://doubleducklab-cms-oauth.<account>.workers.dev
+PUBLIC_SITE_URL=https://doubleducklab.pages.dev
 ```
 
-`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. The CMS only enables when `CMS_GITHUB_REPO`, `CMS_OAUTH_BASE_URL`, and `PUBLIC_SITE_URL` are all set; enabling it still requires matching Cloudflare Pages and OAuth callback settings.
+`PUBLIC_SITE_URL` remains the source of truth for site URLs such as canonical links, Open Graph URLs, and hreflang alternates. The CMS only enables when `CMS_GITHUB_REPO`, `CMS_OAUTH_BASE_URL`, and `PUBLIC_SITE_URL` are all set; enabling it still requires matching Cloudflare Pages and OAuth callback settings. Starting in `1.3.1`, `ops/cms-oauth-worker/` provides the Cloudflare Worker OAuth proxy deployment package.
 
 ## Single Sources of Truth
 
@@ -222,6 +222,7 @@ venue: "Conference Name"
 - `1.2.0`: `news` CMS pilot implemented with a GitHub PR review flow and template-safe configuration
 - `1.2.1`: CMS pilot closure / ops hardening, plus locale/news validation and CMS enablement hardening
 - `1.3.0`: CMS file management for news, members, papers, recruitment pages, and existing project files
+- `1.3.1`: CMS live enablement follow-up with a Cloudflare Worker OAuth proxy package and production environment validation notes
 
 ## License
 
