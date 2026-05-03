@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Declared the Decap CMS media folder in `/admin/config.yml` so configured builds pass the CMS schema check.
 - Matched the Worker OAuth `redirect_uri` to the registered GitHub callback URL exactly.
 - Accepted Decap-saved YAML date values in news frontmatter while normalizing them back to `YYYY-MM-DD` strings.
+- Kept news routes based on Markdown file paths even when Decap saves a `slug` frontmatter field.
 
 ## [1.3.0] - 2026-05-02
 

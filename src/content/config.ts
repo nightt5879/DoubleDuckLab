@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const i18nText = z.object({
   zh: z.string().min(1),
@@ -13,8 +14,16 @@ const newsDate = z.preprocess((value) => {
   return value;
 }, z.string().regex(/^\d{4}-\d{2}-\d{2}$/));
 
+function newsEntryId(entry: string) {
+  return entry.split('\\').join('/').replace(/\.md$/i, '');
+}
+
 const news = defineCollection({
-  type: 'content',
+  loader: glob({
+    pattern: '**/*.md',
+    base: './src/content/news',
+    generateId: ({ entry }) => newsEntryId(entry),
+  }),
   schema: z.object({
     date: newsDate,
     title: i18nText,
