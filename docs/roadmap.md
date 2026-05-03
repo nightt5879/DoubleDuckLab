@@ -1,6 +1,6 @@
 # Roadmap
 
-更新时间：2026-05-03（1.3.2 CMS stability hardening）
+更新时间：2026-05-03（1.3.3 build-log cleanup）
 
 ## 1.0.1 基线修复
 
@@ -73,6 +73,12 @@
 - 清理首次 CMS 验收留下的测试文字，避免测试内容进入长期生产内容
 - 收紧新闻 `slug` 提示、校验和 smoke 检查，要求以小写字母开头，不包含日期前缀
 - 文档补充 Save -> Ready -> Publish now 的后台发布流程说明
+
+## 1.3.3 构建日志清理
+
+已完成：
+- 构建前同步清理 `dist/` 与 `.astro`，避免 stale content cache 造成重复 news id warning
+- 保持 CMS 范围、公开路由和内容模型不变
 
 ## T-0015 真实上线闭环演练
 

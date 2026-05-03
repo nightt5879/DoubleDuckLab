@@ -225,6 +225,7 @@ venue: "Conference Name"
 - `1.3.0`: CMS file management for news, members, papers, recruitment pages, and existing project files
 - `1.3.1`: CMS live enablement follow-up with a Cloudflare Worker OAuth proxy package and production environment validation notes
 - `1.3.2`: CMS stability patch that adds stable legacy news slugs, removes CMS test residue, and tightens news slug validation
+- `1.3.3`: build-log cleanup that clears Astro content cache before builds to remove duplicate news id warnings
 
 ## License
 
