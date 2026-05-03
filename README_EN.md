@@ -228,6 +228,7 @@ venue: "Conference Name"
 - `1.3.2`: CMS stability patch that adds stable legacy news slugs, removes CMS test residue, and tightens news slug validation
 - `1.3.3`: build-log cleanup that clears Astro content cache before builds to remove duplicate news id warnings
 - `1.3.4`: Cloudflare Pages Git build stability patch that pins Node.js and records the Pages output directory in repo config
+- `1.3.5`: production Git build hardening that normalizes malformed site URL variables before static rendering
 
 ## License
 

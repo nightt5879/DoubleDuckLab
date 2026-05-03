@@ -16,17 +16,29 @@ export type CmsRuntimeConfig = {
 };
 
 function normalizeUrl(value: string | undefined, fallback = '') {
-  const normalized = (value || fallback).trim();
-  if (!normalized) {
+  const raw = (value || fallback).trim().replace(/^['"]|['"]$/g, '');
+  if (!raw) {
     return '';
   }
 
-  return normalized.endsWith('/') ? normalized.slice(0, -1) : normalized;
+  const candidate = /^[a-z][a-z\d+\-.]*:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    const url = new URL(candidate);
+    if (!['http:', 'https:'].includes(url.protocol)) {
+      return '';
+    }
+
+    url.search = '';
+    url.hash = '';
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return '';
+  }
 }
 
 function getUrlHostname(value: string) {
   try {
-    return new URL(`${value}/`).hostname;
+    return new URL(value).hostname;
   } catch {
     return '';
   }

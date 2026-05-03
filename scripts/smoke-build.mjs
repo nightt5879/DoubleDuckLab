@@ -8,11 +8,24 @@ const publicSiteUrl = (process.env.PUBLIC_SITE_URL || '').trim();
 const cmsBranch = (process.env.CMS_BRANCH || 'main').trim() || 'main';
 
 function normalizeUrl(value) {
-  if (!value) {
+  const raw = (value || '').trim().replace(/^['"]|['"]$/g, '');
+  if (!raw) {
     return '';
   }
 
-  return value.replace(/\/$/, '');
+  const candidate = /^[a-z][a-z\d+\-.]*:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    const url = new URL(candidate);
+    if (!['http:', 'https:'].includes(url.protocol)) {
+      return '';
+    }
+
+    url.search = '';
+    url.hash = '';
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return '';
+  }
 }
 
 function getUrlHostname(value) {
@@ -21,7 +34,7 @@ function getUrlHostname(value) {
   }
 
   try {
-    return new URL(`${value}/`).hostname;
+    return new URL(value).hostname;
   } catch {
     return '';
   }
