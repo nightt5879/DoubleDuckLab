@@ -4,9 +4,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const distDir = path.resolve('dist');
+const astroCacheDir = path.resolve('.astro');
 const astroEntry = path.resolve('node_modules/astro/astro.js');
 
 fs.rmSync(distDir, { recursive: true, force: true });
+fs.rmSync(astroCacheDir, { recursive: true, force: true });
 
 if (process.env.ASTRO_TELEMETRY_DISABLED === undefined) {
   process.env.ASTRO_TELEMETRY_DISABLED = '1';

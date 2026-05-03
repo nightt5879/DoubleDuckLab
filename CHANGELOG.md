@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.3] - 2026-05-03
+
+### Changed
+- Bumped the package version from `1.3.2` to `1.3.3` for build-log stability cleanup.
+- Cleared Astro's `.astro` content cache before each site build, matching the existing clean `dist/` build behavior.
+
+### Fixed
+- Removed stale-content-cache duplicate news id warnings from repeated local and configured builds.
+
 ## [1.3.2] - 2026-05-03
 
 ### Changed

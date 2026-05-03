@@ -224,6 +224,7 @@ venue: "Conference Name"
 - `1.3.0`：CMS 文件管理后台，扩展到新闻、成员、论文、招生与现有项目文件
 - `1.3.1`：CMS 线上启用跟进，补 Cloudflare Worker OAuth 代理部署包与生产环境变量验收说明
 - `1.3.2`：CMS 稳定性补丁，补齐旧新闻 `slug`、清理后台测试残留，并收紧新闻 slug 校验
+- `1.3.3`：构建日志清理，构建前清理 Astro 内容缓存，消除重复 news id warning
 
 ## License
 
