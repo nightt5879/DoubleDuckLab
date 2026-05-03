@@ -74,6 +74,16 @@ function assertLocalizedFrontmatterObject(frontmatter, field, message) {
   assert(hasLocalizedValue(block, 'zh') && hasLocalizedValue(block, 'en'), message);
 }
 
+function getFrontmatterScalar(frontmatter, field) {
+  const matched = frontmatter.match(new RegExp(`^${field}:\\s*(?:"([^"\\n]+)"|'([^'\\n]+)'|(\\S.*))\\s*$`, 'm'));
+  return matched ? (matched[1] || matched[2] || matched[3] || '').trim() : '';
+}
+
+function expectedNewsCmsSlug(routeSlug) {
+  const matched = routeSlug.match(/^\d{4}-\d{2}-\d{2}-(.+)$/);
+  return matched ? matched[1] : '';
+}
+
 function parseNewsFileInfo(relPath) {
   const normalized = relPath.replaceAll('\\', '/');
   const parts = normalized.split('/');
@@ -147,6 +157,8 @@ try {
   assert(joinFolders.length > 0, 'No join folders in src/content/join');
 
   const newsLangMap = new Map();
+  const newsCmsSlugPattern = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
+  const forbiddenCmsResidue = ['testttttttt', 'testttttt', '测试后台功能', '测试使用后台更新'];
   newsFiles.forEach((filePath) => {
     const rel = path.relative(newsDir, filePath).replaceAll('\\', '/');
     const { slug, lang } = parseNewsFileInfo(rel);
@@ -158,9 +170,18 @@ try {
     newsLangMap.get(slug).add(lang);
 
     const { frontmatter, body } = parseMarkdown(filePath);
+    const cmsSlug = getFrontmatterScalar(frontmatter, 'slug');
+    const expectedCmsSlug = expectedNewsCmsSlug(slug);
+    assert(newsCmsSlugPattern.test(cmsSlug), `news frontmatter slug invalid: ${rel}`);
+    if (expectedCmsSlug) {
+      assert(cmsSlug === expectedCmsSlug, `news frontmatter slug must match filename suffix: ${rel}`);
+    }
     assertFrontmatter(/date:\s*['"]?\d{4}-\d{2}-\d{2}['"]?/, frontmatter, `news frontmatter date invalid: ${rel}`);
     assertLocalizedFrontmatterObject(frontmatter, 'title', `news frontmatter title zh\/en invalid: ${rel}`);
     assert(isString(body), `news body empty: ${rel}`);
+    forbiddenCmsResidue.forEach((needle) => {
+      assert(!body.includes(needle), `news body contains CMS test residue "${needle}": ${rel}`);
+    });
   });
 
   newsLangMap.forEach((langs, slug) => {

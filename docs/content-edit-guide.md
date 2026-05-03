@@ -104,6 +104,7 @@ src/content/news/2026-03-25-my-news.en.md
 新闻文件示例：
 ```md
 ---
+slug: "my-news"
 date: "2026-03-25"
 title:
   zh: "中文标题"
@@ -116,9 +117,12 @@ title:
 CMS 试点启用后的编辑步骤：
 
 1. 打开站点的 `/admin/`
-2. 新建一条 `news` 草稿，填写 `slug`、`date`、中英文标题和正文
-3. 保存草稿后，通过 GitHub Pull Request 走审核
-4. 审核通过后合并，站点会自动重新构建
+2. 新建或打开一条 `news` 草稿，填写 `slug`、`date`、中英文标题和正文
+3. `slug` 使用小写英文、数字和连字符，必须以小写字母开头；不要把日期写进 `slug`
+4. 点击 `Save`，确认左上角从 unsaved 变成 saved
+5. 把状态从 `Draft` 改成 `Ready`
+6. 点击 `Publish` -> `Publish now`，让 CMS 创建 GitHub Pull Request
+7. 检查 GitHub PR 和 Cloudflare Pages 预览，审核通过后合并，站点会自动重新构建
 
 如果 CMS 还没启用，继续沿用当前的 Markdown 文件更新流程即可。手动新增新闻时仍要维护一对 `.zh.md` / `.en.md` 文件，并保证两边 `date`、`title.zh`、`title.en` 一致。
 

@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-05-03
+
+### Changed
+- Bumped the package version from `1.3.1` to `1.3.2` for CMS stability hardening.
+- Tightened the news CMS slug guidance so generated slugs start with a lowercase letter and keep the date out of the field.
+
+### Fixed
+- Added stable `slug` frontmatter to existing news files so editing old entries in Decap no longer requires guessing a slug.
+- Removed CMS validation test residue from the archived news sample.
+- Extended content validation to catch missing or invalid news CMS slugs and known CMS test residue before build.
+
 ## [1.3.1] - 2026-05-03
 
 ### Added
