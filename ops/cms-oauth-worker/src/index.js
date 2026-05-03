@@ -17,7 +17,7 @@ function missingSecrets(env) {
 }
 
 function callbackUrl(url) {
-  return `${url.origin}/callback?provider=github`;
+  return `${url.origin}/callback`;
 }
 
 function authProvider(url) {

@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Ensured canonical, Open Graph, and hreflang URLs honor `PUBLIC_SITE_URL` during configured CMS builds.
 - Added OAuth `state` cookie validation before the CMS Worker exchanges GitHub callback codes.
 - Declared the Decap CMS media folder in `/admin/config.yml` so configured builds pass the CMS schema check.
+- Matched the Worker OAuth `redirect_uri` to the registered GitHub callback URL exactly.
 
 ## [1.3.0] - 2026-05-02
 

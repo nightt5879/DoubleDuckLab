@@ -36,12 +36,24 @@ try {
   assert.equal(location.origin, 'https://github.com');
   assert.equal(location.pathname, '/login/oauth/authorize');
   assert.equal(location.searchParams.get('client_id'), 'test-client-id');
+  assert.equal(location.searchParams.get('redirect_uri'), 'https://oauth.example/callback');
   assert.equal(location.searchParams.get('scope'), 'public_repo,user');
   assert.ok(state);
   assert.ok(setCookie.includes(`ddlab_oauth_state=${state}`));
   assert.ok(setCookie.includes('HttpOnly'));
   assert.ok(setCookie.includes('Secure'));
   assert.ok(setCookie.includes('SameSite=Lax'));
+
+  const callbackWithoutProvider = await worker.fetch(
+    new Request(`https://oauth.example/callback?code=abc&state=${state}`, {
+      headers: { cookie: setCookie },
+    }),
+    env,
+  );
+  assert.equal(callbackWithoutProvider.status, 200);
+  assert.match(await callbackWithoutProvider.text(), /authorization:github:success/);
+  assert.match(callbackWithoutProvider.headers.get('set-cookie'), /ddlab_oauth_state=.*Max-Age=0/);
+  assert.equal(tokenExchangeCount, 1);
 
   const invalidState = await worker.fetch(
     new Request('https://oauth.example/callback?provider=github&code=abc&state=wrong', {
@@ -51,7 +63,7 @@ try {
   );
   assert.equal(invalidState.status, 400);
   assert.equal(await invalidState.text(), 'Invalid OAuth state');
-  assert.equal(tokenExchangeCount, 0);
+  assert.equal(tokenExchangeCount, 1);
 
   const validState = await worker.fetch(
     new Request(`https://oauth.example/callback?provider=github&code=abc&state=${state}`, {
@@ -62,7 +74,7 @@ try {
   assert.equal(validState.status, 200);
   assert.match(await validState.text(), /authorization:github:success/);
   assert.match(validState.headers.get('set-cookie'), /ddlab_oauth_state=.*Max-Age=0/);
-  assert.equal(tokenExchangeCount, 1);
+  assert.equal(tokenExchangeCount, 2);
 
   console.log('CMS OAuth Worker smoke checks passed');
 } finally {
