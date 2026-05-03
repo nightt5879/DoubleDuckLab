@@ -53,8 +53,30 @@ export function buildDefaultLocaleAlternates(pathname: string): LocaleAlternates
 }
 
 export function toAbsoluteUrl(pathname: string, site: URL | string | undefined) {
-  const siteUrl = site instanceof URL ? site : new URL(site || DEFAULT_SITE_URL);
+  const siteUrl = normalizeSiteUrl(site);
   return new URL(pathname, siteUrl).toString();
+}
+
+export function normalizeSiteUrl(site: URL | string | undefined) {
+  if (site instanceof URL) {
+    return site;
+  }
+
+  const raw = `${site || DEFAULT_SITE_URL}`.trim().replace(/^['"]|['"]$/g, '');
+  const candidate = /^[a-z][a-z\d+\-.]*:\/\//i.test(raw) ? raw : `https://${raw}`;
+
+  try {
+    const url = new URL(candidate);
+    if (!['http:', 'https:'].includes(url.protocol)) {
+      throw new Error(`Unsupported site URL protocol: ${url.protocol}`);
+    }
+
+    url.search = '';
+    url.hash = '';
+    return url;
+  } catch {
+    return new URL(DEFAULT_SITE_URL);
+  }
 }
 
 export function summarizeText(value: string | undefined, maxLength = 160) {

@@ -18,7 +18,7 @@ The repository pins the Node.js version in `.node-version`, and the Pages projec
 - `CMS_OAUTH_BASE_URL=https://doubleducklab-cms-oauth.<account>.workers.dev`
 - `PUBLIC_SITE_URL=https://doubleducklab.pages.dev`
 
-`NODE_VERSION` is a build-environment pin, not a CMS secret. It is listed with Pages secrets only because Wrangler manages Pages variables through `wrangler pages secret`.
+`PUBLIC_SITE_URL` must be an absolute site URL. The build now tolerates a missing `https://` prefix, but the stored Pages value should still include the full `https://` URL. `NODE_VERSION` is a build-environment pin, not a CMS secret. It is listed with Pages secrets only because Wrangler manages Pages variables through `wrangler pages secret`.
 
 ## Verification
 

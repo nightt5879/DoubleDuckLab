@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.5] - 2026-05-03
+
+### Changed
+- Bumped the package version from `1.3.4` to `1.3.5` for production Git build URL hardening.
+- Normalized site URL inputs so missing `https://` is treated as HTTPS instead of breaking static route generation.
+
+### Fixed
+- Prevented invalid `PUBLIC_SITE_URL` values from crashing Open Graph and canonical URL generation during Cloudflare Pages production builds.
+- Kept CMS config and smoke checks aligned with the same URL normalization rules.
+
 ## [1.3.4] - 2026-05-03
 
 ### Added
