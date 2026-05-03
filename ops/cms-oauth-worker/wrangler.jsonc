@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "doubleducklab-cms-oauth",
+  "main": "src/index.js",
+  "compatibility_date": "2026-05-03",
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGIN": "https://doubleducklab.pages.dev",
+    "GITHUB_REPO_PRIVATE": "0"
+  },
+  "secrets": {
+    "required": ["GITHUB_OAUTH_ID", "GITHUB_OAUTH_SECRET"]
+  }
+}

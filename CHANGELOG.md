@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-05-03
+
+### Added
+- Added a Cloudflare Worker OAuth proxy package under `ops/cms-oauth-worker/` for the Decap CMS GitHub login flow.
+- Documented the GitHub OAuth App, Worker secrets, and Cloudflare Pages variables required to enable the production `/admin/` CMS.
+
+### Changed
+- Bumped the package version from `1.3.0` to `1.3.1` for the CMS live enablement follow-up.
+- Updated CMS operations notes to make the post-`1.3.0` online login, PR preview, and merge rehearsal explicit.
+- Updated homepage copy so it no longer describes the CMS as news-only.
+
+### Fixed
+- Ensured canonical, Open Graph, and hreflang URLs honor `PUBLIC_SITE_URL` during configured CMS builds.
+- Added OAuth `state` cookie validation before the CMS Worker exchanges GitHub callback codes.
+
 ## [1.3.0] - 2026-05-02
 
 ### Added

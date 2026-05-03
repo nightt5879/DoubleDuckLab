@@ -54,7 +54,7 @@ PUBLIC_SITE_URL=https://your-domain.example
 
 构建时会使用这个地址生成 canonical、Open Graph URL 与 hreflang。
 
-## `1.3.0` 内容文件管理 CMS
+## `1.3.x` 内容文件管理 CMS
 
 当前 `/admin/` 已从 `news` 试点扩展为 Decap CMS 内容文件管理后台。内容同学可以通过后台修改受控 Markdown 文件，再走 GitHub Pull Request 审核流合并到主分支。
 
@@ -76,13 +76,13 @@ PUBLIC_SITE_URL=https://your-domain.example
 建议配置的环境变量如下：
 
 ```bash
-CMS_GITHUB_REPO=owner-name/repo-name
+CMS_GITHUB_REPO=nightt5879/DoubleDuckLab
 CMS_BRANCH=main
-CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
-PUBLIC_SITE_URL=https://your-domain.example
+CMS_OAUTH_BASE_URL=https://doubleducklab-cms-oauth.<account>.workers.dev
+PUBLIC_SITE_URL=https://doubleducklab.pages.dev
 ```
 
-`PUBLIC_SITE_URL` 继续作为站点域名来源，用于构建 canonical、Open Graph URL 和 hreflang。CMS 只有在 `CMS_GITHUB_REPO`、`CMS_OAUTH_BASE_URL` 和 `PUBLIC_SITE_URL` 都配置完成后才会启用；同时还需要在 Cloudflare Pages 和 OAuth 代理上对齐回调地址与仓库权限。
+`PUBLIC_SITE_URL` 继续作为站点域名来源，用于构建 canonical、Open Graph URL 和 hreflang。CMS 只有在 `CMS_GITHUB_REPO`、`CMS_OAUTH_BASE_URL` 和 `PUBLIC_SITE_URL` 都配置完成后才会启用；同时还需要在 Cloudflare Pages 和 OAuth 代理上对齐回调地址与仓库权限。`1.3.1` 起，仓库内提供 `ops/cms-oauth-worker/` 作为 Cloudflare Worker OAuth 代理部署包。
 
 ## 当前唯一真源
 
@@ -221,6 +221,7 @@ venue: "Conference Name"
 - `1.2.0`：`news` CMS 试点，Decap + GitHub PR 审核流已落地，保持模板化配置
 - `1.2.1`：CMS 试点收口 / ops hardening，补 locale/news 校验与启用前置条件硬化
 - `1.3.0`：CMS 文件管理后台，扩展到新闻、成员、论文、招生与现有项目文件
+- `1.3.1`：CMS 线上启用跟进，补 Cloudflare Worker OAuth 代理部署包与生产环境变量验收说明
 
 ## License
 

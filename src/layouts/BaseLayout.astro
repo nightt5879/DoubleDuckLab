@@ -50,8 +50,9 @@ const xDefaultPath = resolvedLocaleAlternates.xDefault
   ? normalizeSitePath(resolvedLocaleAlternates.xDefault)
   : zhPath || enPath;
 const canonicalPath = lang === 'en' ? enPath || currentPath : zhPath || currentPath;
-const canonicalUrl = toAbsoluteUrl(canonicalPath, Astro.site);
-const ogImageUrl = toAbsoluteUrl(ogImage, Astro.site);
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || import.meta.env.SITE_URL || Astro.site;
+const canonicalUrl = toAbsoluteUrl(canonicalPath, siteUrl);
+const ogImageUrl = toAbsoluteUrl(ogImage, siteUrl);
 const localeSwitchHref = disableLocaleAlternates ? undefined : lang === 'zh' ? enPath : zhPath;
 const hasAlternateLocale = Boolean(localeSwitchHref);
 const localeLabel = lang === 'zh' ? '中文' : 'English';
@@ -82,9 +83,9 @@ const navPathResolved = {
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     {!disableCanonical && <link rel="canonical" href={canonicalUrl} />}
-    {!disableLocaleAlternates && zhPath && <link rel="alternate" hreflang="zh-CN" href={toAbsoluteUrl(zhPath, Astro.site)} />}
-    {!disableLocaleAlternates && enPath && <link rel="alternate" hreflang="en" href={toAbsoluteUrl(enPath, Astro.site)} />}
-    {!disableLocaleAlternates && xDefaultPath && <link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(xDefaultPath, Astro.site)} />}
+    {!disableLocaleAlternates && zhPath && <link rel="alternate" hreflang="zh-CN" href={toAbsoluteUrl(zhPath, siteUrl)} />}
+    {!disableLocaleAlternates && enPath && <link rel="alternate" hreflang="en" href={toAbsoluteUrl(enPath, siteUrl)} />}
+    {!disableLocaleAlternates && xDefaultPath && <link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(xDefaultPath, siteUrl)} />}
     <meta property="og:site_name" content={t.siteName} />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title ? `${title} · ${t.siteName}` : t.siteName} />

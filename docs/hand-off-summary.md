@@ -1,6 +1,6 @@
-# Hand-off Summary（1.3.0 CMS file management）
+# Hand-off Summary（1.3.1 CMS live enablement）
 
-更新时间：2026-05-02
+更新时间：2026-05-03
 
 ## 一、当前已完成
 
@@ -28,6 +28,7 @@
 - 项目只编辑现有 overview/background 四文件内容，不支持新增 / 删除项目
 - 编辑流使用 GitHub backend + `editorial_workflow`，通过 Pull Request 审核后合并
 - 运营依赖 `CMS_GITHUB_REPO`、`CMS_BRANCH`、`CMS_OAUTH_BASE_URL` 与 `PUBLIC_SITE_URL` 配置，以及 OAuth / Cloudflare Pages 回调地址对齐
+- `1.3.1` 新增 `ops/cms-oauth-worker/`，用于部署 Decap CMS GitHub OAuth 代理
 
 ## 二、当前版本收口了什么
 
@@ -46,8 +47,10 @@
 
 ## 四、下一阶段建议
 
-1. 在线上完成一次真实 CMS 登录、PR、预览和合并闭环
-2. 收集成员、论文、项目编辑体验反馈，再决定是否迁移项目结构
+1. 创建 GitHub OAuth App，配置 Worker secrets，并部署 `ops/cms-oauth-worker/`
+2. 在 Cloudflare Pages 配置 CMS 环境变量并重新部署生产站
+3. 在线上完成一次真实 CMS 登录、PR、预览和合并闭环
+4. 收集成员、论文、项目编辑体验反馈，再决定是否迁移项目结构
 
 ## 五、T-0015 上线演练补充
 

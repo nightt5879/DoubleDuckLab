@@ -1,6 +1,6 @@
 # Roadmap
 
-更新时间：2026-05-02（1.3.0 CMS file management）
+更新时间：2026-05-03（1.3.1 CMS live enablement）
 
 ## 1.0.1 基线修复
 
@@ -57,6 +57,14 @@
 - 支持招生与合作固定页面编辑，禁止新增/删除
 - 支持现有项目 overview/background 文件编辑，禁止新增/删除项目以保护四文件结构
 - 保持 Decap + GitHub backend + `editorial_workflow`，不引入数据库或自研后端
+
+## 1.3.1 CMS 线上闭环启用
+
+计划项：
+- 新增 Cloudflare Worker OAuth 代理部署包，补齐 Decap CMS GitHub 登录前提
+- 明确 GitHub OAuth App、Worker secrets 与 Cloudflare Pages 环境变量配置
+- 使用已发布的 `v1.3.0` 新闻完成一次真实 CMS 编辑 PR、预览、合并闭环
+- 不扩展 CMS 内容模型，不引入数据库或服务端内容 API
 
 ## T-0015 真实上线闭环演练
 

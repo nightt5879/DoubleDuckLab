@@ -93,5 +93,7 @@ git push origin content/YYYYMMDD-topic
 - 项目只编辑现有 overview/background 文件，不新增 / 删除项目
 - 内容同学保存后会生成可审阅的 GitHub Pull Request，而不是直接写入 `main`
 - 编辑者需要目标仓库的写权限
+- `1.3.1` 起，GitHub 登录依赖 `ops/cms-oauth-worker/` 中的 Cloudflare Worker OAuth 代理
+- 首次线上闭环建议只微调已发布的 `v1.3.0` 新闻，验证登录、PR、预览和合并，不新增测试新闻
 - 如果发布失败，先回退对应的内容 PR，再检查 Cloudflare Pages、OAuth 回调和环境变量配置
 - 首次真实上线演练请同时更新 `docs/go-live-rehearsal.md`

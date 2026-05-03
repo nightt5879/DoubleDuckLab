@@ -49,24 +49,49 @@ cesar.ns.cloudflare.com
 
 后面看到active就是成功了！！！你的官网已经发布了 ！！！
 
-## `1.3.0` 内容 CMS 需要的额外配置
+## `1.3.1` 内容 CMS 线上启用配置
 
-如果后续启用 Decap CMS 内容文件管理后台，Cloudflare Pages 这边还要补三类配置：
+Decap CMS 的 GitHub backend 需要一个 OAuth 代理。`1.3.1` 起，仓库内提供 `ops/cms-oauth-worker/` 作为 Cloudflare Worker 部署包。
 
-1. 构建环境变量
+### 1. 创建 GitHub OAuth App
+
+在 GitHub Developer settings 里创建 OAuth App：
+
+- Homepage URL：Cloudflare Worker 的 base URL，例如 `https://doubleducklab-cms-oauth.<account>.workers.dev`
+- Authorization callback URL：同一个 Worker URL 加 `/callback`，例如 `https://doubleducklab-cms-oauth.<account>.workers.dev/callback`
+
+创建后保存 client ID 和 client secret。不要把 secret 写入仓库。
+
+### 2. 部署 OAuth Worker
+
 ```bash
-PUBLIC_SITE_URL=https://your-domain.example
-CMS_GITHUB_REPO=owner-name/repo-name
-CMS_BRANCH=main
-CMS_OAUTH_BASE_URL=https://cms-oauth.example.com
+cd ops/cms-oauth-worker
+npx wrangler secret put GITHUB_OAUTH_ID
+npx wrangler secret put GITHUB_OAUTH_SECRET
+npx wrangler deploy
 ```
 
-2. OAuth 回调
-- OAuth 代理地址要和 `CMS_OAUTH_BASE_URL` 保持一致
-- GitHub OAuth App 的回调地址要指向这个代理，而不是站点页面本身
+部署后访问 Worker 根路径，应该看到：
 
-3. 仓库权限
+```text
+DoubleDuckLab Decap CMS OAuth proxy OK
+```
+
+### 3. 配置 Cloudflare Pages 环境变量
+
+```bash
+PUBLIC_SITE_URL=https://doubleducklab.pages.dev
+CMS_GITHUB_REPO=nightt5879/DoubleDuckLab
+CMS_BRANCH=main
+CMS_OAUTH_BASE_URL=https://doubleducklab-cms-oauth.<account>.workers.dev
+```
+
+保存变量后重新部署生产站。`/admin/config.yml` 不应再显示 missing-variable notice，而应输出完整 Decap CMS 配置。
+
+### 4. 仓库权限与验收
+
 - 参与编辑内容的同学需要目标仓库写权限
 - CMS 通过 GitHub Pull Request 走审核流，不做直接写入 `main`
+- 首次验收建议只微调已发布的 `v1.3.0` 新闻，确认 CMS 能创建 PR、Cloudflare Pages 能生成预览、合并后生产页面能更新
 
-如果 CMS 暂时还没启用，可以先保留现有 Pages / 域名配置不变。
+如果 CMS 暂时还没启用，可以先保留现有 Pages / 域名配置不变；但 `/admin/` 会继续显示 setup required。
