@@ -8,6 +8,8 @@ This Worker is intentionally small and only supports the Decap GitHub backend ro
 - `GET /auth` GitHub OAuth redirect
 - `GET /callback` GitHub OAuth token callback for the Decap popup
 
+The OAuth `state` value is stored in a short-lived `HttpOnly`, `Secure`, `SameSite=Lax` cookie and must match on `/callback` before the Worker exchanges the GitHub authorization code.
+
 ## Required GitHub OAuth App
 
 Create a GitHub OAuth App from GitHub Developer settings.
@@ -24,6 +26,12 @@ cd ops/cms-oauth-worker
 npx wrangler secret put GITHUB_OAUTH_ID
 npx wrangler secret put GITHUB_OAUTH_SECRET
 npx wrangler deploy
+```
+
+Run the local smoke checks before deploying changes:
+
+```bash
+npm run test:smoke
 ```
 
 The default Worker config uses:

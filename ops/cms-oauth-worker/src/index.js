@@ -1,5 +1,6 @@
 const GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize';
 const GITHUB_TOKEN_URL = 'https://github.com/login/oauth/access_token';
+const OAUTH_STATE_COOKIE = 'ddlab_oauth_state';
 
 function randomHex(bytes) {
   const buffer = new Uint8Array(bytes);
@@ -25,6 +26,38 @@ function authProvider(url) {
 
 function allowedOrigin(env) {
   return env.ALLOWED_ORIGIN || '*';
+}
+
+function parseCookies(header) {
+  return Object.fromEntries(
+    (header || '')
+      .split(';')
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => {
+        const index = part.indexOf('=');
+        if (index === -1) {
+          return [part, ''];
+        }
+
+        return [part.slice(0, index), decodeURIComponent(part.slice(index + 1))];
+      }),
+  );
+}
+
+function stateCookie(value, maxAge = 600) {
+  return [
+    `${OAUTH_STATE_COOKIE}=${encodeURIComponent(value)}`,
+    'Path=/',
+    'HttpOnly',
+    'Secure',
+    'SameSite=Lax',
+    `Max-Age=${maxAge}`,
+  ].join('; ');
+}
+
+function clearStateCookie() {
+  return stateCookie('', 0);
 }
 
 function textResponse(body, init = {}) {
@@ -97,9 +130,17 @@ async function handleAuth(request, env) {
   redirect.searchParams.set('client_id', env.GITHUB_OAUTH_ID);
   redirect.searchParams.set('redirect_uri', callbackUrl(url));
   redirect.searchParams.set('scope', isPrivateRepo(env) ? 'repo,user' : 'public_repo,user');
-  redirect.searchParams.set('state', randomHex(16));
+  const state = randomHex(16);
+  redirect.searchParams.set('state', state);
 
-  return Response.redirect(redirect.toString(), 302);
+  return new Response(null, {
+    status: 302,
+    headers: {
+      location: redirect.toString(),
+      'set-cookie': stateCookie(state),
+      'cache-control': 'no-store',
+    },
+  });
 }
 
 async function exchangeCode(url, env, code) {
@@ -138,10 +179,12 @@ async function handleCallback(request, env) {
   }
 
   if (url.searchParams.has('error')) {
-    return renderCallbackPage(env, 'error', {
+    const response = renderCallbackPage(env, 'error', {
       error: url.searchParams.get('error'),
       error_description: url.searchParams.get('error_description') || 'GitHub OAuth authorization failed.',
     });
+    response.headers.append('set-cookie', clearStateCookie());
+    return response;
   }
 
   const code = url.searchParams.get('code');
@@ -149,14 +192,31 @@ async function handleCallback(request, env) {
     return textResponse('Missing code', { status: 400 });
   }
 
+  const returnedState = url.searchParams.get('state');
+  const expectedState = parseCookies(request.headers.get('cookie'))[OAUTH_STATE_COOKIE];
+
+  if (!returnedState || !expectedState || returnedState !== expectedState) {
+    return textResponse('Invalid OAuth state', {
+      status: 400,
+      headers: {
+        'set-cookie': clearStateCookie(),
+        'cache-control': 'no-store',
+      },
+    });
+  }
+
   try {
     const token = await exchangeCode(url, env, code);
-    return renderCallbackPage(env, 'success', { token });
+    const response = renderCallbackPage(env, 'success', { token });
+    response.headers.append('set-cookie', clearStateCookie());
+    return response;
   } catch (error) {
-    return renderCallbackPage(env, 'error', {
+    const response = renderCallbackPage(env, 'error', {
       error: 'oauth_exchange_failed',
       error_description: error instanceof Error ? error.message : 'OAuth token exchange failed.',
     });
+    response.headers.append('set-cookie', clearStateCookie());
+    return response;
   }
 }
 
