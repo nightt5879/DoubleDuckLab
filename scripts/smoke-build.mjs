@@ -117,6 +117,8 @@ const checks = [
           'publish_mode: editorial_workflow',
           'media_folder: public/uploads',
           'public_folder: /uploads',
+          'Start with a lowercase letter',
+          '^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$',
           'structure: multiple_files',
           '  - name: news',
           '  - name: members',

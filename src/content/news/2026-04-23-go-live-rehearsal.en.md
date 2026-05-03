@@ -1,4 +1,5 @@
 ---
+slug: "go-live-rehearsal"
 date: "2026-04-23"
 title:
   zh: "官网上线演练记录"

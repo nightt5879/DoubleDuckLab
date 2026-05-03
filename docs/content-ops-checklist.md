@@ -74,6 +74,7 @@ git push origin content/YYYYMMDD-topic
   - `*.zh.md`
   - `*.en.md`
 - 必填字段：
+  - `slug`
   - `date`
   - `title.zh/en`
 
@@ -88,10 +89,13 @@ git push origin content/YYYYMMDD-topic
 ## D. `1.3.0` CMS 文件管理启用后
 
 - 编辑入口固定为 `/admin/`
+- 新闻 `slug` 必须以小写字母开头，只使用小写英文、数字和连字符；CMS 会用日期生成文件名前缀，所以 `slug` 字段里不要再写日期
+- 编辑旧新闻时优先保留后台里已有的 `slug`，避免改动公开 URL
 - 新闻、成员、论文可新增 / 编辑 / 删除
 - 招生与合作只编辑固定页面，不新增 / 删除
 - 项目只编辑现有 overview/background 文件，不新增 / 删除项目
 - 内容同学保存后会生成可审阅的 GitHub Pull Request，而不是直接写入 `main`
+- 发布流程是 `Save` -> 状态改为 `Ready` -> `Publish` -> `Publish now`，随后到 GitHub PR 和 Cloudflare Pages 预览确认
 - 编辑者需要目标仓库的写权限
 - `1.3.1` 起，GitHub 登录依赖 `ops/cms-oauth-worker/` 中的 Cloudflare Worker OAuth 代理
 - 首次线上闭环建议只微调已发布的 `v1.3.0` 新闻，验证登录、PR、预览和合并，不新增测试新闻

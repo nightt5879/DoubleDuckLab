@@ -1,6 +1,6 @@
 # Roadmap
 
-更新时间：2026-05-03（1.3.1 CMS live enablement）
+更新时间：2026-05-03（1.3.2 CMS stability hardening）
 
 ## 1.0.1 基线修复
 
@@ -65,6 +65,14 @@
 - 明确 GitHub OAuth App、Worker secrets 与 Cloudflare Pages 环境变量配置
 - 使用已发布的 `v1.3.0` 新闻完成一次真实 CMS 编辑 PR、预览、合并闭环
 - 不扩展 CMS 内容模型，不引入数据库或服务端内容 API
+
+## 1.3.2 CMS 稳定性补丁
+
+已完成：
+- 为旧新闻补齐稳定 `slug` frontmatter，避免 Decap 编辑既有条目时要求手工猜 slug
+- 清理首次 CMS 验收留下的测试文字，避免测试内容进入长期生产内容
+- 收紧新闻 `slug` 提示、校验和 smoke 检查，要求以小写字母开头，不包含日期前缀
+- 文档补充 Save -> Ready -> Publish now 的后台发布流程说明
 
 ## T-0015 真实上线闭环演练
 

@@ -1,4 +1,5 @@
 ---
+slug: "v1-3-0-cms-file-management"
 date: "2026-05-03"
 title:
   zh: "DoubleDuckLab 官网 v1.3.0 发布：内容文件管理后台上线"
