@@ -211,6 +211,7 @@ venue: "Conference Name"
 - Content map: [content-map.md](./content-map.md)
 - Content edit guide: [docs/content-edit-guide.md](./docs/content-edit-guide.md)
 - Content ops checklist: [docs/content-ops-checklist.md](./docs/content-ops-checklist.md)
+- Cloudflare Pages build settings: [docs/cloudflare-pages-build-settings.md](./docs/cloudflare-pages-build-settings.md)
 - Release baseline checklist: [docs/release-baseline-checklist.md](./docs/release-baseline-checklist.md)
 - Roadmap: [docs/roadmap.md](./docs/roadmap.md)
 
@@ -226,6 +227,7 @@ venue: "Conference Name"
 - `1.3.1`: CMS live enablement follow-up with a Cloudflare Worker OAuth proxy package and production environment validation notes
 - `1.3.2`: CMS stability patch that adds stable legacy news slugs, removes CMS test residue, and tightens news slug validation
 - `1.3.3`: build-log cleanup that clears Astro content cache before builds to remove duplicate news id warnings
+- `1.3.4`: Cloudflare Pages Git build stability patch that pins Node.js and records the Pages output directory in repo config
 
 ## License
 

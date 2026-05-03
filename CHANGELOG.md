@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.4] - 2026-05-03
+
+### Added
+- Added a root `.node-version` file so Cloudflare Pages Git builds and GitHub Actions use the same pinned Node.js runtime.
+- Added a root `wrangler.jsonc` Pages configuration that records the `doubleducklab` project and `dist` build output directory.
+- Documented the expected Cloudflare Pages Git build settings for the production CMS site.
+
+### Changed
+- Bumped the package version from `1.3.3` to `1.3.4` for Cloudflare Git build stability.
+- Updated GitHub Actions to read the pinned Node.js version from `.node-version`.
+
+### Fixed
+- Reduced production deploy drift between GitHub CI, local builds, manual Wrangler uploads, and Cloudflare Pages Git builds.
+
 ## [1.3.3] - 2026-05-03
 
 ### Changed
