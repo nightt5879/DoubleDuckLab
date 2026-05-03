@@ -115,6 +115,8 @@ const checks = [
           `base_url: "${normalizeUrl(cmsOauthBaseUrl)}"`,
           `site_domain: "${cmsSiteDomain}"`,
           'publish_mode: editorial_workflow',
+          'media_folder: public/uploads',
+          'public_folder: /uploads',
           'structure: multiple_files',
           '  - name: news',
           '  - name: members',

@@ -387,6 +387,8 @@ export function renderCmsConfigYml(config: CmsRuntimeConfig) {
     '  auth_endpoint: auth',
     `  site_domain: ${yamlString(config.siteDomain)}`,
     'publish_mode: editorial_workflow',
+    'media_folder: public/uploads',
+    'public_folder: /uploads',
     'i18n:',
     '  structure: multiple_files',
     '  locales: [zh, en]',
